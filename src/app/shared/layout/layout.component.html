@@ -59,6 +59,7 @@
       [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" class="sidenav">
 
       <mat-nav-list>
+
         <h3 mat-subheader>Home</h3>
 
         <a mat-list-item [routerLink]="['/dashboard']" routerLinkActive="active">
@@ -68,17 +69,18 @@
           <p mat-line> Dashboard </p>
         </a>
 
-        <a mat-list-item [routerLink]="['/customers']" routerLinkActive="active">
+        <a mat-list-item [routerLink]="['/chat-all']" routerLinkActive="active">
           <mat-icon mat-list-icon>
-            business
+            forum 
           </mat-icon>
-          <p mat-line> Customers </p>
+          <p mat-line> Chat</p>
         </a>
+
         <a mat-list-item [routerLink]="['/users']" routerLinkActive="active">
           <mat-icon mat-list-icon>
             people
           </mat-icon>
-          <p mat-line> Users </p>
+          <p mat-line> Utenti attivi </p>
         </a>
 
         <a mat-list-item [routerLink]="['/account/profile']">
