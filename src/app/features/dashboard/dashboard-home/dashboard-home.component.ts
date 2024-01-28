@@ -27,4 +27,20 @@ export class DashboardHomeComponent implements OnInit {
       this.notificationService.openSnackBar('Welcome!');
     });
   }
+
+  createGame(playUntilPoints: number, expectedNumberOfPlayers: number) {
+    // this._hubService.CreateGame(playUntilPoints, expectedNumberOfPlayers);
+  }
+
+  rename() {
+    let name = prompt('Input your name');
+    if (!name) return;
+    localStorage.setItem('name', name);
+    window.location.reload();
+  }
+
+  getGameCount() {
+    // return this._hubService.GameCount;
+    //return 15;
+  }
 }

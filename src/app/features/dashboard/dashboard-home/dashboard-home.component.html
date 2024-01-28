@@ -1,7 +1,7 @@
 <div class="container" fxLayout="row" fxLayoutAlign="center none">
 
   <div fxFlex="95%">
-    <div class="container" fxLayout="row" fxLayoutAlign="center none">
+    <!-- <div class="container" fxLayout="row" fxLayoutAlign="center none">
 
       <h2>Welcome back, {{currentUser.fullName}}!</h2>
 
@@ -13,6 +13,58 @@
         <p>This is the dashboard.</p>
       </div>
       <mat-icon> </mat-icon>
+    </div> -->
+<div class="row">
+  <div class="col-sm-8 col-6">
+    <div class="row">
+      <div class="col-12 text-center fill-viewport-max-20">
+        <h3 class=" h3 text-center text-primary">Maraffa</h3>
+          <!-- <button class="btn btn-primary my-3" ngbDropdownToggle> Nuova Partita</button> -->
+            <h5 class="dropdown-header">2 giocatori</h5>
+            <button mat-raised-button color="primary" (click)="createGame(21,2)">21 punti</button>
+            <button mat-raised-button color="primary" (click)="createGame(31,2)">31 punti</button>
+            <button mat-raised-button color="primary" (click)="createGame(41,2)">41 punti</button>
+            <button mat-raised-button color="primary" (click)="createGame(51,2)">51 punti</button>
+            <div class="dropdown-divider"></div>
+            <h5 class="dropdown-header">4 players</h5>
+            <button mat-raised-button color="primary" (click)="createGame(21,2)">21 punti</button>
+            <button mat-raised-button color="primary" (click)="createGame(31,2)">31 punti</button>
+            <button mat-raised-button color="primary" (click)="createGame(41,2)">41 punti</button>
+            <button mat-raised-button color="primary" (click)="createGame(51,2)">51 punti</button>
+      </div>
+      <div class="col-12 scrollable-div-y fill-viewport-max-50">
+        <!-- <app-all-chat></app-all-chat> -->
+      </div>
+
+      <div  class="col-12 text-center fill-viewport-max-10">
+        <br />
+        <h6><b>{{getGameCount()}}</b> partite giocate</h6>
+      </div>
+
+      <div class="col-12 text-center small fill-viewport-max-30">
+        <a href="donazione.html"><img src="https://www.paypalobjects.com/it_IT/IT/i/btn/btn_donate_SM.gif" /></a>
+        <small>
+          <br /><b>Sostieni lo sviluppo e il potenziamento dei Server</b>
+          <br />
+        </small>
+        <!--<div class="alert alert-primary small" style="margin-top:5px;padding:0.2rem">
+          in caso di malfunzionamento per eccessivo traffico giocate sul
+          <a href="https://maraffaapp.azurewebsites.net/">server di backup</a>
+        </div>-->
+        <small>
+          &copy; Thomas Casali - Alessandra Lumini - Sofia Tosi - Santoro Matteo
+        </small>
+      </div>
     </div>
+    </div>
+  <div class="col-sm-4 col-6 fill-viewport-max-100 scrollable-div-y">
+    <!-- <button class="btn btn-outline-dark btn-sm btn-block my-2" (click)="rename()">Cambia nome</button> -->
+     <!-- <app-active-players></app-active-players>
+     <app-running-games></app-running-games> -->
+     <!-- <app-running-games></app-running-games>
+     <app-active-players></app-active-players> -->
+  </div>
+</div>
+
   </div>
 </div>
