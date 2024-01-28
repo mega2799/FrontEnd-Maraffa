@@ -44,6 +44,11 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'waiting',
+    loadChildren: () => import('./features/waiting-room/waiting-room.module').then(m => m.WaitingRoomModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: '**',
     redirectTo: 'dashboard',
     pathMatch: 'full'
