@@ -1,7 +1,7 @@
 <div class="container login-container" fxLayout="row" fxLayoutAlign="center center">
     <form [formGroup]="loginForm" fxFlex="30%" fxFlex.sm="50%" fxFlex.xs="90%">
         <mat-card>
-            <mat-card-title>angular-material-template</mat-card-title>
+            <mat-card-title>{{this.name}}</mat-card-title>
             <mat-card-subtitle>Log in to your account</mat-card-subtitle>
             <mat-card-content>
 
@@ -38,6 +38,7 @@
                 <button mat-raised-button id="login" color="primary" [disabled]="loginForm.invalid || loading"
                     (click)="login()">Login</button>
                 <button mat-button id="resetPassword" (click)="resetPassword()" type="button">Reset Password</button>
+                <button mat-button id="guestLogin" (click)="guestAccess()" type="button" >Enter as a guest</button>
             </mat-card-actions>
 
         </mat-card>

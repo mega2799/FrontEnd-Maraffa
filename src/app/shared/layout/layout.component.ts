@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
  import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { SpinnerService } from '../../core/services/spinner.service';
 import { AuthGuard } from 'src/app/core/guards/auth.guard';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
     selector: 'app-layout',
@@ -19,6 +20,7 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     showSpinner: boolean = false;
     userName: string = "";
     isAdmin: boolean = false;
+    name = environment.name;
 
     private autoLogoutSubscription: Subscription = new Subscription;
 
