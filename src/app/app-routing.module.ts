@@ -44,6 +44,11 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'game',
+    loadChildren: () => import('./features/game/game.module').then(m => m.GameModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'waiting',
     loadChildren: () => import('./features/waiting-room/waiting-room.module').then(m => m.WaitingRoomModule),
     canActivate: [AuthGuard]

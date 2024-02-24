@@ -1,7 +1,7 @@
 <div class="container" fxLayout="row" fxLayoutAlign="center none">
   <div fxFlex="95%">
-      <p>waiting-room-component works!</p>
-        <button class="btn btn-danger btn-block mb-2" (click)="leaveWaitingRoom()">Esci</button>
+      <!-- <p>waiting-room-component works!</p> -->
+        <button mat-raised-button color="primary" class="btn btn-danger btn-block mb-2" (click)="leaveWaitingRoom()">Esci</button>
           <div class="alert alert-primary">
           <p><strong>Partita ai:</strong> 
             <!-- {{activeGame.gameSetup.playUntilPoints}} -->
@@ -21,6 +21,7 @@
                 <input type="text" class="form-control" id="password" placeholder="(Optional)">
               </div>
               <div class="col-4 col-sm-2">
+                <button mat-raised-button color="primary" class="btn btn-danger btn-block mb-2" (click)="leaveWaitingRoom()">Esci</button>
                 <button class="btn btn-primary btn-block text-nowrap" (click)="setRoomPassword()">Imposta</button>
               </div>
             </div>
