@@ -62,3 +62,17 @@ a.mat-list-item.active {
   position: absolute;
   bottom: 0;
 }
+
+/* header */
+.mat-toolbar{
+  background-color: #007EA8;
+}
+
+/*header icons*/
+.whiteIcon{
+  color: white;
+}
+
+.username{
+  color: white;
+}
