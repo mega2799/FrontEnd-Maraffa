@@ -20,3 +20,103 @@
   border-radius: 50%;
   margin-right: .5%;
 }
+
+.dashboard-container{
+  display: flex;
+}
+
+.games-buttons{
+  display: flex;
+  flex-direction: column;
+  margin: 0 15% 0;
+}
+
+.menu-item{
+  width: 120px;
+}
+
+.blue-button {
+  background-color: #002AA8;
+  color: white;
+  border-radius: 20px;
+  margin: 1%;
+}
+
+.button-container button{
+  width: 151px;
+}
+
+@media (max-width: 990px) {
+  .button-container{
+    margin-bottom: 4%;
+  }
+}
+
+.text{
+  color: #002AA8;
+  margin: 0;
+}
+
+#played-games{
+  margin-top: 3%;
+}
+
+.lightblue-text{
+  color: #007EA8;
+  font-weight: bold;
+}
+
+.blue-button .mat-icon{
+  padding: 2%;
+}
+
+#messages {
+  outline: none;
+  scrollbar-color: #007EA8 #eef9fc;
+  padding: 1%;
+  display: inline-block;
+  border: none;
+  font-size: 100%;
+  width: 98%;
+}
+
+::placeholder {
+  color: #007EA8;
+  font-size: 150%;
+}
+
+.textarea-container{
+  border: 2px solid #007EA8;
+  border-radius: 25px;
+  padding: 0;
+  overflow: hidden;
+  /*width: 90%;*/
+}
+
+.vertical-container{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin-left: 7%;
+}
+
+.games-container{
+  width: 50%;
+}
+
+.number-of-players{
+  margin-bottom: 3%;
+  padding:1%;
+  border-radius: 30px;
+  font-size: 110%;
+}
+
+
+/*status of the games*/
+.waiting-player{
+  color: #52AA5E ;
+}
+
+.playing{
+ color: #DD2D4A;
+}
