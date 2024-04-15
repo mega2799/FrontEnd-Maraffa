@@ -4,6 +4,7 @@
   <!-- Container for sidebar(s) + page content -->
   <mat-sidenav-container style="height: 100vh">
     <!--TODO il sidenav avrebbe [closeOnClickOutside]="true" -->
+    <!--! sidebar chat closed -->
     <mat-sidenav [(opened)]="isGameChatSidebarOpen" [position]="'end'">
       <div class="row">
         <div class="col-12 fill-viewport-50 scrollable-div-y bg-white">
@@ -20,7 +21,16 @@
       </div>
     </mat-sidenav>
 
-    <!-- script>console.log("current.usr" + currentUser.connectionId + "userTurn" + game.userTurnToPlay.connectionId + "n carte=" + game.cardsPlayed.length)</!--script> -->
+    <script>
+      console.log(
+        "current.usr" +
+          currentUser.connectionId +
+          "userTurn" +
+          game.userTurnToPlay.connectionId +
+          "n carte=" +
+          game.cardsPlayed.length
+      );
+    </script>
     <!-- Page content -->
     <div ng-sidebar-content>
       <div class="col-12" style="margin-top: 5px">
