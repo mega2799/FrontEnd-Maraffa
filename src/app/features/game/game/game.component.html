@@ -217,14 +217,106 @@
       <div class="fill-viewport-min-50">
         <div class="row">
           <div class="col-12 p5">
-              <!-- TODO il for per mostrare la mano *ngFor="let card of game.myCards; let firstItem = first"
+            <!-- TODO il for per mostrare la mano *ngFor="let card of game.myCards; let firstItem = first"
               (click)="makeMove(card)"
               [class.firstPlayedCard]="firstItem"
               [ngClass]="getClassForCard(card)"
               [src]="card.imageUrl" -->
-            <img
-              class="player-hand-card animate" />
+            <img class="player-hand-card animate" />
           </div>
+        </div>
+      </div>
+
+      <ng-template #cardsPlayedPreviousRound>
+        <div class="col-12">
+          <p class="text-center text-primary">
+            Carte giocate nella mano precedente:
+          </p>
+          <app-card-player
+            [cardAndUser]="card"
+            *ngFor="
+              let card of game.cardsPlayedPreviousRound
+            "></app-card-player>
+          <div
+            [hidden]="
+              !cardsDrewPreviousRound || cardsDrewPreviousRound.length === 0
+            ">
+            <p class="text-center text-primary">
+              Carte estratte nella mano precedente:
+            </p>
+            <app-card-player
+              [cardAndUser]="card"
+              *ngFor="let card of cardsDrewPreviousRound"></app-card-player>
+          </div>
+        </div>
+      </ng-template>
+
+      <div
+        ngbDropdown
+        placement="top-left"
+        class="d-inline-block action-button-left">
+        <!-- TODO logica visual *ngIf=" currentUser.connectionId ===
+        game.userTurnToPlay.connectionId && game.isFirstRound &&
+        game.cardsPlayed.length === 0 " -->
+        <button
+          class="btn btn-success"
+          id="callbriscoladropdown"
+          ngbDropdownToggle>
+          Briscola
+        </button>
+        <div ngbDropdownMenu aria-labelledby="callbriscoladropdown">
+          <button class="dropdown-item" (click)="CallBriscola('DENARI')">
+            Denari
+          </button>
+          <button class="dropdown-item" (click)="CallBriscola('SPADE')">
+            Spade
+          </button>
+          <button class="dropdown-item" (click)="CallBriscola('COPPE')">
+            Coppe
+          </button>
+          <button class="dropdown-item" (click)="CallBriscola('BASTONI')">
+            Bastoni
+          </button>
+        </div>
+      </div>
+
+      <div
+        ngbDropdown
+        placement="top-right"
+        class="d-inline-block action-button">
+        <!--button class="btn btn-primary" id="callactiondropdown" *ngIf="currentUser.connectionId==game.userTurnToPlay.connectionId && game.cardsPlayed.length==0 && !selectingCardsForExtraPoints" ngbDropdownToggle-->
+
+        <!-- TODO logic visual 
+        *ngIf="
+              currentUser.connectionId === game.userTurnToPlay.connectionId &&
+              game.cardsPlayed.length === 0 &&
+              !game.roundEnded
+            " -->
+        <button
+          class="btn btn-primary"
+          id="callactiondropdown"
+          ngbDropdownToggle>
+          Chiamata
+        </button>
+        <div ngbDropdownMenu aria-labelledby="callactiondropdown">
+          <!--Cambio le azioni: busso, striscio, ristriscio,volo -->
+          <button class="dropdown-item" (click)="CallAction('BUSSO')">
+            Busso
+          </button>
+          <button class="dropdown-item" (click)="CallAction('VOLO')">
+            Volo
+          </button>
+          <button class="dropdown-item" (click)="CallAction('STRISCIO')">
+            Striscio
+          </button>
+          <button class="dropdown-item" (click)="CallAction('RISTRISCIO')">
+            Ristriscio
+          </button>
+          <button
+            class="dropdown-item"
+            (click)="CallAction('RISTRISCIO BUSSO')">
+            Ristriscio e busso
+          </button>
         </div>
       </div>
     </div>
