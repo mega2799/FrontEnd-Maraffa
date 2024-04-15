@@ -186,13 +186,12 @@
             </div>
           </div>
           <!--se ho finito la partita mostro il bottone per rigiocarla con gli stessi partecipanti-->
-          <!-- <div
-            class="col-12 text-center"
-            ngbDropdown
-            *ngIf="
+
+          <!--TODO logica per mostrare div sotto *ngIf="
               game.gameEnded &&
               game.players[0].user.connectionId === currentUser.connectionId
-            ">
+            " -->
+          <div class="col-12 text-center" ngbDropdown>
             <button class="btn btn-primary my-3" ngbDropdownToggle>
               Rigioca la Partita
             </button>
@@ -209,9 +208,23 @@
               <button class="dropdown-item" (click)="replayGame(51)">
                 Ai 51
               </button>
-            </div> 
-          </div> -->
+            </div>
+          </div>
           <!--fine bottone replay-->
+        </div>
+      </div>
+      <hr />
+      <div class="fill-viewport-min-50">
+        <div class="row">
+          <div class="col-12 p5">
+              <!-- TODO il for per mostrare la mano *ngFor="let card of game.myCards; let firstItem = first"
+              (click)="makeMove(card)"
+              [class.firstPlayedCard]="firstItem"
+              [ngClass]="getClassForCard(card)"
+              [src]="card.imageUrl" -->
+            <img
+              class="player-hand-card animate" />
+          </div>
         </div>
       </div>
     </div>
