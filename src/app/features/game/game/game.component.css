@@ -1,0 +1,158 @@
+.player-hand-card {
+  width: 10%;
+  border: solid 0.5px;
+  margin-bottom: 1px;
+}
+.deck-image-div {
+  margin: 0 auto;
+  width: 25%;
+}
+.deck-image-div > .card-body {
+  padding: 0;
+}
+
+.player-hand-card:hover {
+  margin-top: -5%;
+}
+.extraPointsCardSelected {
+  opacity: 1 !important;
+  margin-top: -5%;
+}
+.extraPointsCardUnselected {
+  opacity: 0.3 !important;
+}
+.first-played-card {
+  margin-left: 0;
+}
+
+@media (max-width: 768px) {
+  .player-hand-card {
+    width: 20%;
+  }
+  .deck-image-div {
+    width: 50%;
+  }
+}
+.left-game {
+  border: solid;
+  border-color: red;
+  border-width: 2px;
+}
+
+.team0 {
+  border-bottom-style: solid;
+  border-color: #007bff;
+  border-width: 5px;
+}
+
+.team1 {
+  border-bottom-style: solid;
+  border-color: #ffc107;
+  border-width: 5px;
+}
+
+.nonplayer-background {
+  background-color: white;
+}
+.player-background {
+  background-color: #99ef92;
+}
+.chat-button {
+  margin-left: 20px;
+}
+.chat-button-has-new-message {
+  -webkit-animation-name: greenPulse;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes greenPulse {
+  from {
+    background-color: #c0ff02;
+    -webkit-box-shadow: 0 0 9px #333;
+  }
+  50% {
+    background-color: #4b610b;
+    -webkit-box-shadow: 0 0 18px #91bd09;
+  }
+  to {
+    background-color: #c0ff02;
+    -webkit-box-shadow: 0 0 9px #333;
+  }
+}
+
+.action-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.action-button-left {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+}
+.extra-points-button {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+}
+
+/* rounder card hand */
+/* 
+.circle-container {
+  position: relative;
+  width: 20em;
+  height: 20em;
+  border-radius: 50%;
+  padding: 0;
+  list-style: none;
+  margin: 5em auto 0;
+}
+.circle-container > * {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -3em;
+  width: 6em;
+  height: 6em;
+}
+.circle-container > li > img:hover{
+  border:2px solid black;
+}
+.circle-container > *:nth-of-type(1) {
+  transform: rotate(0deg) translate(10em) rotate(20deg) skewY(30deg);
+}
+.circle-container > *:nth-of-type(2) {
+  transform: rotate(-20deg) translate(10em) rotate(40deg) skewY(30deg);
+}
+.circle-container > *:nth-of-type(3) {
+  transform: rotate(-40deg) translate(10em) rotate(60deg) skewY(30deg);
+}
+.circle-container > *:nth-of-type(4) {
+  transform: rotate(-60deg) translate(10em) rotate(80deg) skewY(30deg);
+}
+.circle-container > *:nth-of-type(5) {
+  transform: rotate(-80deg) translate(12em) rotate(100deg) skewY(30deg);
+}
+.circle-container > *:nth-of-type(6) {
+  transform: rotate(-100deg) translate(12em) rotate(100deg) skewY(-30deg);
+}
+.circle-container > *:nth-of-type(7) {
+  transform: rotate(-120deg) translate(10em) rotate(100deg) skewY(-30deg);
+}
+.circle-container > *:nth-of-type(8) {
+  transform: rotate(-140deg) translate(10em) rotate(120deg) skewY(-30deg);
+}
+.circle-container > *:nth-of-type(9) {
+  transform: rotate(-160deg) translate(10em) rotate(140deg) skewY(-30deg);
+}
+.circle-container > *:nth-of-type(10) {
+  transform: rotate(-180deg) translate(10em) rotate(160deg) skewY(-30deg);
+}
+
+.circle-container img {
+  display: block;
+  max-width: 100%;
+} */
