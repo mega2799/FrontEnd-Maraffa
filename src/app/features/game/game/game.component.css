@@ -45,6 +45,11 @@
   border-width: 5px;
 }
 
+.card-img-top{
+  height: 35%;
+  width: 35%;
+}
+
 .team1 {
   border-bottom-style: solid;
   border-color: #ffc107;
