@@ -35,9 +35,9 @@
   width: 120px;
 }
 
-.blue-button {
-  background-color: #002AA8;
-  color: white;
+.orange-button {
+  background-color: #ffb01f;
+  color: black;
   border-radius: 20px;
   margin: 1%;
 }
@@ -53,7 +53,7 @@
 }
 
 .text{
-  color: #002AA8;
+  color: #000000;
   margin: 0;
 }
 
@@ -66,7 +66,7 @@
   font-weight: bold;
 }
 
-.blue-button .mat-icon{
+.orange-button .mat-icon{
   padding: 2%;
 }
 
@@ -119,4 +119,62 @@
 
 .playing{
  color: #DD2D4A;
+}
+
+/*radio button*/
+.radio-label{
+  color: #000000;
+  font-weight: 600;
+  font-size: 120%;
+}
+
+.radio-button{
+  display: flex;
+  gap: 1%;
+  margin: 3% 20% 3%;
+}
+
+[type=radio],
+[type=checkbox] {
+   -webkit-appearance: none;
+   -moz-appearance:    none;
+   appearance:         none;
+}
+
+
+[type=radio],
+[type=checkbox] {
+  width: 20px;
+  height: 20px;
+  border: solid 1px #cccccc;
+  margin-right: 8px;
+  position: relative;
+}
+
+
+[type=radio]:checked::before,
+[type=checkbox]:checked::before {
+  content: "";
+  width: 14px;
+  height: 14px;
+  background-color: #ffb01f;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+}
+
+[type=radio],
+[type=radio]:checked::before{
+  border-radius: 100%;
+}
+
+@media (min-width: 1170px) {
+  .radio-button{
+    margin-left: 30%;
+  }
+
+  #played-games{
+    margin-top: 2%;
+  }
+  
 }
