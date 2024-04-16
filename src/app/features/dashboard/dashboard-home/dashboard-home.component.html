@@ -18,37 +18,50 @@
       <div class="row">
         <div class="col-12 text-center fill-viewport-max-20 dashboard-container">
           <div class="vertical-container text-center">
-            <div class="button-container">
-              <button mat-flat-button class="blue-button number-of-players" [matMenuTriggerFor]="fourPlayersMenu">4 giocatori
-                <mat-icon mat-list-icon>people</mat-icon>
-                <mat-icon mat-list-icon>people</mat-icon>
+            <h2 class="lightblue-text">Seleziona una modalità di gioco:</h2>
+              <div class="radio-button">
+                <input type="radio" id="classico" name="options" [(ngModel)]="isOptionSelected" value="classico">
+                <label class="radio-label" for="classico">Classico</label>
+              </div>
+              <div class="radio-button">
+                <input type="radio" id="elevenToZero" name="options" [(ngModel)]="isOptionSelected" value="elevenToZero">
+                <label class="radio-label" for="elevenToZero">11 a 0</label><br>
+              </div>
+              <div class="button-container">
+                <button mat-flat-button class="orange-button number-of-players" [matMenuTriggerFor]="fourPlayersMenu" [disabled]="!isOptionSelected">4 giocatori
+                  <mat-icon mat-list-icon>people</mat-icon>
+                  <mat-icon mat-list-icon>people</mat-icon>
+                  </button>
+                <mat-menu #fourPlayersMenu="matMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
+            
+                  <a mat-menu-item class="menu-item" [routerLink]="['/account/profile']">
+                    <span>ai 31</span>
+                  </a>
+            
+                  <a mat-menu-item class="menu-item" [routerLink]="['/auth/login']">
+                    <span>ai 41</span>
+                  </a>
+                </mat-menu>
+  
+  
+                <button mat-flat-button class="orange-button number-of-players" [matMenuTriggerFor]="twoPlayersMenu" [disabled]="!isOptionSelected">2 giocatori <mat-icon mat-list-icon>
+                    people</mat-icon>
                 </button>
-              <mat-menu #fourPlayersMenu="matMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
-          
-                <a mat-menu-item class="menu-item" [routerLink]="['/account/profile']">
-                  <span>ai 31</span>
-                </a>
-          
-                <a mat-menu-item class="menu-item" [routerLink]="['/auth/login']">
-                  <span>ai 41</span>
-                </a>
-              </mat-menu>
-
-
-              <button mat-flat-button class="blue-button number-of-players" [matMenuTriggerFor]="twoPlayersMenu">2 giocatori <mat-icon mat-list-icon>
-                  people</mat-icon>
-              </button>
-              <mat-menu #twoPlayersMenu="matMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
-          
-                <a mat-menu-item class="menu-item" [routerLink]="['/account/profile']">
-                  <span>ai 31</span>
-                </a>
-          
-                <a mat-menu-item class="menu-item" [routerLink]="['/auth/login']">
-                  <span>ai 41</span>
-                </a>
-              </mat-menu>
-            </div>
+                <mat-menu #twoPlayersMenu="matMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
+            
+                  <a mat-menu-item class="menu-item" [routerLink]="['/account/profile']">
+                    <span>ai 31</span>
+                  </a>
+            
+                  <a mat-menu-item class="menu-item" [routerLink]="['/auth/login']">
+                    <span>ai 41</span>
+                  </a>
+                </mat-menu>
+              </div>
+            
+            
+            
+            
             <div class="textarea-container">
               <textarea id="messages" name="messages" rows="15" cols="70"
                 placeholder="  Scrivi un nuovo messaggio"></textarea>
@@ -57,9 +70,9 @@
           <div class="games-container">
             <h2 class="lightblue-text">Partite:</h2>
             <div class="games-buttons">
-              <button mat-flat-button class="blue-button"><mat-icon
+              <button mat-flat-button class="orange-button"><mat-icon
                   class="waiting-player">fiber_manual_record</mat-icon>game1</button>
-              <button mat-flat-button class="blue-button"><mat-icon
+              <button mat-flat-button class="orange-button"><mat-icon
                   class="playing">fiber_manual_record</mat-icon>game2</button>
             </div>
             <h2 class="lightblue-text">Giocatori:</h2>
@@ -84,7 +97,7 @@
           </div>
 
           <div class="col-12 text-center small fill-viewport-max-30">
-            <a class="blue-button" mat-flat-button href="donazione.html" target="_blank">Donazione</a>
+            <a class="orange-button" mat-flat-button href="donazione.html" target="_blank">Donazione</a>
             <p class="text">
               <small>
                 <br /><b>Sostieni lo sviluppo e il potenziamento dei Server</b>
