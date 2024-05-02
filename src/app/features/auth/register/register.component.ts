@@ -11,12 +11,12 @@ import { NotificationService } from "src/app/core/services/notification.service"
 import { environment } from "src/environments/environment.prod";
 
 @Component({
-  selector: "app-login",
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.css"],
+  selector: "app-register",
+  templateUrl: "./register.component.html",
+  styleUrls: ["./register.component.css"],
 })
-export class LoginComponent implements OnInit {
-  loginForm!: UntypedFormGroup;
+export class RegisterComponent implements OnInit {
+  registerForm!: UntypedFormGroup;
   loading!: boolean;
   name = environment.name;
 
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.titleService.setTitle("MaraffaOnline - Login");
+    this.titleService.setTitle("MaraffaOnline - Registrazione");
     this.authenticationService.logout();
     this.createForm();
   }
@@ -41,42 +41,41 @@ export class LoginComponent implements OnInit {
   private createForm() {
     const savedUserEmail = localStorage.getItem("savedUserEmail");
 
-    this.loginForm = new UntypedFormGroup({
+    this.registerForm = new UntypedFormGroup({
+      email: new UntypedFormControl(savedUserEmail, [
+        Validators.required,
+        Validators.email,
+      ]),
       nickname: new UntypedFormControl("", [Validators.required]),
-    //   email: new UntypedFormControl(savedUserEmail, [
-    //     Validators.required,
-    //     Validators.email,
-    //   ]),
       password: new UntypedFormControl("", Validators.required),
       rememberMe: new UntypedFormControl(savedUserEmail !== null),
     });
   }
 
-  login() {
-    const nickname = this.loginForm.get("nickname")?.value;
-    const password = this.loginForm.get("password")?.value;
-    const rememberMe = this.loginForm.get("rememberMe")?.value;
+  register() {
+    const email = this.registerForm.get("email")?.value;
+    const nickname = this.registerForm.get("nickname")?.value;
+    const password = this.registerForm.get("password")?.value;
+    const rememberMe = this.registerForm.get("rememberMe")?.value;
 
     this.loading = true;
-    this.authenticationService.login(nickname, password).subscribe(
-      (data) => {
-        // if (rememberMe) {
-        //   localStorage.setItem("savedUserEmail", email);
-        // } else {
-        //   localStorage.removeItem("savedUserEmail");
-        // }
-        this.localStorage.setItem("authorized", "true");
-        this.router.navigate(["/"]);
-      },
-      (error) => {
-        this.notificationService.openSnackBar(error.error);
-        this.loading = false;
-      }
-    );
-  }
-
-  registerUser() {
-    this.router.navigate(["/auth/register"]);
+    this.authenticationService
+      .register(email.toLowerCase(), nickname, password)
+      .subscribe(
+        (data) => {
+          // if (rememberMe) {
+          //   localStorage.setItem("savedUserEmail", email);
+          // } else {
+          //   localStorage.removeItem("savedUserEmail");
+          // }
+          this.localStorage.setItem("authorized", "true");
+          this.router.navigate(["/"]);
+        },
+        (error) => {
+          this.notificationService.openSnackBar(error.error);
+          this.loading = false;
+        }
+      );
   }
 
   resetPassword() {

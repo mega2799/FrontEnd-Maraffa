@@ -2,29 +2,51 @@
   class="container login-container"
   fxLayout="row"
   fxLayoutAlign="center center">
-  <form [formGroup]="loginForm" fxFlex="30%" fxFlex.sm="50%" fxFlex.xs="90%">
+  <form [formGroup]="registerForm" fxFlex="30%" fxFlex.sm="50%" fxFlex.xs="90%">
     <mat-card>
       <mat-card-title>{{ this.name }}</mat-card-title>
-      <mat-card-subtitle>Log in al tuo profilo</mat-card-subtitle>
+      <mat-card-subtitle>Registrati</mat-card-subtitle>
       <mat-card-content>
+        <mat-form-field class="full-width">
+          <input
+            id="emailInput"
+            matInput
+            placeholder="Email"
+            formControlName="email"
+            autocomplete="email"
+            type="email" />
+
+          <mat-error
+            id="invalidEmailError"
+            *ngIf="registerForm.controls['email'].hasError('email')">
+            Inserisci un indirizzo email valido, non ti disturberemo...
+          </mat-error>
+          <mat-error
+            id="requiredEmailError"
+            *ngIf="registerForm.controls['email'].hasError('required')">
+            Email e'
+            <strong>necessaria</strong>
+          </mat-error>
+        </mat-form-field>
+
         <mat-form-field class="full-width">
           <input
             id="nicknameInput"
             matInput
-            placeholder="Nome Utente"
+            placeholder="Nome utente"
             formControlName="nickname"
             autocomplete="name"
             type="text" />
 
           <!-- <mat-error
             id="invalidEmailError"
-            *ngIf="loginForm.controls['email'].hasError('email')">
+            *ngIf="registerForm.controls['email'].hasError('email')">
             Please enter a valid email address
           </mat-error> -->
           <mat-error
             id="requiredNicknameError"
-            *ngIf="loginForm.controls['nickname'].hasError('required')">
-            Il nome utente e'
+            *ngIf="registerForm.controls['nickname'].hasError('required')">
+            Un nome utente e'
             <strong>necessario</strong>
           </mat-error>
         </mat-form-field>
@@ -39,8 +61,8 @@
             autocomplete="current-password" />
           <mat-error
             id="requiredPasswordError"
-            *ngIf="loginForm.controls['password'].hasError('required')">
-            La Password e'
+            *ngIf="registerForm.controls['email'].hasError('required')">
+            Password e'
             <strong>necessaria</strong>
           </mat-error>
         </mat-form-field>
@@ -55,33 +77,26 @@
       <mat-card-actions class="login-actions">
         <button
           mat-raised-button
-          id="registerBtn"
+          id="register"
           color="primary"
-          (click)="registerUser()">
+          [disabled]="registerForm.invalid || loading"
+          (click)="register()">
           Registrati
         </button>
-        <button
-          mat-raised-button
-          id="login"
-          color="primary"
-          [disabled]="loginForm.invalid || loading"
-          (click)="login()">
-          Login
-        </button>
-        <button
+        <!-- <button
           mat-button
           id="resetPassword"
           (click)="resetPassword()"
           type="button">
           Reset Password
-        </button>
-        <button
+        </button> -->
+        <!-- <button
           mat-button
           id="guestLogin"
           (click)="guestAccess()"
           type="button">
-          Entra come ospite
-        </button>
+          Enter as a guest
+        </button> -->
       </mat-card-actions>
     </mat-card>
 
