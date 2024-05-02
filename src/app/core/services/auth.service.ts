@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Inject, Injectable } from "@angular/core";
 import * as moment from "moment";
-import { delay, map } from "rxjs/operators";
+import { delay } from "rxjs/operators";
 
 import { Observable, of } from "rxjs";
 
@@ -19,30 +19,31 @@ export class AuthenticationService {
     return this.http.post<any>("/api/register", { email, nickname, password });
   }
 
-  login(email: string, password: string) {
-    return of(true).pipe(
-      delay(1000),
-      map((/*response*/) => {
-        // set token property
-        // const decodedToken = jwt_decode(response['token']);
+  login(nickname: string, password: string) {
+    return this.http.post<any>("/api/login", { nickname, password });
+    //      return of(true).pipe(
+    //   delay(1000),
+    //   map((/*response*/) => {
+    //     // set token property
+    //     // const decodedToken = jwt_decode(response['token']);
 
-        // store email and jwt token in local storage to keep user logged in between page refreshes
-        this.localStorage.setItem(
-          "currentUser",
-          JSON.stringify({
-            token: "aisdnaksjdn,axmnczm",
-            isAdmin: true,
-            email: "john.doe@gmail.com",
-            id: "12312323232",
-            alias: "john.doe@gmail.com".split("@")[0],
-            expiration: moment().add(1, "days").toDate(),
-            fullName: "John Doe",
-          })
-        );
+    //     // store email and jwt token in local storage to keep user logged in between page refreshes
+    //     this.localStorage.setItem(
+    //       "currentUser",
+    //       JSON.stringify({
+    //         token: "aisdnaksjdn,axmnczm",
+    //         isAdmin: true,
+    //         email: "john.doe@gmail.com",
+    //         id: "12312323232",
+    //         alias: "john.doe@gmail.com".split("@")[0],
+    //         expiration: moment().add(1, "days").toDate(),
+    //         fullName: "John Doe",
+    //       })
+    //     );
 
-        return true;
-      })
-    );
+    //     return true;
+    //   })
+    // );
   }
 
   logout(): void {

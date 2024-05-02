@@ -63,14 +63,18 @@ export class RegisterComponent implements OnInit {
       .register(email.toLowerCase(), nickname, password)
       .subscribe(
         (data) => {
-          console.log(data);
+          if (data.error === null) {
+            this.localStorage.setItem("authorized", "true");
+            this.router.navigate(["/"]);
+          } else {
+            this.notificationService.openSnackBar(data.error);
+            this.loading = false;
+          }
           // if (rememberMe) {
           //   localStorage.setItem("savedUserEmail", email);
           // } else {
           //   localStorage.removeItem("savedUserEmail");
           // }
-          this.localStorage.setItem("authorized", "true");
-          this.router.navigate(["/"]);
         },
         (error) => {
           this.notificationService.openSnackBar(error.error);

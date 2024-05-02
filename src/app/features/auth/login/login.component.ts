@@ -6,6 +6,7 @@ import {
 } from "@angular/forms";
 import { Title } from "@angular/platform-browser";
 import { Router } from "@angular/router";
+import * as moment from "moment";
 import { AuthenticationService } from "src/app/core/services/auth.service";
 import { NotificationService } from "src/app/core/services/notification.service";
 import { environment } from "src/environments/environment.prod";
@@ -43,10 +44,10 @@ export class LoginComponent implements OnInit {
 
     this.loginForm = new UntypedFormGroup({
       nickname: new UntypedFormControl("", [Validators.required]),
-    //   email: new UntypedFormControl(savedUserEmail, [
-    //     Validators.required,
-    //     Validators.email,
-    //   ]),
+      //   email: new UntypedFormControl(savedUserEmail, [
+      //     Validators.required,
+      //     Validators.email,
+      //   ]),
       password: new UntypedFormControl("", Validators.required),
       rememberMe: new UntypedFormControl(savedUserEmail !== null),
     });
@@ -65,11 +66,30 @@ export class LoginComponent implements OnInit {
         // } else {
         //   localStorage.removeItem("savedUserEmail");
         // }
-        this.localStorage.setItem("authorized", "true");
-        this.router.navigate(["/"]);
+        if (data.error === undefined) {
+          this.localStorage.setItem(
+            "currentUser",
+            JSON.stringify({
+              token: data.token,
+              isAdmin: true,
+              email: null,
+              id: nickname,
+              // alias: "john.doe@gmail.com".split("@")[0],
+              expiration: moment().add(1, "days").toDate(),
+              fullName: "John Doe",
+            })
+          );
+          this.localStorage.setItem("authorized", data.token);
+          this.router.navigate(["/"]);
+        } else {
+          console.log(data);
+
+          this.notificationService.openSnackBar(data.error);
+          this.loading = false;
+        }
       },
       (error) => {
-        this.notificationService.openSnackBar(error.error);
+        this.notificationService.openSnackBar(error.error.error); //WTF BRO
         this.loading = false;
       }
     );
