@@ -3,7 +3,7 @@ import { Inject, Injectable } from "@angular/core";
 import * as moment from "moment";
 import { delay, map } from "rxjs/operators";
 
-import { of } from "rxjs";
+import { Observable, of } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -14,30 +14,9 @@ export class AuthenticationService {
     @Inject("LOCALSTORAGE") private localStorage: Storage
   ) {}
 
-  register(email: string, nickname: string, password: string) {
-    return of(true).pipe(
-      delay(1000),
-      map((/*response*/) => {
-        // set token property
-        // const decodedToken = jwt_decode(response['token']);
-
-        // store email and jwt token in local storage to keep user logged in between page refreshes
-        this.localStorage.setItem(
-          "currentUser",
-          JSON.stringify({
-            token: "aisdnaksjdn,axmnczm",
-            isAdmin: true,
-            email: "john.doe@gmail.com",
-            id: "12312323232",
-            alias: "john.doe@gmail.com".split("@")[0],
-            expiration: moment().add(1, "days").toDate(),
-            fullName: "John Doe",
-          })
-        );
-
-        return true;
-      })
-    );
+  register(email: string, nickname: string, password: string): Observable<any> {
+    // return of(true).subscribe()
+    return this.http.post<any>("/api/register", { email, nickname, password });
   }
 
   login(email: string, password: string) {

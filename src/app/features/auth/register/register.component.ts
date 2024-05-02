@@ -63,6 +63,7 @@ export class RegisterComponent implements OnInit {
       .register(email.toLowerCase(), nickname, password)
       .subscribe(
         (data) => {
+          console.log(data);
           // if (rememberMe) {
           //   localStorage.setItem("savedUserEmail", email);
           // } else {
