@@ -64,8 +64,8 @@ a.mat-list-item.active {
 }
 
 /* header */
-.mat-toolbar{
-  background-color: #007EA8;
+.mat-toolbar, .oval-menu{
+  background-color:  #007EA8; /* #0163a1; #007EA8;*/
 }
 
 /*header icons*/
@@ -89,7 +89,6 @@ a.mat-list-item.active {
 }
 
 .oval-menu{
-  background-color: #007EA8;
   border-radius: 25px;
   /*width: 4%;*/
   margin: 10% 2% 10%;

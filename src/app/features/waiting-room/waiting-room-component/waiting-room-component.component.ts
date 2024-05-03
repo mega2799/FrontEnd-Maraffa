@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { NGXLogger } from 'ngx-logger';
@@ -24,6 +25,23 @@ export class WaitingRoomComponentComponent implements OnInit {
     private logger: NGXLogger) {
   }
 
+  teamA = ['Matte', 'Fede'];
+
+  teamB = ['Sofi', 'Klevis'];
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
+  }
+    
   ngOnDestroy(): void {
     this._isAlive = false;
     this.currentUser = this.authService.getCurrentUser();
@@ -78,3 +96,43 @@ export class WaitingRoomComponentComponent implements OnInit {
     // if (cfrm) this._hubService.KickUSerFromGame(player.user);
   }
 }
+
+
+
+// import {
+//   CdkDrag,
+//   CdkDragDrop,
+//   CdkDropList,
+//   CdkDropListGroup,
+//   moveItemInArray,
+//   transferArrayItem,
+// } from '@angular/cdk/drag-drop';
+
+// /**
+//  * @title Drag&Drop disabled sorting
+//  */
+// @Component({
+//   selector: 'cdk-drag-drop-disabled-sorting-example',
+//   templateUrl: 'waiting-room-component.component.html',
+//   styleUrls: ['waiting-room-component.component.css'],
+//   standalone: true,
+//   imports: [CdkDropListGroup, CdkDropList, CdkDrag],
+// })
+// export class CdkDragDropDisabledSortingExample {
+//   items = ['Carrots', 'Tomatoes', 'Onions', 'Apples', 'Avocados'];
+
+//   basket = ['Oranges', 'Bananas', 'Cucumbers'];
+
+//   drop(event: CdkDragDrop<string[]>) {
+//     if (event.previousContainer === event.container) {
+//       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+//     } else {
+//       transferArrayItem(
+//         event.previousContainer.data,
+//         event.container.data,
+//         event.previousIndex,
+//         event.currentIndex,
+//       );
+//     }
+//   }
+// }

@@ -16,10 +16,6 @@
   overflow: auto;
 }
 
-.mat-raised-button {
-  border-radius: 50%;
-  margin-right: .5%;
-}
 
 .dashboard-container{
   display: flex;
@@ -28,43 +24,22 @@
 .games-buttons{
   display: flex;
   flex-direction: column;
-  margin: 0 15% 0;
+  margin: 0 15% 0; 
 }
 
 .menu-item{
   width: 120px;
 }
 
-.orange-button {
-  background-color: #ffb01f;
-  color: black;
-  border-radius: 20px;
-  margin: 1%;
-}
-
-.button-container button{
-  width: 151px;
-}
-
-@media (max-width: 990px) {
-  .button-container{
-    margin-bottom: 4%;
-  }
-}
-
-.text{
-  color: #000000;
-  margin: 0;
-}
 
 #played-games{
   margin-top: 3%;
 }
 
-.lightblue-text{
-  color: #007EA8;
-  font-weight: bold;
-}
+
+::placeholder{
+  color: #0163a1;
+} 
 
 .orange-button .mat-icon{
   padding: 2%;
@@ -72,7 +47,7 @@
 
 #messages {
   outline: none;
-  scrollbar-color: #007EA8 #eef9fc;
+  scrollbar-color: #4882bf #eef9fc;
   padding: 1%;
   display: inline-block;
   border: none;
@@ -81,16 +56,19 @@
 }
 
 ::placeholder {
-  color: #007EA8;
   font-size: 150%;
 }
 
 .textarea-container{
-  border: 2px solid #007EA8;
+  border: 2px solid #4882bf;
   border-radius: 25px;
   padding: 0;
   overflow: hidden;
   /*width: 90%;*/
+}
+
+.text{
+  margin: 0;
 }
 
 .vertical-container{
@@ -157,7 +135,7 @@
   content: "";
   width: 14px;
   height: 14px;
-  background-color: #ffb01f;
+  /* background-color: #63CCCA;#74bbfc; */
   position: absolute;
   top: 2px;
   left: 2px;
