@@ -82,6 +82,15 @@
           type="button">
           Entra come ospite
         </button>
+
+        <button
+          mat-button
+          id="guestLogin"
+          (click)="guestAccessFunny()"
+          *ngIf="this.funny"
+          type="button">
+          Entra come ospite Divertente
+        </button>
       </mat-card-actions>
     </mat-card>
 

@@ -62,7 +62,9 @@ export class AuthenticationService {
       id: "12312323232",
       alias: "john.doe@gmail.com".split("@")[0],
       expiration: moment().add(1, "days").toDate(),
-      fullName: "John Doe",
+      fullName: this.localStorage.getItem("fullName")
+        ? this.localStorage.getItem("fullName")
+        : "John Doe",
     };
   }
 
