@@ -38,7 +38,7 @@
     </button>
     <mat-menu #userMenu="matMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
 
-      <a mat-menu-item [routerLink]="['/account/profile']">
+      <a mat-menu-item [routerLink]="['/userInfo']">
         <mat-icon>person</mat-icon>
         <span>Profile</span>
       </a>
@@ -161,7 +161,7 @@
         </mat-icon>
       </a>
 
-      <a mat-list-item [routerLink]="['/users']" routerLinkActive="active" class="menu-item">
+      <a mat-list-item [routerLink]="['/profile2']" routerLinkActive="active" class="menu-item"> <!--users-->
         <mat-icon mat-list-icon>
           people
         </mat-icon>

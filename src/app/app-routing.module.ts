@@ -24,6 +24,11 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'userInfo',
+    loadChildren: () => import('./features/user-info/account.module').then(m => m.UserInfoModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'account',
     loadChildren: () => import('./features/account/account.module').then(m => m.AccountModule),
     canActivate: [AuthGuard]

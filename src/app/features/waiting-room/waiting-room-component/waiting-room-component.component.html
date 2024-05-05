@@ -46,7 +46,7 @@
       <div class="button-container">
         <button mat-flat-button class="orange-button" (click)="leaveWaitingRoom()">Esci</button>
         <button mat-flat-button class="orange-button" (click)="joinGame()">Unisciti</button>
-        <button mat-flat-button class="orange-button" (click)="startGame()">Gioca</button> 
+        <button mat-flat-button class="orange-button" (click)="startGame()" [routerLink]="['/game']">Gioca</button> 
       </div>
     </div>
 
