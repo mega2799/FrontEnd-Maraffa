@@ -1,19 +1,26 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
 
-import { AccountRoutingModule } from './account-routing.module';
-import { UserInfoPageComponent } from './account-page/account-page.component';
-import { AccountDetailsComponent } from './account-details/account-details.component';
-import { ProfileDetailsComponent } from './profile-details/profile-details.component';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule } from "src/app/shared/shared.module";
+import { AccountDetailsComponent } from "./account-details/account-details.component";
+import { UserInfoPageComponent } from "./account-page/account-page.component";
+import { AccountRoutingModule } from "./account-routing.module";
+import { ProfileDetailsComponent } from "./profile-details/profile-details.component";
+
+import { NgApexchartsModule } from "ng-apexcharts";
 
 @NgModule({
   imports: [
     CommonModule,
+    NgApexchartsModule,
     SharedModule,
-    AccountRoutingModule
+    AccountRoutingModule,
   ],
-  declarations: [UserInfoPageComponent, AccountDetailsComponent, ProfileDetailsComponent],
-  exports: [UserInfoPageComponent]
+  declarations: [
+    UserInfoPageComponent,
+    AccountDetailsComponent,
+    ProfileDetailsComponent,
+  ],
+  exports: [UserInfoPageComponent],
 })
-export class UserInfoModule { }
+export class UserInfoModule {}
