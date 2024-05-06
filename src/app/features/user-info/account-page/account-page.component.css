@@ -1,12 +1,12 @@
 .profile-card{
-    background: #007EA8;
+    background: #0163A1;
     border-radius: 20px;
     padding: 0 0 3%;
-    margin: 2%;
+    margin: 2% 5% 2% 5%;
 }
 
 .blue{
-    background: #007EA8;
+    background: #0163A1;
     border-radius: 20px;
     padding: 2%;
 }
@@ -17,31 +17,8 @@
     padding: 2% 6%;
     border: 1px solid #007EA8;
     margin: 0%;
-}
-
-.change-pwd{
-    color: #007EA8 !important;
-}
-
-/*change password label*/
-.mat-tab-label, .mat-tab-label.mat-tab-label-active {
-    color: #007EA8;
-    font-weight: bold;
-}
-
-/*ink-bar (border under change password)*/
-.mat-tab-group.mat-primary .mat-ink-bar,.mat-tab-nav-bar.mat-primary .mat-ink-bar {
-    background-color: #007EA8;
-}
-
-/*border of the input when is focused*/
-.mat-form-field.mat-focused .mat-form-field-ripple {
-    background-color: #007EA8
-}
-
-/*label of the input when is focused*/
-.mat-form-field.mat-focused .mat-form-field-label {
-    color: #007EA8
+    display: flex;
+    justify-content: center; 
 }
 
 .mat-card {

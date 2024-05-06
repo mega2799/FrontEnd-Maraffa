@@ -1,11 +1,17 @@
+.profile-card, .blue, .mat-tab-group.mat-primary .mat-ink-bar,.mat-tab-nav-bar.mat-primary .mat-ink-bar, .mat-form-field.mat-focused .mat-form-field-ripple{
+    background-color: #0163A1;
+}
+
+.change-pwd, .mat-tab-label, .mat-tab-label.mat-tab-label-active, .mat-form-field.mat-focused .mat-form-field-label{
+    color: #0163A1 !important;
+}
+
 .profile-card{
-    background: #007EA8;
     border-radius: 20px;
     padding: 0 0 3%;
 }
 
 .blue{
-    background: #007EA8;
     border-radius: 20px;
     padding: 6%;
 }
@@ -18,29 +24,10 @@
     margin: 0%;
 }
 
-.change-pwd{
-    color: #007EA8 !important;
-}
 
 /*change password label*/
 .mat-tab-label, .mat-tab-label.mat-tab-label-active {
-    color: #007EA8;
     font-weight: bold;
-}
-
-/*ink-bar (border under change password)*/
-.mat-tab-group.mat-primary .mat-ink-bar,.mat-tab-nav-bar.mat-primary .mat-ink-bar {
-    background-color: #007EA8;
-}
-
-/*border of the input when is focused*/
-.mat-form-field.mat-focused .mat-form-field-ripple {
-    background-color: #007EA8
-}
-
-/*label of the input when is focused*/
-.mat-form-field.mat-focused .mat-form-field-label {
-    color: #007EA8
 }
 
 .mat-card {

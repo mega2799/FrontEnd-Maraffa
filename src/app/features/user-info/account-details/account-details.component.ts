@@ -5,11 +5,13 @@ import {
   ApexResponsive,
   ChartComponent,
 } from "ng-apexcharts";
+import { ColdObservable } from "rxjs/internal/testing/ColdObservable";
 
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
   chart: ApexChart | any;
   responsive: ApexResponsive[];
+  colors : any;
   labels: any;
 };
 
@@ -24,12 +26,13 @@ export class AccountDetailsComponent {
 
   constructor() {
     this.chartOptions = {
-      series: [44, 55, 13, 43, 22],
+      colors:['#0786fb', '#f7ae1a'],
+      series: [65, 35],
       chart: {
         width: 380,
         type: "pie",
       },
-      labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
+      labels: ["Partite vinte", "Partite perse"],
       responsive: [
         {
           breakpoint: 480,
@@ -43,6 +46,7 @@ export class AccountDetailsComponent {
           },
         },
       ],
+      // colors:["#1abc9c", "#2ecc71"],
     };
   }
 }
