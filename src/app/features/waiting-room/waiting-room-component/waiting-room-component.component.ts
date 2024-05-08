@@ -24,10 +24,10 @@ export class WaitingRoomComponentComponent implements OnInit {
     private titleService: Title,
     private logger: NGXLogger) {
   }
-
-  teamA = ['Matte', 'Fede'];
-
-  teamB = ['Sofi', 'Klevis'];
+  
+  teamA = ['Sofi', 'Klevis'];
+  
+  teamB = ['Matte', 'Fede'];
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {

@@ -3,6 +3,17 @@ import { Router } from "@angular/router";
 import { Card } from "src/app/model/card.model";
 import { User } from "src/app/model/user.model";
 
+
+interface Chiamata {
+  value: string;
+  viewValue: string;
+}
+
+interface Briscola {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: "app-game",
   templateUrl: "./game.component.html",
@@ -13,6 +24,18 @@ export class GameComponent implements OnInit, OnDestroy {
   private cardsPlayedPopover: any; //NgbPopover; //TODO cos'e' NgbPopover?
   private gamefinished = false;
   private _isAlive = true;
+  calls: Chiamata[] = [
+    {value: 'busso', viewValue: 'Busso'},
+    {value: 'volo', viewValue: 'Volo'},
+    {value: 'striscio_lungo', viewValue: 'Stricio Lungo'},
+    {value: 'striscio_corto', viewValue: 'Stricio Corto'},
+  ];
+  trumps: Briscola[] = [
+    {value: 'coins', viewValue: 'Denari'},
+    {value: 'cups', viewValue: 'Coppe'},
+    {value: 'clubs', viewValue: 'Bastoni'},
+    {value: 'swords', viewValue: 'Spade'},
+  ];
 
   isGameChatSidebarOpen = false;
   gameLocked = false;

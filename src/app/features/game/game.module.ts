@@ -6,7 +6,6 @@ import { GameRoutingModule } from './game-routing.module';
 import { CardPlayerComponent } from './card-player/card-player.component';
 
 
-
 @NgModule({
   declarations: [
     GameComponent,
