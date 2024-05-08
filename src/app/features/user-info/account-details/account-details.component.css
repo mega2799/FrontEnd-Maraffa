@@ -1,0 +1,29 @@
+p{
+    font-weight: bold;
+}
+
+#maraffa_image{
+    width: 8%;
+    height: 8%;
+    border-radius: 15%;
+    margin-right: 2%;
+}
+
+.image_icon{
+    width: 24px;
+    height: 24px;
+}
+
+
+@media (max-width: 600px) {
+    #maraffa_image{
+        width: 12%;
+        height: 12%;
+    }
+
+} 
+
+.img-paragraph{
+    display: flex;
+    align-items: center;
+}

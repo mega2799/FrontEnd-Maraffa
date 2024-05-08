@@ -1,1 +1,175 @@
-<p>game works!</p>
+<div class="game">
+  <div class="players-name">
+    <p id="first-selected">Sofi</p>
+    <p>Matte</p>
+    <p>Klev</p>
+    <p id="second-selected">Fede</p>
+  </div>
+  
+  <!-- <mat-tab-group  id="tab-names">
+    <mat-tab label="Sofi" ><ng-template mat-tab-label>
+      <span class="first-team">Sofi</span></ng-template>
+    </mat-tab>
+    <mat-tab label="Matte" ><ng-template mat-tab-label>
+      <span class="second-team">Matte</span></ng-template>
+    </mat-tab>
+    <mat-tab label="Klev" class="first-team"><ng-template mat-tab-label>
+      <span class="first-team">Klev</span></ng-template>
+    </mat-tab>
+    <mat-tab label="Fede" class="second-team"><ng-template mat-tab-label>
+      <span class="second-team">Fede</span></ng-template>
+    </mat-tab>
+  </mat-tab-group> -->
+  <p class="normal-text">Ê il turno di: Matte</p>
+
+  <div id="table">
+  <div class="game-buttons">
+    <button id="esci" class="btn btn-danger btn-block game-button" (click)="exitGame()">
+      Esci &#10007;
+    </button>
+    <button id="chat"
+        type="button"
+        class="btn btn-block btn-success game-button"
+        [ngClass]="{
+          'chat-button-has-new-message': numberUnreadMessages > 0
+        }"
+        (click)="toggleGameChatSidebar()">
+        Chat 💬
+        <span
+          [hidden]="numberUnreadMessages === 0"
+          class="badge badge-light"
+          >{{ numberUnreadMessages }}</span
+        >
+      </button>
+      <button id="ultima"
+      class="btn btn-info btn-block game-button"
+      triggers="manual"
+      placement="left"
+      popoverClass="popover-previous-cards"
+      (click)="showCardsPlayedPreviousRound()">
+      Ultima &#9776;
+    </button>
+  </div>
+  <div class="cards-container">
+  <div class="wrap">
+    <img src="assets/images/4S.png" alt="4_spade" class="card"/>
+    <div class="player">Sofi</div>
+  </div>
+  <div class="wrap">
+    <img src="assets/images/4S.png" alt="4_spade" class="card"/>
+    <div class="player">Matte</div>
+  </div>
+  <div class="wrap">
+    <img src="assets/images/4S.png" alt="4_spade" class="card"/>
+    <div class="player">Klev</div>
+  </div>
+  <div class="wrap">
+    <img src="assets/images/4S.png" alt="4_spade" class="card"/>
+    <div class="player">Fede</div>
+  </div>
+</div>
+</div>
+<div class="select-container">
+  <mat-form-field class="custom-select">
+    <mat-label>Chiamata</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let call of calls" [value]="call.value">
+        {{call.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field> 
+
+  <mat-form-field class="custom-select">
+    <mat-label>Briscola</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let trump of trumps" [value]="trump.value">
+        {{trump.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field> 
+</div>
+<div class="hand">
+  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
+  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
+  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
+  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
+  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
+  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
+  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
+  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
+  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
+  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
+</div>
+
+      <!-- <div
+        ngbDropdown
+        placement="top-left"
+        class="d-inline-block action-button-left">
+        /* TODO logica visual *ngIf=" currentUser.connectionId ===
+        game.userTurnToPlay.connectionId && game.isFirstRound &&
+        game.cardsPlayed.length === 0 "*/ -->
+        <!-- <button
+          class="btn btn-success"
+          id="callbriscoladropdown"
+          ngbDropdownToggle>
+          Briscola
+        </button>
+        <div ngbDropdownMenu aria-labelledby="callbriscoladropdown">
+          <button class="dropdown-item" (click)="CallBriscola('DENARI')">
+            Denari
+          </button>
+          <button class="dropdown-item" (click)="CallBriscola('SPADE')">
+            Spade
+          </button>
+          <button class="dropdown-item" (click)="CallBriscola('COPPE')">
+            Coppe
+          </button>
+          <button class="dropdown-item" (click)="CallBriscola('BASTONI')">
+            Bastoni
+          </button>
+        </div>
+      </div>
+    <div>
+
+    </div>
+      <div
+        ngbDropdown
+        placement="top-right"
+        class="d-inline-block action-button"> -->
+        <!--button class="btn btn-primary" id="callactiondropdown" *ngIf="currentUser.connectionId==game.userTurnToPlay.connectionId && game.cardsPlayed.length==0 && !selectingCardsForExtraPoints" ngbDropdownToggle-->
+
+        <!-- TODO logic visual 
+        *ngIf="
+              currentUser.connectionId === game.userTurnToPlay.connectionId &&
+              game.cardsPlayed.length === 0 &&
+              !game.roundEnded
+            " -->
+        <!-- <button
+          class="btn btn-primary"
+          id="callactiondropdown"
+          ngbDropdownToggle>
+          Chiamata
+        </button>
+        <div ngbDropdownMenu aria-labelledby="callactiondropdown">
+          /*Cambio le azioni: busso, striscio, ristriscio,volo */
+          <button class="dropdown-item" (click)="CallAction('BUSSO')">
+            Busso
+          </button>
+          <button class="dropdown-item" (click)="CallAction('VOLO')">
+            Volo
+          </button>
+          <button class="dropdown-item" (click)="CallAction('STRISCIO')">
+            Striscio
+          </button>
+          <button class="dropdown-item" (click)="CallAction('RISTRISCIO')">
+            Ristriscio
+          </button>
+          <button
+            class="dropdown-item"
+            (click)="CallAction('RISTRISCIO BUSSO')">
+            Ristriscio e busso
+          </button>
+        </div>
+      </div>
+
+</div> --> 

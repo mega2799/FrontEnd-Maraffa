@@ -7,7 +7,7 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./account-page.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class AccountPageComponent implements OnInit {
+export class UserInfoPageComponent implements OnInit {
 
   constructor(private titleService: Title) { }
 

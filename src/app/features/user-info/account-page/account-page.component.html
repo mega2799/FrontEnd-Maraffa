@@ -1,7 +1,7 @@
-<div class="container" fxLayout="row" fxLayoutAlign="center none">
 
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
   <div fxFlex="60%" fxFlex.xs="100%" fxFlex.sm="80%">
-    <mat-card class="profile-card" fxLayout="row" fxLayoutAlign="none none">
+    <mat-card class="profile-card" fxLayout="column" fxLayoutAlign="none none">
       <div class="blue" fxFlex="35%" fxFlex.xs="100%" fxFlex.sm="50%">
         <div fxLayout="column" fxLayout.sm="column" fxLayout.xs="column">
 
@@ -12,12 +12,8 @@
       </div>
       <div class="white" fxFlex="75%" fxFlex.lt-md="50%">
         <div fxFlex></div>
-          <div fxFlex="100%">
-            <mat-tab-group class="change-pwd" fxFlex.lt-md="100%">
-              <mat-tab class="change-pwd-label" label="Change Password"> 
-                <app-change-password></app-change-password>
-              </mat-tab>
-            </mat-tab-group>
+          <div fxFlex="80%">
+            <app-chart></app-chart>
           </div>
         </div>
     </mat-card>
