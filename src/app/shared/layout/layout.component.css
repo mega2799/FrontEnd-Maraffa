@@ -62,3 +62,65 @@ a.mat-list-item.active {
   position: absolute;
   bottom: 0;
 }
+
+/* header */
+.mat-toolbar, .oval-menu{
+  background-color:  #007EA8; /* #0163a1; #007EA8;*/
+}
+
+/*header icons*/
+.whiteIcon{
+  color: white;
+}
+
+.username{
+  color: white;
+}
+
+.navbar-container{
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.cont{
+  flex: 1; /* Allow content to grow */
+  overflow-y: auto;
+}
+
+.oval-menu{
+  border-radius: 25px;
+  /*width: 4%;*/
+  margin: 10% 2% 10%;
+  position: fixed;
+  z-index: 2;
+  left: 1%;
+
+}
+
+@media (min-width: 990px) {
+  .oval-menu{
+    display: flex;
+    flex-direction: column;
+  }
+
+  #menu-button, .sidenav{
+    display: none;
+  }
+}
+
+@media (max-width: 990px) {
+  .oval-menu{
+    display: none;
+  }
+  #menu-button{
+    display: show;
+  }
+}
+
+
+.oval-menu mat-icon{
+  color: white;
+  padding: 3%;
+  margin: 10%;
+}

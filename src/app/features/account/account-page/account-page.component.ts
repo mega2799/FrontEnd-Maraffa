@@ -1,11 +1,12 @@
 import { HttpClient } from "@angular/common/http";
-import { Component, Inject, OnInit } from "@angular/core";
+import { Component, Inject, OnInit, ViewEncapsulation } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 
 @Component({
   selector: "app-account-page",
   templateUrl: "./account-page.component.html",
   styleUrls: ["./account-page.component.css"],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AccountPageComponent implements OnInit {
   userData: any = {};

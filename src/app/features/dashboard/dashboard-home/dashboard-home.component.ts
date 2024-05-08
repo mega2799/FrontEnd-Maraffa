@@ -11,6 +11,7 @@ import { AuthenticationService } from 'src/app/core/services/auth.service';
 })
 export class DashboardHomeComponent implements OnInit {
   currentUser: any;
+  isOptionSelected: boolean = false;
 
   constructor(private notificationService: NotificationService,
     private authService: AuthenticationService,
