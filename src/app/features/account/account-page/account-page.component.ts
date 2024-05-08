@@ -18,15 +18,17 @@ export class AccountPageComponent implements OnInit {
 
   ngOnInit() {
     const nickName = this.localStorage.getItem("fullName");
-    this.http.get<any>(`/api/user/${nickName}`).subscribe((response) => {
-      if (response.error != undefined) {
-        console.log(response.error);
-        //TODO 404 page ?????
-      } else {
-        this.userData = response;
-      }
-    });
-
     this.titleService.setTitle(`${nickName} - Account`);
+    JSON.parse(this.localStorage.getItem("currentUser")!) &&
+    JSON.parse(this.localStorage.getItem("currentUser")!).isGuest
+      ? (this.userData = {})
+      : this.http.get<any>(`/api/user/${nickName}`).subscribe((response) => {
+          if (response.error != undefined) {
+            console.log(response.error);
+            //TODO 404 page ?????
+          } else {
+            this.userData = response;
+          }
+        });
   }
 }
