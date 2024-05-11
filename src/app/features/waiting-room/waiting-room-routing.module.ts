@@ -7,7 +7,7 @@ import { WaitingRoomComponentComponent } from './waiting-room-component/waiting-
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':gameID',
     component: LayoutComponent,
     children: [
       { path: '', component: WaitingRoomComponentComponent },
