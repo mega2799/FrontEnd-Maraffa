@@ -7,7 +7,7 @@
       <mat-card-title class="auth-title login-title">{{ this.name }}</mat-card-title>
       <mat-card-subtitle class="subtitle">Log in al tuo profilo</mat-card-subtitle>
       <mat-card-content>
-        <mat-form-field class="full-width">
+        <mat-form-field class="full-width login">
           <input
             id="nicknameInput"
             matInput
@@ -30,7 +30,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field class="full-width">
+        <mat-form-field class="full-width login">
           <input
             id="passwordInput"
             matInput
@@ -48,9 +48,7 @@
         </mat-form-field>
 
         <div class="full-width">
-          <mat-slide-toggle formControlName="rememberMe"
-            >Ricordami</mat-slide-toggle
-          >
+          <mat-slide-toggle class="login" formControlName="rememberMe">Ricordami</mat-slide-toggle>
         </div>
       </mat-card-content>
       <div class="right-container">

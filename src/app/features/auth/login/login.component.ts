@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
   ) {}
 
   guestAccess() {
-    throw new Error("Method not implemented.");
+    this.router.navigate(["/dashboard"]);
   }
 
   guestAccessFunny() {
@@ -99,9 +99,15 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    document.body.classList.add('login');
+    document.body.classList.remove('register');
     this.titleService.setTitle("MaraffaOnline - Login");
     this.authenticationService.logout();
     this.createForm();
+  }
+
+  ngOnDestroy() {
+    document.body.classList.remove('login');
   }
 
   private createForm() {

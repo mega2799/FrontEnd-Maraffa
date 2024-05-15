@@ -33,9 +33,15 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+    document.body.classList.add('register');
+    document.body.classList.remove('login');
     this.titleService.setTitle("MaraffaOnline - Registrazione");
     this.authenticationService.logout();
     this.createForm();
+  }
+
+  ngOnDestroy() {
+    document.body.classList.remove('register');
   }
 
   private createForm() {
@@ -78,7 +84,7 @@ export class RegisterComponent implements OnInit {
       );
   }
 
-  resetPassword() {
-    this.router.navigate(["/auth/password-reset-request"]);
+  loginUser() {
+    this.router.navigate(["/auth/login"]);
   }
 }
