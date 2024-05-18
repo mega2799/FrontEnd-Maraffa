@@ -73,9 +73,7 @@ export class LoginComponent implements OnInit {
     private authenticationService: AuthenticationService
   ) {}
 
-  guestAccess() {
-    this.router.navigate(["/dashboard"]);
-  }
+  guestAccess() {}
 
   guestAccessFunny() {
     const name = bestNames[Math.floor(Math.random() * bestNames.length)];
@@ -99,15 +97,15 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    document.body.classList.add('login');
-    document.body.classList.remove('register');
+    document.body.classList.add("login");
+    document.body.classList.remove("register");
     this.titleService.setTitle("MaraffaOnline - Login");
     this.authenticationService.logout();
     this.createForm();
   }
 
   ngOnDestroy() {
-    document.body.classList.remove('login');
+    document.body.classList.remove("login");
   }
 
   private createForm() {
