@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { NGXLogger } from "ngx-logger";
 import { AuthenticationService } from "src/app/core/services/auth.service";
@@ -28,10 +28,11 @@ export interface Game {
   templateUrl: "./dashboard-home.component.html",
   styleUrls: ["./dashboard-home.component.css"],
 })
-export class DashboardHomeComponent implements OnInit {
+export class DashboardHomeComponent implements OnInit, OnDestroy {
   currentUser: any;
   isOptionSelected: boolean = false;
   games!: Game[];
+  interval: any;
 
   constructor(
     private notificationService: NotificationService,
@@ -41,12 +42,18 @@ export class DashboardHomeComponent implements OnInit {
     private dashboardService: DashBoardService
   ) {}
 
+  ngOnDestroy(): void {
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+  }
+
   ngOnInit() {
     this.currentUser = this.authService.getCurrentUser();
     this.titleService.setTitle("angular-material-template - Dashboard");
     this.logger.log("Dashboard loaded");
 
-    setInterval(() => {
+    this.interval = setInterval(() => {
       this.dashboardService.getGames().subscribe((res) => {
         this.games = res;
       });

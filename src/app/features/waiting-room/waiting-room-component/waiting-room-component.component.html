@@ -1,71 +1,110 @@
-<div  fxLayout="row" fxLayoutAlign="center none">
+<div fxLayout="row" fxLayoutAlign="center none">
   <div fxFlex="95%" class="container">
     <h2 class="text">Game 1</h2>
     <div class="card-container">
       <div class="p-container">
-        <p class="lighter-text">Status:  <span class="normal-text">In attesa di altri giocatori</span></p> <!--sostituire "In attesa di altri giocatori" con la variabile status-->
-        <p class="lighter-text">Partita ai:  <span class="normal-text">41</span></p> 
+        <p class="lighter-text">
+          Status: <span class="normal-text">In attesa di altri giocatori</span>
+        </p>
+        <!--sostituire "In attesa di altri giocatori" con la variabile status-->
+        <p class="lighter-text">
+          Partita ai: <span class="normal-text">41</span>
+        </p>
         <p class="lighter-text">Partecipanti:</p>
       </div>
       <div cdkDropListGroup>
         <div class="example-container">
           <h2 class="team">Team A</h2>
-      
           <div
             cdkDropList
             [cdkDropListData]="teamA"
             class="example-list"
             cdkDropListSortingDisabled
             (cdkDropListDropped)="drop($event)">
-            <div class="teamA-box example-box" *ngFor="let item of teamA" cdkDrag>{{item}}</div>
+            <div
+              class="teamA-box example-box"
+              *ngFor="let item of teamA"
+              cdkDrag>
+              {{ item }}
+            </div>
           </div>
         </div>
-      
+
         <div class="example-container">
           <h2 class="team">Team B</h2>
-      
+
           <div
             cdkDropList
             [cdkDropListData]="teamB"
             class="example-list"
             (cdkDropListDropped)="drop($event)">
-            <div class="teamB-box example-box" *ngFor="let item of teamB" cdkDrag>{{item}}</div>
+            <div
+              class="teamB-box example-box"
+              *ngFor="let item of teamB"
+              cdkDrag>
+              {{ item }}
+            </div>
           </div>
         </div>
       </div>
       <form>
         <div class="form-group row">
-          <label for="password" class="col-3 col-sm-1 col-form-label lighter-text">Password: </label>
+          <label
+            for="password"
+            class="col-3 col-sm-1 col-form-label lighter-text"
+            >Password:
+          </label>
           <div>
-            <input type="text" class="form-control input-login" id="password" placeholder="(Optional)">
-            <button class="tick-button" (click)="setRoomPassword()"><mat-icon mat-list-icon id="tick"><span class="material-symbols-outlined">
-              check_circle</span></mat-icon></button>            
+            <input
+              type="text"
+              class="form-control input-login"
+              id="password"
+              placeholder="(Optional)" />
+            <button class="tick-button" (click)="setRoomPassword()">
+              <mat-icon mat-list-icon id="tick"
+                ><span class="material-symbols-outlined">
+                  check_circle</span
+                ></mat-icon
+              >
+            </button>
           </div>
         </div>
       </form>
       <div class="button-container">
-        <button mat-flat-button class="orange-button" (click)="leaveWaitingRoom()">Esci</button>
-        <button mat-flat-button class="orange-button" (click)="joinGame()">Unisciti</button>
-        <button mat-flat-button class="orange-button" (click)="startGame()" [routerLink]="['/game']">Gioca</button> 
+        <button
+          mat-flat-button
+          class="orange-button"
+          (click)="leaveWaitingRoom()">
+          Esci
+        </button>
+        <button mat-flat-button class="orange-button" (click)="joinGame()">
+          Unisciti
+        </button>
+        <button
+          mat-flat-button
+          class="orange-button"
+          (click)="startGame()"
+          [routerLink]="['/game']">
+          Gioca
+        </button>
       </div>
     </div>
 
-        <!-- <h3>-->
-          <!-- <span class="text-danger" [hidden]="activeGame.players.length===activeGame.gameSetup.expectedNumberOfPlayers"> In attesa di altri {{activeGame.gameSetup.expectedNumberOfPlayers - activeGame.players.length}} giocatori</span> -->
-          <!-- <span class="text-danger" > In attesa di altri giocatori</span> -->
-          <!-- <span class="text-success" [hidden]="activeGame.players.length!==activeGame.gameSetup.expectedNumberOfPlayers"> -->
-          <!--<span class="text-success" >
+    <!-- <h3>-->
+    <!-- <span class="text-danger" [hidden]="activeGame.players.length===activeGame.gameSetup.expectedNumberOfPlayers"> In attesa di altri {{activeGame.gameSetup.expectedNumberOfPlayers - activeGame.players.length}} giocatori</span> -->
+    <!-- <span class="text-danger" > In attesa di altri giocatori</span> -->
+    <!-- <span class="text-success" [hidden]="activeGame.players.length!==activeGame.gameSetup.expectedNumberOfPlayers"> -->
+    <!--<span class="text-success" >
             Ci siamo tutti. La partita può iniziare!
           </span>
         </h3> -->
-        <!-- TODO - lista giocatori -->
-        <!-- <ol>
+    <!-- TODO - lista giocatori -->
+    <!-- <ol>
           <li *ngFor="let player of activeGame.players">
             {{player.user.name}}
             <strong *ngIf="currentUser.connectionId===activeGame.players[0].user.connectionId && currentUser.connectionId!==player.user.connectionId" class="ml-2 text-danger cursor-pointer" (click)="kickPlayerFromGame(player);">[Elimina]</strong>
           </li>
         </ol> -->
-        <!-- <button [disabled]="activeGame.players.length!==activeGame.gameSetup.expectedNumberOfPlayers" *ngIf="activeGame.players[0].user.connectionId===currentUser.connectionId" class="btn btn-success" (click)="startGame()">Inizia la partita!</button>  -->
-        
+    <!-- <button [disabled]="activeGame.players.length!==activeGame.gameSetup.expectedNumberOfPlayers" *ngIf="activeGame.players[0].user.connectionId===currentUser.connectionId" class="btn btn-success" (click)="startGame()">Inizia la partita!</button>  -->
   </div>
 </div>

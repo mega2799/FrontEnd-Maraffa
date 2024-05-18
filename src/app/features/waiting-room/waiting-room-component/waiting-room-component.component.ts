@@ -3,7 +3,7 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from "@angular/cdk/drag-drop";
-import { Component, OnInit } from "@angular/core";
+import { Component, Inject, OnInit } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { NGXLogger } from "ngx-logger";
 import { AuthenticationService } from "src/app/core/services/auth.service";
@@ -25,13 +25,14 @@ export class WaitingRoomComponentComponent implements OnInit {
   constructor(
     private notificationService: NotificationService,
     private authService: AuthenticationService,
+    @Inject("LOCALSTORAGE") private localStorage: Storage,
     private titleService: Title,
     private logger: NGXLogger
   ) {}
 
-  teamA = ["Sofi", "Klevis"];
+  teamA: string[] = [''];
 
-  teamB = ["Matte", "Fede"];
+  teamB: string[] = [''];
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
