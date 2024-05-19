@@ -19,82 +19,91 @@
           class="col-12 text-center fill-viewport-max-20 dashboard-container">
           <div class="vertical-container text-center">
             <h2 class="lightblue-text">Seleziona una modalità di gioco:</h2>
-            <div class="radio-button">
-              <input
-                type="radio"
-                id="classico"
-                name="options"
-                [(ngModel)]="isOptionSelected"
-                value="classico" />
-              <label class="radio-label" for="classico">Classico</label>
-            </div>
-            <div class="radio-button">
-              <input
-                type="radio"
-                id="elevenToZero"
-                name="options"
-                [(ngModel)]="isOptionSelected"
-                value="elevenToZero" />
-              <label class="radio-label" for="elevenToZero">11 a 0</label><br />
-            </div>
-            <div class="button-container">
-              <button
-                mat-flat-button
-                class="orange-button number-of-players"
-                [matMenuTriggerFor]="fourPlayersMenu"
-                [disabled]="!isOptionSelected">
-                4 giocatori
-                <mat-icon mat-list-icon>people</mat-icon>
-                <mat-icon mat-list-icon>people</mat-icon>
-              </button>
-              <mat-menu
-                #fourPlayersMenu="matMenu"
-                xPosition="before"
-                yPosition="above"
-                [overlapTrigger]="false">
-                <a
-                  mat-menu-item
-                  class="menu-item"
-                  [routerLink]="['/account/profile']">
-                  <span>ai 31</span>
-                </a>
+            <form [formGroup]="formMode">
+              <div class="radio-button">
+                <input
+                  type="radio"
+                  id="classico"
+                  name="options"
+                  [(ngModel)]="isOptionSelected"
+                  formControlName="mode"
+                  value="classico" />
+                <label class="radio-label" for="classico">Classico</label>
+              </div>
+              <div class="radio-button">
+                <input
+                  type="radio"
+                  id="elevenToZero"
+                  name="options"
+                  [(ngModel)]="isOptionSelected"
+                  formControlName="mode"
+                  value="elevenToZero" />
+                <label class="radio-label" for="elevenToZero">11 a 0</label
+                ><br />
+              </div>
+              <div class="button-container">
+                <button
+                  mat-flat-button
+                  class="orange-button number-of-players"
+                  [matMenuTriggerFor]="fourPlayersMenu"
+                  (click)="this.playersNum.setValue('4')">
+                  <!-- (click)="this.formMode.get('playersNum')?.setValue('4')"> -->
+                  4 giocatori
+                  <mat-icon mat-list-icon>people</mat-icon>
+                  <mat-icon mat-list-icon>people</mat-icon>
+                </button>
+                <mat-menu
+                  #fourPlayersMenu="matMenu"
+                  xPosition="before"
+                  yPosition="above"
+                  [overlapTrigger]="false">
+                  <a
+                    mat-menu-item
+                    class="menu-item"
+                    (click)="this.score.setValue('41')">
+                    <span>ai 31</span>
+                  </a>
 
-                <a
-                  mat-menu-item
-                  class="menu-item"
-                  [routerLink]="['/auth/login']">
-                  <span>ai 41</span>
-                </a>
-              </mat-menu>
+                  <a
+                    mat-menu-item
+                    class="menu-item"
+                    (click)="this.score.setValue('41'); this.sendCreate()">
+                    <!-- (click)="this.formMode.get('score')?.setValue('41')"> -->
+                    <span>ai 41</span>
+                  </a>
+                </mat-menu>
 
-              <button
-                mat-flat-button
-                class="orange-button number-of-players"
-                [matMenuTriggerFor]="twoPlayersMenu"
-                [disabled]="!isOptionSelected">
-                2 giocatori <mat-icon mat-list-icon> people</mat-icon>
-              </button>
-              <mat-menu
-                #twoPlayersMenu="matMenu"
-                xPosition="before"
-                yPosition="above"
-                [overlapTrigger]="false">
-                <a
-                  mat-menu-item
-                  class="menu-item"
-                  [routerLink]="['/account/profile']">
-                  <span>ai 31</span>
-                </a>
+                <button
+                  mat-flat-button
+                  class="orange-button number-of-players"
+                  [matMenuTriggerFor]="twoPlayersMenu"
+                  formControlName="playersNum"
+                  (click)="this.playersNum.setValue('2')">
+                  2 giocatori <mat-icon mat-list-icon> people</mat-icon>
+                </button>
+                <mat-menu
+                  #twoPlayersMenu="matMenu"
+                  xPosition="before"
+                  yPosition="above"
+                  [overlapTrigger]="false">
+                  <a
+                    mat-menu-item
+                    class="menu-item"
+                    formControlName="score"
+                    (click)="this.score.setValue('31')">
+                    <span>ai 31</span>
+                  </a>
 
-                <a
-                  mat-menu-item
-                  class="menu-item"
-                  [routerLink]="['/auth/login']">
-                  <span>ai 41</span>
-                </a>
-              </mat-menu>
-            </div>
-
+                  <a
+                    mat-menu-item
+                    class="menu-item"
+                    formControlName="score"
+                    (click)="this.score.setValue('41')">
+                    <span>ai 41</span>
+                  </a>
+                </mat-menu>
+              </div>
+            </form>
             <div class="textarea-container">
               <textarea
                 id="messages"

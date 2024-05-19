@@ -15,4 +15,8 @@ export class DashBoardService {
   getGames(): Observable<any> {
     return this.http.get<any>("/api/game/getGames");
   }
+
+  createGame(body : any){
+    return this.http.post("/api/game/create", body);
+  }
 }

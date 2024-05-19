@@ -1,5 +1,7 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, Inject, OnDestroy, OnInit } from "@angular/core";
+import { FormControl, FormGroup } from "@angular/forms";
 import { Title } from "@angular/platform-browser";
+import { Router } from "@angular/router";
 import { NGXLogger } from "ngx-logger";
 import { AuthenticationService } from "src/app/core/services/auth.service";
 import { DashBoardService } from "src/app/core/services/dashboard.service";
@@ -33,10 +35,19 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   isOptionSelected: boolean = false;
   games!: Game[];
   interval: any;
+  playersNum = new FormControl("playersNum");
+  score = new FormControl("score");
+  formMode = new FormGroup({
+    mode: new FormControl("mode"),
+    numberOfPlayers: this.playersNum,
+    expectedScore: this.score,
+  });
 
   constructor(
+    private router: Router,
     private notificationService: NotificationService,
     private authService: AuthenticationService,
+    @Inject("LOCALSTORAGE") private localStorage: Storage,
     private titleService: Title,
     private logger: NGXLogger,
     private dashboardService: DashBoardService
@@ -46,6 +57,25 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     if (this.interval) {
       clearInterval(this.interval);
     }
+  }
+
+  sendCreate() {
+    const mode =
+      this.formMode.value.mode === "classico" ? "CLASSIC" : "ELEVEN2ZERO";
+    const numberOfPlayers = parseInt(
+      this.formMode.value.numberOfPlayers as string
+    );
+    const expectedScore = parseInt(this.formMode.value.expectedScore as string);
+    const username = this.localStorage.getItem("fullName");
+    const GUIID = this.localStorage.getItem("UUID");
+    console.log({ mode, numberOfPlayers, expectedScore, username, GUIID });
+
+    this.dashboardService
+      .createGame({ mode, numberOfPlayers, expectedScore, username, GUIID })
+      .subscribe((res: any) => {
+        this.notificationService.openSnackBar("Game created successfully");
+        this.router.navigate([`/waiting/${res.gameID}`]);
+      });
   }
 
   ngOnInit() {
