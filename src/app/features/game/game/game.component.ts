@@ -32,6 +32,11 @@ interface Briscola {
   // ],
 })
 export class GameComponent implements OnInit, OnDestroy {
+  playCard($event: string) {
+    //L'evento viene emesso dal componente 2 volte o piu', rimuovere la carta in modo robusto
+    console.log(`ZIO ${$event}`);
+    this.cards = this.cards.filter((card) => card.src !== $event);
+  }
   @ViewChild("cardsPlayedPopover") //BHO
   private cardsPlayedPopover: any; //NgbPopover; //TODO cos'e' NgbPopover?
   private gamefinished = false;

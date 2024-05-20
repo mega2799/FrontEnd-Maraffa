@@ -60,7 +60,7 @@
                   <a
                     mat-menu-item
                     class="menu-item"
-                    (click)="this.score.setValue('41')">
+                    (click)="this.score.setValue('31'); this.sendCreate()">
                     <span>ai 31</span>
                   </a>
 
@@ -90,7 +90,7 @@
                     mat-menu-item
                     class="menu-item"
                     formControlName="score"
-                    (click)="this.score.setValue('31')">
+                    (click)="this.score.setValue('31'); this.sendCreate()">
                     <span>ai 31</span>
                   </a>
 
@@ -98,7 +98,7 @@
                     mat-menu-item
                     class="menu-item"
                     formControlName="score"
-                    (click)="this.score.setValue('41')">
+                    (click)="this.score.setValue('41'); this.sendCreate()">
                     <span>ai 41</span>
                   </a>
                 </mat-menu>

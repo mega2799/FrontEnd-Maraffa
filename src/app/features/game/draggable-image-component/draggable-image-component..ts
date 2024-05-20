@@ -22,6 +22,7 @@ export class DraggableImageComponent implements OnInit {
   @Input() hidden!: boolean;
   @Output() positionChange = new EventEmitter<{ x: number; y: number }>();
   @Output() hiddenChange = new EventEmitter<boolean>();
+  @Output() playedCard = new EventEmitter<string>();
 
   private dragging = false;
   private startY = 0;
@@ -46,15 +47,16 @@ export class DraggableImageComponent implements OnInit {
     }
   }
 
-  @HostListener('document:mouseup', ['$event'])
+  @HostListener("document:mouseup", ["$event"])
   onMouseUp(event: MouseEvent) {
     this.stopDrag();
   }
 
   onTransitionEnd() {
+    this.playedCard.emit(this.src);
     if (this.hidden) {
       console.log(`Image with src ${this.src} has been hidden.`);
+      // this.cardArry = this.cardArry.filter((card) => card.src !== this.src);
     }
   }
 }
- 

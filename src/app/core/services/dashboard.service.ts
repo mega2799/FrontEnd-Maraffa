@@ -7,6 +7,9 @@ import { Observable } from "rxjs";
   providedIn: "root",
 })
 export class DashBoardService {
+  joinGame(body: any) {
+    return this.http.patch<any>("/api/game/join", body);
+  }
   constructor(
     private http: HttpClient,
     @Inject("LOCALSTORAGE") private localStorage: Storage
@@ -16,7 +19,7 @@ export class DashBoardService {
     return this.http.get<any>("/api/game/getGames");
   }
 
-  createGame(body : any){
+  createGame(body: any) {
     return this.http.post("/api/game/create", body);
   }
 }
