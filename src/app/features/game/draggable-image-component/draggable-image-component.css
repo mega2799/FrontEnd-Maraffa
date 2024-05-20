@@ -1,0 +1,14 @@
+.draggable {
+  /* position: absolute; */
+  cursor: grab;
+  transition: top 0.5s, opacity 0.5s;
+
+}
+
+.draggable img {
+  margin: 1%;
+  border-radius: 10px;
+  border: solid 1px #9c9b9b;
+  /* width: 100px;  */
+  /* height: auto; */
+}

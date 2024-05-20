@@ -103,7 +103,7 @@
       </mat-select>
     </mat-form-field>
   </div>
-  <div class="hand">
+  <!-- <div class="hand">
     <img
       *ngFor="let item of this.cards; index as i"
       src="https://cataas.com/cat?width=196&height=392&/{{ i }}"
@@ -118,7 +118,17 @@
       }"
       alt="4_spade"
       class="hand-card" />
+  </div> -->
+  <div class="hand">
+    <app-draggable-image
+      *ngFor="let image of cards; let i = index"
+      [src]="image.src"
+      [position]="image.position"
+      [hidden]="image.hidden"
+      (positionChange)="image.position = $event"
+      (hiddenChange)="image.hidden = $event"></app-draggable-image>
   </div>
+
   <!-- *ngIf="!hidden" -->
 
   <!-- <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>

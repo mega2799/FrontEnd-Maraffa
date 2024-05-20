@@ -42,7 +42,11 @@ export class GameComponent implements OnInit, OnDestroy {
   private startY = 0;
   hidden = false;
 
-  cards: any[] = new Array(10);
+  cards: any[] = Array.from(Array(10).keys()).map((i) => ({
+    src: `https://cataas.com/cat?width=196&height=392&/${i}`,
+    position: { x: 200, y: 0 },
+    hidden: false,
+  }));
   calls: Chiamata[] = [
     { value: "busso", viewValue: "Busso" },
     { value: "volo", viewValue: "Volo" },
@@ -73,6 +77,7 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // console.log(...this.cards);
     return;
     // this._hubService.ActiveGame.pipe(takeWhile(() => this._isAlive)).subscribe(game => {
     //   this.game = game;
