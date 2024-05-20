@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import {
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
 import { Router } from "@angular/router";
 import { Card } from "src/app/model/card.model";
 import { User } from "src/app/model/user.model";
@@ -17,12 +23,25 @@ interface Briscola {
   selector: "app-game",
   templateUrl: "./game.component.html",
   styleUrls: ["./game.component.css"],
+  // animations: [
+  //   trigger("toggle", [
+  //     state("open", style({ height: "200px" })),
+  //     state("closed", style({ height: "*" })),
+  //     transition("open <=> closed", animate("200ms ease-in-out")),
+  //   ]),
+  // ],
 })
 export class GameComponent implements OnInit, OnDestroy {
   @ViewChild("cardsPlayedPopover") //BHO
   private cardsPlayedPopover: any; //NgbPopover; //TODO cos'e' NgbPopover?
   private gamefinished = false;
   private _isAlive = true;
+
+  position = { x: 0, y: 0 };
+  private dragging = false;
+  private startY = 0;
+  hidden = false;
+
   cards: any[] = new Array(10);
   calls: Chiamata[] = [
     { value: "busso", viewValue: "Busso" },
@@ -97,6 +116,29 @@ export class GameComponent implements OnInit, OnDestroy {
     // });
   }
 
+  startDrag(event: MouseEvent) {
+    this.dragging = true;
+    this.startY = event.clientY - this.position.y;
+    event.preventDefault(); // Prevenire selezioni indesiderate
+  }
+
+  stopDrag() {
+    if (this.dragging && this.position.y < 0) {
+      this.hidden = true; // Nascondi l'immagine se trascinata verso l'alto
+    }
+    this.dragging = false;
+  }
+
+  onDrag(event: MouseEvent) {
+    if (this.dragging) {
+      this.position.y = event.clientY - this.startY;
+    }
+  }
+
+  @HostListener("document:mouseup", ["$event"])
+  onMouseUp(event: MouseEvent) {
+    this.stopDrag();
+  }
   makeMove(card: Card) {
     if (this.gameLocked) return;
     if (this.selectingCardsForExtraPoints) {

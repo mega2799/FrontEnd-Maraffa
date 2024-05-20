@@ -55,19 +55,31 @@
     </div>
     <div class="cards-container">
       <div class="wrap">
-        <img src="assets/images/4S.png" alt="4_spade" class="card" />
+        <img
+          src="https://cataas.com/cat?width=196&height=392"
+          alt="4_spade"
+          class="card" />
         <div class="player">Sofi</div>
       </div>
       <div class="wrap">
-        <img src="assets/images/4S.png" alt="4_spade" class="card" />
+        <img
+          src="https://cataas.com/cat?width=196&height=392"
+          alt="4_spade"
+          class="card" />
         <div class="player">Matte</div>
       </div>
       <div class="wrap">
-        <img src="assets/images/4S.png" alt="4_spade" class="card" />
+        <img
+          src="https://cataas.com/cat?width=196&height=392"
+          alt="4_spade"
+          class="card" />
         <div class="player">Klev</div>
       </div>
       <div class="wrap">
-        <img src="assets/images/4S.png" alt="4_spade" class="card" />
+        <img
+          src="https://cataas.com/cat?width=196&height=392"
+          alt="4_spade"
+          class="card" />
         <div class="player">Fede</div>
       </div>
     </div>
@@ -91,12 +103,25 @@
       </mat-select>
     </mat-form-field>
   </div>
-  <div class="hand" *ngFor="let item of this.cards; index as i">
+  <div class="hand">
     <img
+      *ngFor="let item of this.cards; index as i"
       src="https://cataas.com/cat?width=196&height=392&/{{ i }}"
+      (mousedown)="startDrag($event)"
+      (mouseup)="stopDrag()"
+      (mousemove)="onDrag($event)"
+      [ngStyle]="{
+        top: position.y + 'px',
+        left: position.x + 'px',
+        opacity: hidden ? 0 : 1,
+        transition: 'top 0.5s, opacity 0.5s'
+      }"
       alt="4_spade"
       class="hand-card" />
-    <!-- <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
+  </div>
+  <!-- *ngIf="!hidden" -->
+
+  <!-- <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
   <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
   <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
   <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
@@ -106,7 +131,6 @@
   <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
   <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
   <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/> -->
-  </div>
 
   <!-- <div
         ngbDropdown
