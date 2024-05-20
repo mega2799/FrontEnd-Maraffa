@@ -46,8 +46,15 @@ export class DraggableImageComponent implements OnInit {
     }
   }
 
-  @HostListener("document:mouseup", ["$event"])
+  @HostListener('document:mouseup', ['$event'])
   onMouseUp(event: MouseEvent) {
     this.stopDrag();
   }
+
+  onTransitionEnd() {
+    if (this.hidden) {
+      console.log(`Image with src ${this.src} has been hidden.`);
+    }
+  }
 }
+ 
