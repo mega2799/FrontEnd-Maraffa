@@ -5,10 +5,13 @@ import {
 } from "@angular/cdk/drag-drop";
 import { Component, Inject, OnInit } from "@angular/core";
 import { Title } from "@angular/platform-browser";
+import { ActivatedRoute, Router } from "@angular/router";
 import { NGXLogger } from "ngx-logger";
 import { AuthenticationService } from "src/app/core/services/auth.service";
+import { DashBoardService } from "src/app/core/services/dashboard.service";
 import { NotificationService } from "src/app/core/services/notification.service";
 
+//TODO se lo status della partita' e' PLAYING serve un redirect alla pagina di gioco
 @Component({
   selector: "app-waiting-room-component",
   templateUrl: "./waiting-room-component.component.html",
@@ -16,7 +19,7 @@ import { NotificationService } from "src/app/core/services/notification.service"
 })
 export class WaitingRoomComponentComponent implements OnInit {
   private _isAlive = true;
-
+  gameID!: string;
   activeGame!: any; //Game; //TODO modificato
   password!: string; //TODO modificato
   currentUser!: any; //User; //TODO modificato
@@ -25,14 +28,19 @@ export class WaitingRoomComponentComponent implements OnInit {
   constructor(
     private notificationService: NotificationService,
     private authService: AuthenticationService,
+    private dashboardService: DashBoardService,
+    private route: ActivatedRoute,
+    private router: Router,
     @Inject("LOCALSTORAGE") private localStorage: Storage,
     private titleService: Title,
     private logger: NGXLogger
   ) {}
 
-  teamA: string[] = [''];
+  score!: number;
+  status!: string;
+  teamA: string[] = [""];
 
-  teamB: string[] = [''];
+  teamB: string[] = [""];
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
@@ -70,7 +78,19 @@ export class WaitingRoomComponentComponent implements OnInit {
     // this._hubService.CurrentUser.pipe(takeWhile(() => this._isAlive)).subscribe(user => {
     //   this.currentUser = user;
     // });
-    console.log("Hi barbie");
+    this.gameID = this.route.snapshot.paramMap.get("gameID") as string;
+    this.dashboardService.getGames().subscribe((res: any[]) => {
+      //TODO non c'e' nel middleware
+      const actualGame: any = res.find(
+        (game: any) => game.gameID == this.gameID
+      );
+      if (!actualGame) throw new Error("Game not found");
+      this.status = actualGame.status;
+      this.teamA = actualGame.team1;
+      this.teamA.push(actualGame.creator); //TODO per ora lo hardocoddo io
+      this.teamB = actualGame.team2;
+      this.score = 0; //TODO esporre nella chiamata
+    });
   }
 
   leaveWaitingRoom() {
@@ -79,6 +99,17 @@ export class WaitingRoomComponentComponent implements OnInit {
   }
 
   joinGame() {
+    this.dashboardService
+      .joinGame({
+        gameID: this.gameID,
+        username: this.localStorage.getItem("fullName"),
+        GUIID: this.localStorage.getItem("UUID"),
+      })
+      .subscribe((res: any) => {
+        this.notificationService.openSnackBar(
+          "Ti sei unito correttamente alla partita"
+        );
+      });
     // this._hubService.JoinGame(this.activeGame.gameSetup.id, '');
   }
 
@@ -90,6 +121,7 @@ export class WaitingRoomComponentComponent implements OnInit {
   }
 
   startGame() {
+    this.router.navigate(["/game/" + this.gameID]);
     // this._hubService.StartGame();
   }
 

@@ -4,11 +4,11 @@
     <div class="card-container">
       <div class="p-container">
         <p class="lighter-text">
-          Status: <span class="normal-text">In attesa di altri giocatori</span>
+          Status: <span class="normal-text">{{status}}</span>
         </p>
         <!--sostituire "In attesa di altri giocatori" con la variabile status-->
         <p class="lighter-text">
-          Partita ai: <span class="normal-text">41</span>
+          Partita ai: <span class="normal-text">{{score}}</span>
         </p>
         <p class="lighter-text">Partecipanti:</p>
       </div>
@@ -84,7 +84,8 @@
           mat-flat-button
           class="orange-button"
           (click)="startGame()"
-          [routerLink]="['/game']">
+          [routerLink]="['/game']"
+          >
           Gioca
         </button>
       </div>

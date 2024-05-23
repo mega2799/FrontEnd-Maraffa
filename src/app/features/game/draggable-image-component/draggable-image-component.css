@@ -15,3 +15,29 @@
   /* width: 100px;  */
   /* height: auto; */
 }
+
+.readable{
+  padding: 2%;
+  font-weight: bold;
+  border-radius:  0 0 10px 10px;
+  position: absolute;
+  bottom: 1.5%;
+  left: 0;
+  width: 96%;
+  text-align: center;
+  border-color: #6c6c6c;
+  border-style: solid;
+  border-width: 0 1px 1px 1px;
+  color: white;
+}
+
+
+.cards-container .wrap:nth-child(even) .readable{
+  background-color: #f19a3e;
+  color: white;
+}
+
+.cards-container .wrap:nth-child(odd) .readable{
+  background-color:#00a3f5;
+  color: white;
+}

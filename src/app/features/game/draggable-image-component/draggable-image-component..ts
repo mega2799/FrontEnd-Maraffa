@@ -17,6 +17,7 @@ export class DraggableImageComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.src);
   }
+  @Input() alt!: string;
   @Input() src!: string;
   @Input() position!: { x: number; y: number };
   @Input() hidden!: boolean;

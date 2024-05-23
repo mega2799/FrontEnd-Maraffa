@@ -1,11 +1,13 @@
 import {
   Component,
   HostListener,
+  Inject,
   OnDestroy,
   OnInit,
   ViewChild,
 } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
+import { GameService } from "src/app/core/services/game.service";
 import { Card } from "src/app/model/card.model";
 import { User } from "src/app/model/user.model";
 
@@ -18,6 +20,10 @@ interface Briscola {
   value: string;
   viewValue: string;
 }
+
+type CardSuit = "COINS" | "CUPS" | "SWORDS" | "CLUBS";
+// type CardValue = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+// type CardValue : Number = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 
 @Component({
   selector: "app-game",
@@ -32,6 +38,7 @@ interface Briscola {
   // ],
 })
 export class GameComponent implements OnInit, OnDestroy {
+  username!: string;
   playCard($event: string) {
     //L'evento viene emesso dal componente 2 volte o piu', rimuovere la carta in modo robusto
     console.log(`ZIO ${$event}`);
@@ -47,11 +54,16 @@ export class GameComponent implements OnInit, OnDestroy {
   private startY = 0;
   hidden = false;
 
-  cards: any[] = Array.from(Array(10).keys()).map((i) => ({
-    src: `https://cataas.com/cat?width=196&height=392&/${i}`,
-    position: { x: 200, y: 0 },
-    hidden: false,
-  }));
+  cards: any[] = [];
+  //  Array.from(Array(10).keys()).map((i) => ({
+  //   suit: null,
+  //   value: null,
+  //   src: `https://cataas.com/cat?width=196&height=392&/${i}`,
+  //   position: { x: 200, y: 0 },
+  //   hidden: false,
+  // }));
+
+  // cards!: any[];
   calls: Chiamata[] = [
     { value: "busso", viewValue: "Busso" },
     { value: "volo", viewValue: "Volo" },
@@ -68,6 +80,7 @@ export class GameComponent implements OnInit, OnDestroy {
   isGameChatSidebarOpen = false;
   gameLocked = false;
   currentUser: User = new User(); //TODO check
+  gameID!: string;
   game: any; //Game;
   numberUnreadMessages: number = 0;
   cardsForExtraPoints: Card[] = [];
@@ -75,15 +88,59 @@ export class GameComponent implements OnInit, OnDestroy {
 
   cardsDrewPreviousRound: any; //CardAndUser[];
 
-  constructor(private _router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    @Inject("LOCALSTORAGE") private localStorage: Storage,
+    private gameService: GameService,
+    private router: Router
+  ) {}
 
   ngOnDestroy(): void {
     this._isAlive = false;
   }
 
+  private getCardDescription(cardValue: number, cardSuit: CardSuit): string {
+    const suitNames: { [key in CardSuit]: string } = {
+      COINS: "denari",
+      CUPS: "coppe",
+      SWORDS: "spade",
+      CLUBS: "bastoni",
+    };
+
+    const faceCardNames: { [key: number]: string } = {
+      1: "asso",
+      8: "fante",
+      9: "cavallo",
+      10: "re",
+    };
+
+    const suitName = suitNames[cardSuit];
+    const valueName =
+      cardValue + 1 >= 8 || cardValue + 1 === 1
+        ? faceCardNames[cardValue + 1]
+        : (cardValue + 1).toString();
+
+    return `${valueName} di ${suitName}`;
+  }
   ngOnInit() {
     // console.log(...this.cards);
-    return;
+    this.gameID = this.route.snapshot.paramMap.get("gameID") as string;
+    this.username = this.localStorage.getItem("fullName") as string;
+    this.gameService
+      .getUserCards(this.gameID, this.username)
+      .subscribe((res: any) => {
+        this.cards = this.cards.concat(
+          ...res.cards.map((card: any) => ({
+            suit: card.cardSuit,
+            value: card.cardValue / 10, //TODO parse as a string
+            src: `https://cataas.com/cat?width=196&height=392&/${card.cardValue}`,
+            alt: this.getCardDescription(card.cardValue % 10, card.cardSuit),
+            // src: `assets/cards/${card.value}.png`,
+            position: { x: 200, y: 0 },
+            hidden: false,
+          }))
+        );
+      });
     // this._hubService.ActiveGame.pipe(takeWhile(() => this._isAlive)).subscribe(game => {
     //   this.game = game;
     //   if (game == null) return;
@@ -167,7 +224,7 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   exitGame() {
-    this._router.navigateByUrl("/");
+    this.router.navigateByUrl("/");
   }
 
   toggleGameChatSidebar() {

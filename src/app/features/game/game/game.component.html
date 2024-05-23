@@ -123,9 +123,11 @@
     <app-draggable-image
       *ngFor="let image of cards; let i = index"
       [src]="image.src"
+      [alt]="image.alt"
       [position]="image.position"
       [hidden]="image.hidden"
       (positionChange)="image.position = $event"
+      (playedCard)="playCard($event)"
       (hiddenChange)="image.hidden = $event"></app-draggable-image>
   </div>
 
