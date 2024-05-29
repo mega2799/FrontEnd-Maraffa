@@ -6,6 +6,7 @@ export default class UserManagment {
   public userData: any = {};
   constructor(
     public http: HttpClient,
+    // @Inject("SESSIONSTORAGE") public localStorage: Storage,
     @Inject("LOCALSTORAGE") public localStorage: Storage,
     public titleService: Title
   ) {}

@@ -31,6 +31,7 @@ export class WaitingRoomComponentComponent implements OnInit {
     private dashboardService: DashBoardService,
     private route: ActivatedRoute,
     private router: Router,
+    // @Inject("SESSIONSTORAGE") private localStorage: Storage,
     @Inject("LOCALSTORAGE") private localStorage: Storage,
     private titleService: Title,
     private logger: NGXLogger

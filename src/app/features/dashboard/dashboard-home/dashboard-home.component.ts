@@ -47,6 +47,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     private router: Router,
     private notificationService: NotificationService,
     private authService: AuthenticationService,
+    // @Inject("SESSIONSTORAGE") private localStorage: Storage,
     @Inject("LOCALSTORAGE") private localStorage: Storage,
     private titleService: Title,
     private logger: NGXLogger,

@@ -20,7 +20,10 @@
       <span class="second-team">Fede</span></ng-template>
     </mat-tab>
   </mat-tab-group> -->
-  <p class="normal-text">Ê il turno di: Matte</p>
+  <p class="normal-text">
+    Ê il turno di:
+    {{ this.currentUser }}
+  </p>
 
   <div id="table">
     <div class="game-buttons">
@@ -87,8 +90,11 @@
   <div class="select-container">
     <mat-form-field class="custom-select">
       <mat-label>Chiamata</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let call of calls" [value]="call.value">
+      <mat-select *ngIf="!selectedTrump">
+        <mat-option
+          *ngFor="let call of calls"
+          [value]="call.value"
+          (selectionChange)="CallBriscola(call.value)">
           {{ call.viewValue }}
         </mat-option>
       </mat-select>
@@ -119,18 +125,19 @@
       alt="4_spade"
       class="hand-card" />
   </div> -->
-  <div class="hand">
-    <app-draggable-image
-      *ngFor="let image of cards; let i = index"
-      [src]="image.src"
-      [alt]="image.alt"
-      [position]="image.position"
-      [hidden]="image.hidden"
-      (positionChange)="image.position = $event"
-      (playedCard)="playCard($event)"
-      (hiddenChange)="image.hidden = $event"></app-draggable-image>
+  <div class="hand-container">
+    <div class="hand">
+      <app-draggable-image
+        *ngFor="let image of cards; let i = index"
+        [src]="image.src"
+        [alt]="image.alt"
+        [position]="image.position"
+        [hidden]="image.hidden"
+        (positionChange)="image.position = $event"
+        (playedCard)="playCard($event)"
+        (hiddenChange)="image.hidden = $event"></app-draggable-image>
+    </div>
   </div>
-
   <!-- *ngIf="!hidden" -->
 
   <!-- <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>

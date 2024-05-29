@@ -13,6 +13,7 @@ export class DashBoardService {
   constructor(
     private http: HttpClient,
     @Inject("LOCALSTORAGE") private localStorage: Storage
+    // @Inject("SESSIONSTORAGE") private localStorage: Storage,
   ) {}
 
   getGames(): Observable<any> {

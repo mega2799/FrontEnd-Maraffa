@@ -11,6 +11,7 @@ import { Observable, of } from "rxjs";
 export class AuthenticationService {
   constructor(
     private http: HttpClient,
+    // @Inject("SESSIONSTORAGE") private localStorage: Storage,
     @Inject("LOCALSTORAGE") private localStorage: Storage
   ) {}
 

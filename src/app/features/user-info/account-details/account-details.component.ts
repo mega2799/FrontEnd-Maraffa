@@ -28,6 +28,7 @@ export class AccountDetailsComponent extends UserManagment implements OnInit {
 
   constructor(
     public override http: HttpClient,
+    // @Inject("SESSIONSTORAGE") public override localStorage: Storage,
     @Inject("LOCALSTORAGE") public override localStorage: Storage,
     public override titleService: Title
   ) {

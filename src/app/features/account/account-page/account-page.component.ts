@@ -12,6 +12,7 @@ export class AccountPageComponent implements OnInit {
   userData: any = {};
   constructor(
     private http: HttpClient,
+    // @Inject("SESSIONSTORAGE") private localStorage: Storage,
     @Inject("LOCALSTORAGE") private localStorage: Storage,
     private titleService: Title
   ) {}

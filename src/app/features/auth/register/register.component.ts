@@ -21,6 +21,7 @@ export class RegisterComponent implements OnInit {
   name = environment.name;
 
   constructor(
+    // @Inject("SESSIONSTORAGE") private localStorage: Storage,
     private router: Router,
     @Inject("LOCALSTORAGE") private localStorage: Storage,
     private titleService: Title,

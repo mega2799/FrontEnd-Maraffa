@@ -7,9 +7,10 @@ import {
   ViewChild,
 } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { catchError, retry, throwError } from "rxjs";
 import { GameService } from "src/app/core/services/game.service";
+import { WebSocketGameService } from "src/app/core/services/websocket.game";
 import { Card } from "src/app/model/card.model";
-import { User } from "src/app/model/user.model";
 
 interface Chiamata {
   value: string;
@@ -22,6 +23,25 @@ interface Briscola {
 }
 
 type CardSuit = "COINS" | "CUPS" | "SWORDS" | "CLUBS";
+
+// ONE(7), TWO(8), THREE(9), FOUR(0), FIVE(1), SIX(2), SEVEN(3), KNAVE(4), HORSE(5), KING(6), NONE(999);
+//TODO riordinare ovunque
+const cardNames: string[] = [
+  "FOUR",
+  "FIVE",
+  "SIX",
+  "SEVEN",
+  "KNAVE",
+  "HORSE",
+  "KING",
+  "ONE",
+  "TWO",
+  "THREE",
+];
+
+const cardValues: number[] = [4, 5, 6, 7, 8, 9, 10, 1, 2, 3];
+
+// const cardValues: number[] = [3, 4, 5, 6, 7, 8, 9, 0, 1, 2];
 // type CardValue = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 // type CardValue : Number = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 
@@ -42,7 +62,34 @@ export class GameComponent implements OnInit, OnDestroy {
   playCard($event: string) {
     //L'evento viene emesso dal componente 2 volte o piu', rimuovere la carta in modo robusto
     console.log(`ZIO ${$event}`);
-    this.cards = this.cards.filter((card) => card.src !== $event);
+    const card = this.cards.find((card) => card.src === $event);
+    if (!card) {
+      console.log("Card not found");
+      throw new Error("Card not found");
+    }
+    // console.log(card);
+
+    // console.log({
+    //   gameID: this.gameID,
+    //   username: this.username,
+    //   cardValue: cardNames[card.value],
+    //   cardSuit: card.suit,
+    //   isSuitFinished: false,
+    // });
+    // this.cards = this.cards.filter((card) => card.src !== $event);
+    this.ws.webSocketSubject.next(JSON.stringify({ msg: "ZIO PERA" })); //TODO wow funziona davvero
+
+    this.gameService
+      .playCard(
+        this.gameID,
+        this.username,
+        cardNames[card.value],
+        card.suit,
+        false
+      )
+      .subscribe((res) => {
+        this.cards = this.cards.filter((card) => card.src !== $event); //TODO sembra venga chiamato a caso piu' volte ma per ora degli errori non ci preoccupiamo
+      });
   }
   @ViewChild("cardsPlayedPopover") //BHO
   private cardsPlayedPopover: any; //NgbPopover; //TODO cos'e' NgbPopover?
@@ -71,32 +118,41 @@ export class GameComponent implements OnInit, OnDestroy {
     { value: "striscio_corto", viewValue: "Stricio Corto" },
   ];
   trumps: Briscola[] = [
-    { value: "coins", viewValue: "Denari" },
-    { value: "cups", viewValue: "Coppe" },
-    { value: "clubs", viewValue: "Bastoni" },
-    { value: "swords", viewValue: "Spade" },
+    { value: "COINS", viewValue: "Denari" },
+    { value: "CUPS", viewValue: "Coppe" },
+    { value: "CLUBS", viewValue: "Bastoni" },
+    { value: "SWORDS", viewValue: "Spade" },
   ];
 
   isGameChatSidebarOpen = false;
   gameLocked = false;
-  currentUser: User = new User(); //TODO check
+  // currentUser: User = new User(); //TODO check
   gameID!: string;
   game: any; //Game;
   numberUnreadMessages: number = 0;
   cardsForExtraPoints: Card[] = [];
   selectingCardsForExtraPoints: boolean = false;
-
+  selectedTrump: Boolean = false;
   cardsDrewPreviousRound: any; //CardAndUser[];
+  currentUser!: string;
+  public interval: number = 1;
 
   constructor(
     private route: ActivatedRoute,
+    // @Inject("SESSIONSTORAGE") private localStorage: Storage,
     @Inject("LOCALSTORAGE") private localStorage: Storage,
-    private gameService: GameService,
+    public gameService: GameService,
+    private ws: WebSocketGameService,
     private router: Router
   ) {}
 
+  // updateInterval(interval: number) {
+  //   this.interval = interval;
+  //   this.ws.updateInterval(interval);
+  // }
   ngOnDestroy(): void {
     this._isAlive = false;
+    // this.ws.onExit();
   }
 
   private getCardDescription(cardValue: number, cardSuit: CardSuit): string {
@@ -108,22 +164,24 @@ export class GameComponent implements OnInit, OnDestroy {
     };
 
     const faceCardNames: { [key: number]: string } = {
-      1: "asso",
-      8: "fante",
-      9: "cavallo",
-      10: "re",
+      0: "asso",
+      7: "fante",
+      8: "cavallo",
+      9: "re",
     };
 
     const suitName = suitNames[cardSuit];
-    const valueName =
-      cardValue + 1 >= 8 || cardValue + 1 === 1
-        ? faceCardNames[cardValue + 1]
-        : (cardValue + 1).toString();
+    const valueName = cardValues[cardValue].toString();
+    // cardValues[cardValue] >= 8 || cardValues[cardValue] === 0
+    //   ? faceCardNames[cardValues[cardValue]]
+    //   : cardValues[cardValue].toString();
 
     return `${valueName} di ${suitName}`;
   }
   ngOnInit() {
     // console.log(...this.cards);
+    // this.currentUser
+    //TODO onStart assegna il currentPlayer al primo che deve giocare !
     this.gameID = this.route.snapshot.paramMap.get("gameID") as string;
     this.username = this.localStorage.getItem("fullName") as string;
     this.gameService
@@ -132,7 +190,7 @@ export class GameComponent implements OnInit, OnDestroy {
         this.cards = this.cards.concat(
           ...res.cards.map((card: any) => ({
             suit: card.cardSuit,
-            value: card.cardValue / 10, //TODO parse as a string
+            value: card.cardValue > 10 ? card.cardValue % 10 : card.cardValue, //TODO parse as a string
             src: `https://cataas.com/cat?width=196&height=392&/${card.cardValue}`,
             alt: this.getCardDescription(card.cardValue % 10, card.cardSuit),
             // src: `assets/cards/${card.value}.png`,
@@ -140,7 +198,55 @@ export class GameComponent implements OnInit, OnDestroy {
             hidden: false,
           }))
         );
+        console.log(this.cards);
       });
+
+    this.ws.webSocket$
+      .pipe(
+        catchError((error) => {
+          this.interval = 1;
+          return throwError(() => new Error(error));
+        }),
+        retry({ delay: 5_000 })
+        // takeUntilDestroyed()
+      )
+      .subscribe((value: any) => {
+        // response event
+        // console.log("WTF is this: ", value);
+        const response = JSON.parse(value);
+        console.log("WTF is this: ", response);
+        switch (response.event) {
+          case "userTurn":
+            this.turnChanegeEvent(response);
+            break;
+          default:
+            break;
+        }
+      });
+    // this.ws.clientID= this.localStorage.getItem("UUID") as string;
+    // this.ws.initWebSocket();
+    // this.ws.webSocket$
+    //   .pipe(
+    //     catchError((error) => {
+    //       this.interval = 1;
+    //       return throwError(() => new Error(error));
+    //     }),
+    //     retry({ delay: 5_000 })
+    //     // takeUntilDestroyed()
+    //   )
+    //   .subscribe((value: any) => {
+    //     // response event
+    //     console.log("WTF is this: ", value);
+    //     const response = JSON.parse(value);
+    //     console.log("WTF is this: ", response);
+    //     switch (response.event) {
+    //       case "userTurn":
+    //         this.turnChanegeEvent(response);
+    //         break;
+    //       default:
+    //         break;
+    //     }
+    //   });
     // this._hubService.ActiveGame.pipe(takeWhile(() => this._isAlive)).subscribe(game => {
     //   this.game = game;
     //   if (game == null) return;
@@ -181,6 +287,9 @@ export class GameComponent implements OnInit, OnDestroy {
     // this._hubService.GameChatMessages.pipe(takeWhile(() => this._isAlive)).subscribe(messages => {
     //   if (messages.length > 0 && messages[0].username != this.currentUser.name && !this.isGameChatSidebarOpen) this.numberUnreadMessages++;
     // });
+  }
+  turnChanegeEvent(response: any) {
+    this.currentUser = response.userTurn;
   }
 
   startDrag(event: MouseEvent) {
@@ -244,6 +353,9 @@ export class GameComponent implements OnInit, OnDestroy {
 
   //ALE
   CallBriscola(action: string) {
+    console.log("CallBriscola with: " + action);
+    this.selectedTrump = !this.selectedTrump;
+    // this.gameService.chooseSuit(this.gameID, this.username, action).subscribe();
     // this._hubService.CallBriscola(action);
   }
 

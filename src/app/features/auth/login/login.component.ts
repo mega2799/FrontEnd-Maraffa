@@ -78,6 +78,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     @Inject("LOCALSTORAGE") private localStorage: Storage,
+    // @Inject("SESSIONSTORAGE") private localStorage: Storage,
     private titleService: Title,
     private notificationService: NotificationService,
     private authenticationService: AuthenticationService
