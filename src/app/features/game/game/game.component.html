@@ -88,7 +88,58 @@
     </div>
   </div>
   <div class="select-container">
-    <mat-form-field class="custom-select">
+    <form [formGroup]="interactionForm" (ngSubmit)="onSubmit()">
+      <mat-form-field *ngIf="!selectedTrump" class="custom-select">
+        <mat-label>Briscola</mat-label>
+        <mat-select formControlName="trump">
+          <mat-option *ngFor="let briscola of trumps" [value]="briscola.value">
+            {{ briscola.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button type="submit" *ngIf="!selectedTrump">
+        Chiama briscola
+      </button>
+      <mat-form-field *ngIf="!isMyTurn" class="custom-select">
+        <mat-label>Chiamata</mat-label>
+        <mat-select formControlName="call">
+          <mat-option *ngFor="let chiamata of calls" [value]="chiamata.value">
+            {{ chiamata.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button type="submit" *ngIf="!isMyTurn">Chiama</button>
+    </form>
+    <!-- 
+    <form [formGroup]="this.interactionForm">
+      <mat-form-field class="custom-select">
+        <mat-label>Chiamata</mat-label>
+        <mat-select *ngIf="!selectedTrump">
+          <input
+            *ngFor="let call of calls"
+            formControlName="call"
+            value="call.value"
+            (click)="CallBriscola(call.value)" />
+          > <label for="call.value"> {{ call.value }}</label>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="custom-select">
+        <mat-label>Briscola</mat-label>
+        <mat-select>
+          <mat-input
+            *ngFor="let trump of trumps"
+            formControlName="trump"
+            value="trump.value"
+            (click)="CallBriscola(trump.value)">
+            {{ trump.viewValue }}
+          </mat-input>
+        </mat-select>
+      </mat-form-field>
+    </form> -->
+    <!-- <mat-form-field class="custom-select">
       <mat-label>Chiamata</mat-label>
       <mat-select *ngIf="!selectedTrump">
         <mat-option
@@ -103,11 +154,14 @@
     <mat-form-field class="custom-select">
       <mat-label>Briscola</mat-label>
       <mat-select>
-        <mat-option *ngFor="let trump of trumps" [value]="trump.value">
+        <mat-option
+          *ngFor="let trump of trumps"
+          [value]="trump.value"
+          (selectionChange)="CallBriscola(trump.value)">
           {{ trump.viewValue }}
         </mat-option>
       </mat-select>
-    </mat-form-field>
+    </mat-form-field> -->
   </div>
   <!-- <div class="hand">
     <img

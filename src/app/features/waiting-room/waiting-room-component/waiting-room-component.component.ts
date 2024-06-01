@@ -7,9 +7,11 @@ import { Component, Inject, OnInit } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NGXLogger } from "ngx-logger";
+import { catchError, retry, throwError } from "rxjs";
 import { AuthenticationService } from "src/app/core/services/auth.service";
 import { DashBoardService } from "src/app/core/services/dashboard.service";
 import { NotificationService } from "src/app/core/services/notification.service";
+import { WebSocketGameService } from "src/app/core/services/websocket.game";
 
 //TODO se lo status della partita' e' PLAYING serve un redirect alla pagina di gioco
 @Component({
@@ -23,6 +25,8 @@ export class WaitingRoomComponentComponent implements OnInit {
   activeGame!: any; //Game; //TODO modificato
   password!: string; //TODO modificato
   currentUser!: any; //User; //TODO modificato
+  creator!: string;
+  public interval: number = 1;
 
   // constructor(/*private _hubService: HubService, private _router: Router*/) { }
   constructor(
@@ -34,6 +38,7 @@ export class WaitingRoomComponentComponent implements OnInit {
     // @Inject("SESSIONSTORAGE") private localStorage: Storage,
     @Inject("LOCALSTORAGE") private localStorage: Storage,
     private titleService: Title,
+    private ws: WebSocketGameService,
     private logger: NGXLogger
   ) {}
 
@@ -79,7 +84,31 @@ export class WaitingRoomComponentComponent implements OnInit {
     // this._hubService.CurrentUser.pipe(takeWhile(() => this._isAlive)).subscribe(user => {
     //   this.currentUser = user;
     // });
+    this.creator = this.route.snapshot.paramMap.get("creator") as string;
     this.gameID = this.route.snapshot.paramMap.get("gameID") as string;
+    this.ws.webSocket$
+      .pipe(
+        catchError((error) => {
+          this.interval = 1;
+          return throwError(() => new Error(error));
+        }),
+        retry({ delay: 5_000 })
+        // takeUntilDestroyed()
+      )
+      .subscribe((value: any) => {
+        // response event
+        // console.log("WTF is this: ", value);
+        const response = JSON.parse(value);
+        console.log("WTF is this: ", response);
+        switch (response.event) {
+          case "TODO":
+            // this.turnChanegeEvent(response);
+            break;
+          default:
+            break;
+        }
+      });
+
     this.dashboardService.getGames().subscribe((res: any[]) => {
       //TODO non c'e' nel middleware
       const actualGame: any = res.find(

@@ -1,14 +1,14 @@
 <div fxLayout="row" fxLayoutAlign="center none">
   <div fxFlex="95%" class="container">
-    <h2 class="text">Game 1</h2>
+    <h2 class="text">Partita di {{ this.creator }}</h2>
     <div class="card-container">
       <div class="p-container">
         <p class="lighter-text">
-          Status: <span class="normal-text">{{status}}</span>
+          Status: <span class="normal-text">{{ status }}</span>
         </p>
         <!--sostituire "In attesa di altri giocatori" con la variabile status-->
         <p class="lighter-text">
-          Partita ai: <span class="normal-text">{{score}}</span>
+          Partita ai: <span class="normal-text">{{ score }}</span>
         </p>
         <p class="lighter-text">Partecipanti:</p>
       </div>
@@ -84,8 +84,7 @@
           mat-flat-button
           class="orange-button"
           (click)="startGame()"
-          [routerLink]="['/game']"
-          >
+          [routerLink]="['/game']">
           Gioca
         </button>
       </div>

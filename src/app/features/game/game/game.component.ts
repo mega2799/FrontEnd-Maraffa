@@ -6,6 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
+import { FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { catchError, retry, throwError } from "rxjs";
 import { GameService } from "src/app/core/services/game.service";
@@ -59,6 +60,7 @@ const cardValues: number[] = [4, 5, 6, 7, 8, 9, 10, 1, 2, 3];
 })
 export class GameComponent implements OnInit, OnDestroy {
   username!: string;
+  isMyTurn: boolean = false;
   playCard($event: string) {
     //L'evento viene emesso dal componente 2 volte o piu', rimuovere la carta in modo robusto
     console.log(`ZIO ${$event}`);
@@ -136,7 +138,9 @@ export class GameComponent implements OnInit, OnDestroy {
   cardsDrewPreviousRound: any; //CardAndUser[];
   currentUser!: string;
   public interval: number = 1;
-
+  trump = new FormControl("trump");
+  call = new FormControl("call");
+  interactionForm!: FormGroup;
   constructor(
     private route: ActivatedRoute,
     // @Inject("SESSIONSTORAGE") private localStorage: Storage,
@@ -178,7 +182,17 @@ export class GameComponent implements OnInit, OnDestroy {
 
     return `${valueName} di ${suitName}`;
   }
+
+  onSubmit() {
+    //TODO questo verra chiamato sia quando si fa una chiamata che quando si chiama la briscola
+    console.log(this.interactionForm.value);
+  }
+
   ngOnInit() {
+    this.interactionForm = new FormGroup({
+      trump: this.trump,
+      call: this.call,
+    });
     // console.log(...this.cards);
     // this.currentUser
     //TODO onStart assegna il currentPlayer al primo che deve giocare !

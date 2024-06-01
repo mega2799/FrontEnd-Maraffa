@@ -3,9 +3,11 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { Title } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 import { NGXLogger } from "ngx-logger";
+import { catchError, retry, throwError } from "rxjs";
 import { AuthenticationService } from "src/app/core/services/auth.service";
 import { DashBoardService } from "src/app/core/services/dashboard.service";
 import { NotificationService } from "src/app/core/services/notification.service";
+import { WebSocketGameService } from "src/app/core/services/websocket.game";
 
 // export enum GameStatus {
 //   // playing = "PLAYING ",
@@ -34,7 +36,6 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   currentUser: any;
   isOptionSelected: boolean = false;
   games!: Game[];
-  interval: any;
   playersNum = new FormControl("playersNum");
   score = new FormControl("score");
   formMode = new FormGroup({
@@ -42,6 +43,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     numberOfPlayers: this.playersNum,
     expectedScore: this.score,
   });
+  public interval: number = 1;
 
   constructor(
     private router: Router,
@@ -51,13 +53,12 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     @Inject("LOCALSTORAGE") private localStorage: Storage,
     private titleService: Title,
     private logger: NGXLogger,
+    private ws: WebSocketGameService,
     private dashboardService: DashBoardService
   ) {}
 
   ngOnDestroy(): void {
-    if (this.interval) {
-      clearInterval(this.interval);
-    }
+    return;
   }
 
   sendCreate() {
@@ -75,7 +76,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
       .createGame({ mode, numberOfPlayers, expectedScore, username, GUIID })
       .subscribe((res: any) => {
         this.notificationService.openSnackBar("Game created successfully");
-        this.router.navigate([`/waiting/${res.gameID}`]);
+        this.router.navigate([`/waiting/${this.currentUser}/${res.gameID}`]);
       });
   }
 
@@ -84,17 +85,39 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     this.titleService.setTitle("angular-material-template - Dashboard");
     this.logger.log("Dashboard loaded");
 
-    this.interval = setInterval(() => {
-      this.dashboardService.getGames().subscribe((res) => {
-        this.games = res;
-      });
-
-      //TODO la get activePlayers andra' qui dentro ehehehehe
-    }, 1000);
+    this.dashboardService.getGames().subscribe((res) => {
+      this.games = res;
+    });
 
     setTimeout(() => {
       this.notificationService.openSnackBar("Ciao!");
     });
+
+    this.ws.webSocket$
+      .pipe(
+        catchError((error) => {
+          this.interval = 1;
+          return throwError(() => new Error(error));
+        }),
+        retry({ delay: 5_000 })
+        // takeUntilDestroyed()
+      )
+      .subscribe((value: any) => {
+        // response event
+        // console.log("WTF is this: ", value);
+        const response = JSON.parse(value);
+        console.log("WTF is this: ", response);
+        switch (response.event) {
+          case "gameList":
+            this.updateGames(response);
+            break;
+          default:
+            break;
+        }
+      });
+  }
+  updateGames(res: any) {
+    this.games = res.games;
   }
 
   createGame(playUntilPoints: number, expectedNumberOfPlayers: number) {

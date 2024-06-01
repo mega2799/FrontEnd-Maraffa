@@ -121,7 +121,7 @@
               <button
                 mat-flat-button
                 class="orange-button"
-                [routerLink]="['/waiting/' + game.gameID]">
+                [routerLink]="['/waiting/' + game.creator + '/' + game.gameID]">
                 <mat-icon class="{{ game.status.toLowerCase() }}"
                   >fiber_manual_record</mat-icon
                 >Partita di {{ game.creator }}
