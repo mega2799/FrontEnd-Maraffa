@@ -164,17 +164,17 @@ export class GameComponent implements OnInit, OnDestroy {
     };
 
     const faceCardNames: { [key: number]: string } = {
-      0: "asso",
-      7: "fante",
-      8: "cavallo",
-      9: "re",
+      1: "asso",
+      8: "fante",
+      9: "cavallo",
+      10: "re",
     };
 
     const suitName = suitNames[cardSuit];
-    const valueName = cardValues[cardValue].toString();
-    // cardValues[cardValue] >= 8 || cardValues[cardValue] === 0
-    //   ? faceCardNames[cardValues[cardValue]]
-    //   : cardValues[cardValue].toString();
+    const valueName = // cardValues[cardValue].toString();
+      Object.keys(faceCardNames).includes(String(cardValues[cardValue]))
+        ? faceCardNames[cardValues[cardValue]]
+        : cardValues[cardValue].toString();
 
     return `${valueName} di ${suitName}`;
   }
@@ -191,7 +191,12 @@ export class GameComponent implements OnInit, OnDestroy {
           ...res.cards.map((card: any) => ({
             suit: card.cardSuit,
             value: card.cardValue > 10 ? card.cardValue % 10 : card.cardValue, //TODO parse as a string
-            src: `https://cataas.com/cat?width=196&height=392&/${card.cardValue}`,
+            // src: `https://cataas.com/cat?width=196&height=392&/${card.cardValue}`,
+            src: `assets/images/cards/${card.cardSuit}/${
+              cardValues[
+                card.cardValue > 10 ? card.cardValue % 10 : card.cardValue
+              ]
+            }.jpg`,
             alt: this.getCardDescription(card.cardValue % 10, card.cardSuit),
             // src: `assets/cards/${card.value}.png`,
             position: { x: 200, y: 0 },
