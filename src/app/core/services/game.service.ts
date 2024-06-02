@@ -38,6 +38,10 @@ export class GameService {
     return this.http.get<any>(`/api/game/${gameID}/${user}/cards`);
   }
 
+  getGames(): Observable<any> {
+    return this.http.get<any>(`/api/game/getGames`);
+  }
+
   chooseSuit(
     gameID: string,
     username: string,

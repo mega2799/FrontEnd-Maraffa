@@ -10,8 +10,20 @@ import { NGXLogger } from "ngx-logger";
 import { catchError, retry, throwError } from "rxjs";
 import { AuthenticationService } from "src/app/core/services/auth.service";
 import { DashBoardService } from "src/app/core/services/dashboard.service";
+import { GameService } from "src/app/core/services/game.service";
 import { NotificationService } from "src/app/core/services/notification.service";
 import { WebSocketGameService } from "src/app/core/services/websocket.game";
+
+const gameModeValue: any = {
+  ELEVEN2ZERO: "11 a 0",
+  CLASSIC: "Classico",
+};
+
+const statusValue: any = {
+  PLAYING: "In corso",
+  WAITING_PLAYERS: "In attesa di giocatori",
+  STARTING: "In partenza",
+};
 
 //TODO se lo status della partita' e' PLAYING serve un redirect alla pagina di gioco
 @Component({
@@ -27,6 +39,7 @@ export class WaitingRoomComponentComponent implements OnInit {
   currentUser!: any; //User; //TODO modificato
   creator!: string;
   public interval: number = 1;
+  mode!: string;
 
   // constructor(/*private _hubService: HubService, private _router: Router*/) { }
   constructor(
@@ -39,6 +52,7 @@ export class WaitingRoomComponentComponent implements OnInit {
     @Inject("LOCALSTORAGE") private localStorage: Storage,
     private titleService: Title,
     private ws: WebSocketGameService,
+    public gameService: GameService,
     private logger: NGXLogger
   ) {}
 
@@ -86,6 +100,12 @@ export class WaitingRoomComponentComponent implements OnInit {
     // });
     this.creator = this.route.snapshot.paramMap.get("creator") as string;
     this.gameID = this.route.snapshot.paramMap.get("gameID") as string;
+    this.gameService.getGames().subscribe((res: any[]) => {
+      const currentGame = res.find((game: any) => game.gameID == this.gameID);
+      this.status = statusValue[currentGame.status];
+      this.mode = gameModeValue[currentGame.mode];
+      this.score = currentGame.score;
+    });
     this.ws.webSocket$
       .pipe(
         catchError((error) => {
@@ -101,7 +121,8 @@ export class WaitingRoomComponentComponent implements OnInit {
         const response = JSON.parse(value);
         console.log("WTF is this: ", response);
         switch (response.event) {
-          case "TODO":
+          case "userJoin":
+            this.joinUser(response);
             // this.turnChanegeEvent(response);
             break;
           default:
@@ -115,12 +136,19 @@ export class WaitingRoomComponentComponent implements OnInit {
         (game: any) => game.gameID == this.gameID
       );
       if (!actualGame) throw new Error("Game not found");
-      this.status = actualGame.status;
+      this.status = statusValue[actualGame.status];
       this.teamA = actualGame.team1;
       this.teamA.push(actualGame.creator); //TODO per ora lo hardocoddo io
       this.teamB = actualGame.team2;
       this.score = 0; //TODO esporre nella chiamata
     });
+  }
+
+  joinUser(response: any) {
+    this.status = statusValue[response.status];
+    this.notificationService.openSnackBar(
+      `${response.user} si è unito alla partita`
+    );
   }
 
   leaveWaitingRoom() {
