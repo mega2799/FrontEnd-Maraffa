@@ -56,6 +56,13 @@ export class RegisterComponent implements OnInit {
       password: new UntypedFormControl("", Validators.required),
       rememberMe: new UntypedFormControl(savedUserEmail !== null),
     });
+
+    this.registerForm.statusChanges.subscribe(status => {
+      const loginButton = document.getElementById('login-button') as HTMLButtonElement;
+      if (loginButton) {
+        loginButton.disabled = status !== 'VALID' || this.loading;
+      }
+    });
   }
 
   register() {

@@ -40,6 +40,13 @@
     font-size: 120%;
 }
 
+#register-button:disabled{
+    background-color: #aeafaf;
+    color: rgb(25, 25, 25);
+    width: 45%;
+}
+
+
 #LoginBtn{
     background-color: white ;
     color: #E67300;

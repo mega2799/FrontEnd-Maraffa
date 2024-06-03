@@ -82,6 +82,7 @@
         <button
         mat-button
           id="register-button"
+          [disabled]="registerForm.invalid || loading"
           (click)="register()">
           Registrati
         </button>
