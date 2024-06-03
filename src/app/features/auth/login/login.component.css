@@ -28,6 +28,12 @@
     width: 45%;
 }
 
+#login-button:disabled{
+    background-color: #aeafaf;
+    color: rgb(25, 25, 25);
+    width: 45%;
+}
+
 #registerBtn{
     background-color: white ;
     color: #007EA8;
