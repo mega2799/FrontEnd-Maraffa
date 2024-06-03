@@ -6,12 +6,17 @@
 
 .subtitle{
     text-align: center;
+    font-size: large;
+}
+
+#remember{
+    font-size: large;
 }
 
 .auth-card{
     border-radius: 10px;
-    margin-left: 20%; 
-    margin-right: 20%; 
+    margin-left: 10%; 
+    margin-right: 10%; 
 }
 
 .mat-card-actions, .mat-card-subtitle, .mat-card-content{
@@ -32,6 +37,7 @@
     background-color: #FFB01F;
     color: black;
     width: 45%;
+    font-size: 120%;
 }
 
 #LoginBtn{
@@ -40,6 +46,7 @@
     font-weight: bold;
     text-decoration: underline;
     border: none;
+    font-size: large;
 }
 
 .login-actions{
@@ -51,6 +58,7 @@
 
 .normal-link{
     text-decoration: underline;
+    font-size: 120%;
 }
 
 /*input placeholder*/

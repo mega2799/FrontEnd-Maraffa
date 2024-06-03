@@ -6,13 +6,19 @@
 
 .subtitle{
     text-align: center;
+    font-size: large;
+}
+
+#remember{
+    font-size: large;
 }
 
 .auth-card{
     border-radius: 10px;
-    margin-left: 20%; 
-    margin-right: 20%; 
+    margin-left: 10%; 
+    margin-right: 10%; 
 }
+
 
 .mat-card-actions, .mat-card-subtitle, .mat-card-content{
     margin: 0;
@@ -26,6 +32,7 @@
     background-color: #007EA8;
     color: white;
     width: 45%;
+    font-size: 120%;
 }
 
 #login-button:disabled{
@@ -40,10 +47,12 @@
     font-weight: bold;
     text-decoration: underline;
     border: none;
+    font-size: large;
 }
 
 .normal-link{
     text-decoration: underline;
+    font-size: 120%;
 }
 
 .right-container{
@@ -61,7 +70,8 @@
 .login-input{
     background-color: #F5F5F5;
     border-radius: 5px;
-    padding: 2% 0;
+    padding: 3% 0;
+    margin-top: 1%;
 }
 
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
