@@ -20,6 +20,7 @@
           <h2 class="team">Team A</h2>
           <div
             cdkDropList
+            id="A"
             [cdkDropListData]="teamA"
             class="example-list"
             cdkDropListSortingDisabled
@@ -40,10 +41,12 @@
             cdkDropList
             [cdkDropListData]="teamB"
             class="example-list"
+            id="B"
             (cdkDropListDropped)="drop($event)">
             <div
               class="teamB-box example-box"
               *ngFor="let item of teamB"
+              id="item"
               cdkDrag>
               {{ item }}
             </div>
@@ -80,19 +83,18 @@
           (click)="leaveWaitingRoom()">
           Esci
         </button>
-        <button mat-flat-button class="orange-button" (click)="joinGame()">
-          Unisciti
-        </button>
         <button
           mat-flat-button
           class="orange-button"
-          (click)="startGame()"
-          [routerLink]="['/game']">
+          *ngIf="this.creator !== this.currentUser"
+          (click)="joinGame()">
+          Unisciti
+        </button>
+        <button mat-flat-button class="orange-button" (click)="startGame()">
           Gioca
         </button>
       </div>
     </div>
-
     <!-- <h3>-->
     <!-- <span class="text-danger" [hidden]="activeGame.players.length===activeGame.gameSetup.expectedNumberOfPlayers"> In attesa di altri {{activeGame.gameSetup.expectedNumberOfPlayers - activeGame.players.length}} giocatori</span> -->
     <!-- <span class="text-danger" > In attesa di altri giocatori</span> -->

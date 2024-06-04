@@ -53,4 +53,21 @@ export class GameService {
       cardSuit,
     });
   }
+  startGame(gameID: string) {
+    return this.http.patch<any>(`/api/game/start`, { gameID });
+  }
+
+  changeTeam(
+    gameID: string,
+    team: string,
+    username: string,
+    position: number
+  ): Observable<any> {
+    return this.http.patch<any>(`/api/game/changeTeam`, {
+      gameID,
+      username,
+      team,
+      position,
+    });
+  }
 }

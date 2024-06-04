@@ -36,11 +36,11 @@ export class WaitingRoomComponentComponent implements OnInit {
   gameID!: string;
   activeGame!: any; //Game; //TODO modificato
   password!: string; //TODO modificato
-  currentUser!: any; //User; //TODO modificato
+  currentUser!: string; //User; //TODO modificato
   creator!: string;
   public interval: number = 1;
   mode!: string;
-
+  isReady: boolean = false;
   // constructor(/*private _hubService: HubService, private _router: Router*/) { }
   constructor(
     private notificationService: NotificationService,
@@ -58,11 +58,33 @@ export class WaitingRoomComponentComponent implements OnInit {
 
   score!: number;
   status!: string;
-  teamA: string[] = [""];
+  teamA: string[] = [];
 
-  teamB: string[] = [""];
+  teamB: string[] = [];
 
   drop(event: CdkDragDrop<string[]>) {
+    console.log("WTF is going on? ");
+    console.log(event);
+    const oldContainer = event.previousContainer.id;
+    const newContainer = event.container.id;
+    const newIndex = event.currentIndex;
+    const username = this.currentUser;
+    console.log({ oldContainer, newContainer, newIndex, username });
+    console.log(
+      "Who am i dragging? ",
+      event.previousContainer.data[event.previousIndex]
+    );
+    if (
+      event.previousContainer.data[event.previousIndex] !== this.currentUser
+    ) {
+      setTimeout(() => {
+        this.notificationService.openSnackBar(
+          "Non puoi spostare un altro giocatore"
+        );
+      });
+      return;
+    }
+
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -77,11 +99,16 @@ export class WaitingRoomComponentComponent implements OnInit {
         event.currentIndex
       );
     }
+    this.gameService
+      .changeTeam(this.gameID, newContainer, username, newIndex)
+      .subscribe((res: any) => {
+        console.log("Change team response: ", res);
+      });
   }
 
   ngOnDestroy(): void {
     this._isAlive = false;
-    this.currentUser = this.authService.getCurrentUser();
+    // this.currentUser = this.authService.getCurrentUser();
     this.titleService.setTitle("angular-material-template - Waiting Room");
     this.logger.log("Joined waiting room");
 
@@ -99,6 +126,10 @@ export class WaitingRoomComponentComponent implements OnInit {
     //   this.currentUser = user;
     // });
     this.creator = this.route.snapshot.paramMap.get("creator") as string;
+    this.currentUser = this.localStorage.getItem("fullName") as string;
+    console.log("Current user: ", this.currentUser);
+    console.log("Creator: ", this.creator);
+
     this.gameID = this.route.snapshot.paramMap.get("gameID") as string;
     this.gameService.getGames().subscribe((res: any[]) => {
       const currentGame = res.find((game: any) => game.gameID == this.gameID);
@@ -123,7 +154,12 @@ export class WaitingRoomComponentComponent implements OnInit {
         switch (response.event) {
           case "userJoin":
             this.joinUser(response);
-            // this.turnChanegeEvent(response);
+            break;
+          case "changeTeam":
+            this.turnChanegeEvent(response);
+            break;
+          case "startGame":
+            this.redirectToGame(); //TODO
             break;
           default:
             break;
@@ -137,18 +173,34 @@ export class WaitingRoomComponentComponent implements OnInit {
       );
       if (!actualGame) throw new Error("Game not found");
       this.status = statusValue[actualGame.status];
-      this.teamA = actualGame.team1;
-      this.teamA.push(actualGame.creator); //TODO per ora lo hardocoddo io
-      this.teamB = actualGame.team2;
+      this.teamA = actualGame.teamA;
+      // this.teamA.push(actualGame.creator); //TODO per ora lo hardocoddo io
+      this.teamB = actualGame.teamB;
       this.score = 0; //TODO esporre nella chiamata
     });
+
+    console.log("teamA: ", this.teamA);
+    console.log("teamB: ", this.teamB);
+  }
+  redirectToGame() {
+    throw new Error("Method not implemented.");
+  }
+  turnChanegeEvent(response: any) {
+    this.teamA = response.teamA;
+    // this.teamA.push(actualGame.creator); //TODO per ora lo hardocoddo io
+    this.teamB = response.teamB;
   }
 
   joinUser(response: any) {
     this.status = statusValue[response.status];
-    this.notificationService.openSnackBar(
-      `${response.user} si è unito alla partita`
-    );
+    this.teamA = response.teamA;
+    this.teamB = response.teamB;
+    window.location.reload();
+    setTimeout(() => {
+      this.notificationService.openSnackBar(
+        `${response.user} si è unito alla partita`
+      );
+    });
   }
 
   leaveWaitingRoom() {
@@ -164,23 +216,41 @@ export class WaitingRoomComponentComponent implements OnInit {
         GUIID: this.localStorage.getItem("UUID"),
       })
       .subscribe((res: any) => {
-        this.notificationService.openSnackBar(
-          "Ti sei unito correttamente alla partita"
-        );
+        setTimeout(() => {
+          this.notificationService.openSnackBar(
+            "Ti sei unito correttamente alla partita"
+          );
+        });
       });
     // this._hubService.JoinGame(this.activeGame.gameSetup.id, '');
   }
 
-  userIsSpectator() {
-    var exists = this.activeGame.spectators.find((spectator: any) => {
-      return spectator.name == this.currentUser.name;
-    });
-    return exists != null;
-  }
+  //TODO spettatori
+  // userIsSpectator() {
+  //   var exists = this.activeGame.spectators.find((spectator: any) => {
+  //     return spectator.name == this.currentUser.name;
+  //   });
+  //   return exists != null;
+  // }
 
   startGame() {
-    this.router.navigate(["/game/" + this.gameID]);
-    // this._hubService.StartGame();
+    // console.log("Start game: ", this.isReady);
+    this.gameService.startGame(this.gameID).subscribe((res: any) => {
+      if (Object.keys(res).includes("error")) {
+        setTimeout(() => {
+          this.notificationService.openSnackBar(res.error);
+        });
+      } else {
+        this.router.navigate(["/game/" + this.gameID]);
+      }
+    });
+  }
+
+  private showNotification() {
+    const message = !this.isReady
+      ? "La partita non può iniziare finché non tutti i giocatori non sono pronti"
+      : "La partita non può iniziare finché i team non sono pronti";
+    this.notificationService.openSnackBar(message);
   }
 
   setRoomPassword() {
