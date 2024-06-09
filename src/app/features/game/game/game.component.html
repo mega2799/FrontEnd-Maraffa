@@ -98,9 +98,10 @@
         </mat-select>
       </mat-form-field>
 
-      <button mat-raised-button type="submit" *ngIf="!selectedTrump">
+      <button mat-raised-button *ngIf="!selectedTrump" type="submit">
         Chiama briscola
       </button>
+
       <mat-form-field *ngIf="!isMyTurn" class="custom-select">
         <mat-label>Chiamata</mat-label>
         <mat-select formControlName="call">

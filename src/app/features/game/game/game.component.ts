@@ -60,6 +60,7 @@ const cardValues: number[] = [4, 5, 6, 7, 8, 9, 10, 1, 2, 3];
 })
 export class GameComponent implements OnInit, OnDestroy {
   username!: string;
+  chosesTrump: boolean = false;
   isMyTurn: boolean = false;
   playCard($event: string) {
     //L'evento viene emesso dal componente 2 volte o piu', rimuovere la carta in modo robusto
@@ -186,6 +187,23 @@ export class GameComponent implements OnInit, OnDestroy {
   onSubmit() {
     //TODO questo verra chiamato sia quando si fa una chiamata che quando si chiama la briscola
     console.log(this.interactionForm.value);
+
+    const { trump, call } = this.interactionForm.value;
+    if (trump != "trump") {
+      this.gameService
+        .chooseSuit(this.gameID, this.username, trump)
+        .subscribe((res) => {
+          if (res.error != null) {
+            //TODO check this
+            console.log(res.error);
+          } else {
+            console.log(res);
+            // this.selectedTrump = true;
+            this.chosesTrump = false;
+          }
+        });
+    }
+    // if()
   }
 
   ngOnInit() {
@@ -193,6 +211,8 @@ export class GameComponent implements OnInit, OnDestroy {
       trump: this.trump,
       call: this.call,
     });
+    console.log("choose trump: " + this.chosesTrump);
+
     // console.log(...this.cards);
     // this.currentUser
     //TODO onStart assegna il currentPlayer al primo che deve giocare !
@@ -237,6 +257,12 @@ export class GameComponent implements OnInit, OnDestroy {
         switch (response.event) {
           case "userTurn":
             this.turnChanegeEvent(response);
+            break;
+          case "trumpEvent":
+            this.trumpManagment(response);
+            break;
+          case "startGame":
+            this.startGameManagment(response);
             break;
           default:
             break;
@@ -306,6 +332,17 @@ export class GameComponent implements OnInit, OnDestroy {
     // this._hubService.GameChatMessages.pipe(takeWhile(() => this._isAlive)).subscribe(messages => {
     //   if (messages.length > 0 && messages[0].username != this.currentUser.name && !this.isGameChatSidebarOpen) this.numberUnreadMessages++;
     // });
+  }
+  startGameManagment(response: any) {
+    this.currentUser = response.firstPlayer;
+  }
+  trumpManagment(response: any) {
+    console.log(response);
+    console.log(response.username );
+    console.log(this.username);
+    //TODO dovrebbe funzionare tutto ma non nasconde dinamicamente.... perche ?
+    this.chosesTrump = response.username === this.username;
+    // if(response.settled) this.selectedTrump = true;
   }
   turnChanegeEvent(response: any) {
     this.currentUser = response.userTurn;

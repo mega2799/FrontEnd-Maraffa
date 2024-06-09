@@ -159,7 +159,7 @@ export class WaitingRoomComponentComponent implements OnInit {
             this.turnChanegeEvent(response);
             break;
           case "startGame":
-            this.redirectToGame(); //TODO
+            this.redirectToGame(response); //TODO
             break;
           default:
             break;
@@ -182,8 +182,8 @@ export class WaitingRoomComponentComponent implements OnInit {
     console.log("teamA: ", this.teamA);
     console.log("teamB: ", this.teamB);
   }
-  redirectToGame() {
-    throw new Error("Method not implemented.");
+  redirectToGame(response: any) {
+    this.router.navigate(["/game/" + response.gameID]);
   }
   turnChanegeEvent(response: any) {
     this.teamA = response.teamA;
