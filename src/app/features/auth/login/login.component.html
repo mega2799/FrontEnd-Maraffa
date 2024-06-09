@@ -2,18 +2,19 @@
   class="container login-container"
   fxLayout="row"
   fxLayoutAlign="center center">
-  <form [formGroup]="loginForm" fxFlex="30%" fxFlex.sm="50%" fxFlex.xs="90%">
-    <mat-card>
-      <mat-card-title>{{ this.name }}</mat-card-title>
-      <mat-card-subtitle>Log in al tuo profilo</mat-card-subtitle>
+  <form [formGroup]="loginForm">
+    <mat-card class="auth-card">
+      <mat-card-title class="auth-title login-title">{{ this.name }}</mat-card-title>
+      <mat-card-subtitle class="subtitle">Log in al tuo profilo</mat-card-subtitle>
       <mat-card-content>
-        <mat-form-field class="full-width">
+        <mat-form-field class="full-width login">
           <input
             id="nicknameInput"
             matInput
             placeholder="Nome Utente"
             formControlName="nickname"
             autocomplete="name"
+            class="login-input"
             type="text" />
 
           <!-- <mat-error
@@ -29,13 +30,14 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field class="full-width">
+        <mat-form-field class="full-width login">
           <input
             id="passwordInput"
             matInput
             placeholder="Password"
             formControlName="password"
             type="password"
+            class="login-input"
             autocomplete="current-password" />
           <mat-error
             id="requiredPasswordError"
@@ -46,23 +48,24 @@
         </mat-form-field>
 
         <div class="full-width">
-          <mat-slide-toggle formControlName="rememberMe"
-            >Remember my email address</mat-slide-toggle
-          >
+          <mat-slide-toggle class="login" formControlName="rememberMe" id="remember">Ricordami</mat-slide-toggle>
         </div>
       </mat-card-content>
-
-      <mat-card-actions class="login-actions">
-        <button
-          mat-raised-button
-          id="registerBtn"
-          color="primary"
-          (click)="registerUser()">
-          Registrati
+      <div class="right-container">
+      <button
+          mat-button
+          id="resetPassword"
+          class="normal-link"
+          (click)="resetPassword()"
+          type="button">
+          Reset Password
         </button>
+      </div>
+      <mat-card-actions class="login-actions">
+        
         <button
           mat-raised-button
-          id="login"
+          id="login-button"
           color="primary"
           [disabled]="loginForm.invalid || loading"
           (click)="login()">
@@ -70,14 +73,8 @@
         </button>
         <button
           mat-button
-          id="resetPassword"
-          (click)="resetPassword()"
-          type="button">
-          Reset Password
-        </button>
-        <button
-          mat-button
           id="guestLogin"
+          class="normal-link"
           (click)="guestAccess()"
           type="button">
           Entra come ospite
@@ -88,8 +85,15 @@
           id="guestLogin"
           (click)="guestAccessFunny()"
           *ngIf="this.funny"
+          class="normal-link"
           type="button">
           Entra come ospite Divertente
+        </button>
+        <button
+          mat-button
+          id="registerBtn"
+          (click)="registerUser()">
+          Registrati
         </button>
       </mat-card-actions>
     </mat-card>

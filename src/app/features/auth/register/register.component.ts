@@ -33,9 +33,15 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+    document.body.classList.add('register');
+    document.body.classList.remove('login');
     this.titleService.setTitle("MaraffaOnline - Registrazione");
     this.authenticationService.logout();
     this.createForm();
+  }
+
+  ngOnDestroy() {
+    document.body.classList.remove('register');
   }
 
   private createForm() {
@@ -49,6 +55,13 @@ export class RegisterComponent implements OnInit {
       nickname: new UntypedFormControl("", [Validators.required]),
       password: new UntypedFormControl("", Validators.required),
       rememberMe: new UntypedFormControl(savedUserEmail !== null),
+    });
+
+    this.registerForm.statusChanges.subscribe(status => {
+      const loginButton = document.getElementById('login-button') as HTMLButtonElement;
+      if (loginButton) {
+        loginButton.disabled = status !== 'VALID' || this.loading;
+      }
     });
   }
 
@@ -78,7 +91,7 @@ export class RegisterComponent implements OnInit {
       );
   }
 
-  resetPassword() {
-    this.router.navigate(["/auth/password-reset-request"]);
+  loginUser() {
+    this.router.navigate(["/auth/login"]);
   }
 }
