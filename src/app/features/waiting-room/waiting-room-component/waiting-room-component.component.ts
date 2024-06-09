@@ -159,7 +159,7 @@ export class WaitingRoomComponentComponent implements OnInit {
             this.turnChanegeEvent(response);
             break;
           case "startGame":
-            this.redirectToGame(response); //TODO
+            this.redirectToGame(response);
             break;
           default:
             break;
@@ -176,7 +176,7 @@ export class WaitingRoomComponentComponent implements OnInit {
       this.teamA = actualGame.teamA;
       // this.teamA.push(actualGame.creator); //TODO per ora lo hardocoddo io
       this.teamB = actualGame.teamB;
-      this.score = 0; //TODO esporre nella chiamata
+      this.score = actualGame.score;
     });
 
     console.log("teamA: ", this.teamA);
@@ -187,7 +187,6 @@ export class WaitingRoomComponentComponent implements OnInit {
   }
   turnChanegeEvent(response: any) {
     this.teamA = response.teamA;
-    // this.teamA.push(actualGame.creator); //TODO per ora lo hardocoddo io
     this.teamB = response.teamB;
   }
 

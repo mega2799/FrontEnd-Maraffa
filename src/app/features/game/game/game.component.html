@@ -89,7 +89,7 @@
   </div>
   <div class="select-container">
     <form [formGroup]="interactionForm" (ngSubmit)="onSubmit()">
-      <mat-form-field *ngIf="!selectedTrump" class="custom-select">
+      <mat-form-field *ngIf="selectedTrump" class="custom-select">
         <mat-label>Briscola</mat-label>
         <mat-select formControlName="trump">
           <mat-option *ngFor="let briscola of trumps" [value]="briscola.value">
@@ -97,12 +97,11 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-
-      <button mat-raised-button *ngIf="!selectedTrump" type="submit">
+      <button mat-raised-button *ngIf="selectedTrump" type="submit">
         Chiama briscola
       </button>
 
-      <mat-form-field *ngIf="!isMyTurn" class="custom-select">
+      <mat-form-field *ngIf="isMyTurn" class="custom-select">
         <mat-label>Chiamata</mat-label>
         <mat-select formControlName="call">
           <mat-option *ngFor="let chiamata of calls" [value]="chiamata.value">
@@ -111,7 +110,7 @@
         </mat-select>
       </mat-form-field>
 
-      <button mat-raised-button type="submit" *ngIf="!isMyTurn">Chiama</button>
+      <button mat-raised-button type="submit" *ngIf="isMyTurn">Chiama</button>
     </form>
     <!-- 
     <form [formGroup]="this.interactionForm">

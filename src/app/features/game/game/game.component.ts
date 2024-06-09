@@ -199,7 +199,7 @@ export class GameComponent implements OnInit, OnDestroy {
           } else {
             console.log(res);
             // this.selectedTrump = true;
-            this.chosesTrump = false;
+            this.selectedTrump = false;
           }
         });
     }
@@ -211,13 +211,23 @@ export class GameComponent implements OnInit, OnDestroy {
       trump: this.trump,
       call: this.call,
     });
-    console.log("choose trump: " + this.chosesTrump);
-
     // console.log(...this.cards);
     // this.currentUser
     //TODO onStart assegna il currentPlayer al primo che deve giocare !
     this.gameID = this.route.snapshot.paramMap.get("gameID") as string;
     this.username = this.localStorage.getItem("fullName") as string;
+
+    setTimeout(() => {}, 1500);
+    this.gameService.getGame(this.gameID).subscribe((res: any) => {
+      console.log("NAGATOMO ?");
+      console.log(res);
+      if (res.state === 0) {
+        this.trumpManagment({ username: res.trumpSelectorUsername });
+        this.selectedTrump = this.username === res.trumpSelectorUsername;
+      }
+      this.turnChanegeEvent({ userTurn: res.playerTurn });
+      this.isMyTurn = this.username === res.playerTurn;
+    });
     this.gameService
       .getUserCards(this.gameID, this.username)
       .subscribe((res: any) => {
@@ -334,18 +344,21 @@ export class GameComponent implements OnInit, OnDestroy {
     // });
   }
   startGameManagment(response: any) {
+    console.log("Calling startGameManagment");
+    console.log(response);
     this.currentUser = response.firstPlayer;
   }
   trumpManagment(response: any) {
     console.log(response);
-    console.log(response.username );
+    console.log(response.username);
     console.log(this.username);
     //TODO dovrebbe funzionare tutto ma non nasconde dinamicamente.... perche ?
-    this.chosesTrump = response.username === this.username;
+    this.selectedTrump = response.username === this.username;
     // if(response.settled) this.selectedTrump = true;
   }
   turnChanegeEvent(response: any) {
     this.currentUser = response.userTurn;
+    this.isMyTurn = this.username === response.userTurn;
   }
 
   startDrag(event: MouseEvent) {

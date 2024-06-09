@@ -6,6 +6,9 @@ import { Observable } from "rxjs";
   providedIn: "root",
 })
 export class GameService {
+  getGame(gameID: string) {
+    return this.http.get<any>(`/api/game/` + gameID);
+  }
   private _currentPlayer!: string;
   public get currentPlayer(): string {
     return this._currentPlayer;
