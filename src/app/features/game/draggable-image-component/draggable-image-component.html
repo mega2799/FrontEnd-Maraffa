@@ -11,7 +11,7 @@
     transform: hidden ? 'translateY(-100px)' : 'translateY(0)',
     transition: 'transform 0.5s, opacity 0.5s'
   }"
-  (transitionend)="onTransitionEnd()">
+  (transitionend)="onTransitionEnd($event)">
   <img [src]="src" alt="Draggable Image" />
   <div class="readable">{{alt}}</div>
 </div>

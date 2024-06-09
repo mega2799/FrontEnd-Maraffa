@@ -57,7 +57,11 @@
       </button>
     </div>
     <div class="cards-container">
-      <div class="wrap">
+      <div class="wrap" *ngFor="let tableCard of tableCards">
+        <img src="{{ tableCard.src }}" alt="{{ tableCard.alt }}" class="card" />
+        <div class="player">{{ tableCard.user }}</div>
+      </div>
+      <!-- <div class="wrap">
         <img
           src="https://cataas.com/cat?width=196&height=392"
           alt="4_spade"
@@ -84,7 +88,7 @@
           alt="4_spade"
           class="card" />
         <div class="player">Fede</div>
-      </div>
+      </div> -->
     </div>
   </div>
   <div class="select-container">

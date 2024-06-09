@@ -53,11 +53,14 @@ export class DraggableImageComponent implements OnInit {
     this.stopDrag();
   }
 
-  onTransitionEnd() {
-    this.playedCard.emit(this.src);
-    if (this.hidden) {
-      console.log(`Image with src ${this.src} has been hidden.`);
-      // this.cardArry = this.cardArry.filter((card) => card.src !== this.src);
+  onTransitionEnd(event: any) {
+    console.log(event);
+    if (event.propertyName == "transform") {
+      this.playedCard.emit(this.src);
+      if (this.hidden) {
+        console.log(`Image with src ${this.src} has been hidden.`);
+      }
+      //put your code here
     }
   }
 }

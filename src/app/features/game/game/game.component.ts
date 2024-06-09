@@ -63,23 +63,11 @@ export class GameComponent implements OnInit, OnDestroy {
   chosesTrump: boolean = false;
   isMyTurn: boolean = false;
   playCard($event: string) {
-    //L'evento viene emesso dal componente 2 volte o piu', rimuovere la carta in modo robusto
-    console.log(`ZIO ${$event}`);
     const card = this.cards.find((card) => card.src === $event);
-    if (!card) {
-      console.log("Card not found");
-      throw new Error("Card not found");
-    }
-    // console.log(card);
+    //TODO temporary show user pyaled card eheheheh
+    //TODO estrarre in una funzione da chiamare tramite le socket :/
+    this.tableCards.push({ src: $event, user: "miaMadre" });
 
-    // console.log({
-    //   gameID: this.gameID,
-    //   username: this.username,
-    //   cardValue: cardNames[card.value],
-    //   cardSuit: card.suit,
-    //   isSuitFinished: false,
-    // });
-    // this.cards = this.cards.filter((card) => card.src !== $event);
     this.ws.webSocketSubject.next(JSON.stringify({ msg: "ZIO PERA" })); //TODO wow funziona davvero
 
     this.gameService
@@ -142,6 +130,7 @@ export class GameComponent implements OnInit, OnDestroy {
   trump = new FormControl("trump");
   call = new FormControl("call");
   interactionForm!: FormGroup;
+  tableCards: any[] = [];
   constructor(
     private route: ActivatedRoute,
     // @Inject("SESSIONSTORAGE") private localStorage: Storage,
