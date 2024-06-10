@@ -1,3 +1,4 @@
+import { KeyValue } from "@angular/common";
 import {
   Component,
   HostListener,
@@ -39,6 +40,8 @@ const cardNames: string[] = [
   "TWO",
   "THREE",
 ];
+
+const suits: string[] = ["COINS", "CUPS", "SWORDS", "CLUBS"];
 
 const cardValues: number[] = [4, 5, 6, 7, 8, 9, 10, 1, 2, 3];
 
@@ -128,6 +131,7 @@ export class GameComponent implements OnInit, OnDestroy {
   currentUser!: string;
   public interval: number = 1;
   trump = new FormControl("trump");
+  trumpChoosen: string = "";
   call = new FormControl("call");
   interactionForm!: FormGroup;
   tableCards: any[] = [];
@@ -148,6 +152,14 @@ export class GameComponent implements OnInit, OnDestroy {
     this._isAlive = false;
     // this.ws.onExit();
   }
+
+  // private CardsMapping(number: number): string {
+  //   const suit = ;
+  //   const 
+  //   const value = [number % 10]
+  //   return value + suit;
+    
+  // }
 
   private getCardDescription(cardValue: number, cardSuit: CardSuit): string {
     const suitNames: { [key in CardSuit]: string } = {
@@ -184,9 +196,12 @@ export class GameComponent implements OnInit, OnDestroy {
         .subscribe((res) => {
           if (res.error != null) {
             //TODO check this
+            
             console.log(res.error);
           } else {
             console.log(res);
+            this.trumpChoosen = res.value;
+            console.log("The trump is", res.value)
             // this.selectedTrump = true;
             this.selectedTrump = false;
           }
@@ -341,6 +356,7 @@ export class GameComponent implements OnInit, OnDestroy {
     console.log(response);
     console.log(response.username);
     console.log(this.username);
+    console.log("trump selected"+ response);
     //TODO dovrebbe funzionare tutto ma non nasconde dinamicamente.... perche ?
     this.selectedTrump = response.username === this.username;
     // if(response.settled) this.selectedTrump = true;
@@ -348,6 +364,14 @@ export class GameComponent implements OnInit, OnDestroy {
   turnChanegeEvent(response: any) {
     this.currentUser = response.userTurn;
     this.isMyTurn = this.username === response.userTurn;
+    if (response.trick != null){
+      this.tableCards = Object.entries(response.trick.cardsAndUsers).map(([key, value]: any) => ({
+        src: `assets/images/cards/${suits[Math.floor(key / 10)]}/${key % 10 <= 6 ? key % 10 + 4 : key % 10 - 6}.jpg`,
+        user: value,
+      }));
+      
+      console.log("console log simpatico " + this.tableCards);
+    }
   }
 
   startDrag(event: MouseEvent) {
