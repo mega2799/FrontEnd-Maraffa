@@ -95,6 +95,14 @@
   .normal-text{
     margin-top: 0;
   }
+
+
+}
+
+.game-text{
+  margin: 0 0 1% 0;
+  font-weight: bold;
+  padding: 0;
 }
 
 @media (min-width: 516px) and (max-width: 600px){
