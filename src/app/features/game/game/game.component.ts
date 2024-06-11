@@ -13,6 +13,8 @@ import { GameService } from "src/app/core/services/game.service";
 import { NotificationService } from "src/app/core/services/notification.service";
 import { WebSocketGameService } from "src/app/core/services/websocket.game";
 import { Card } from "src/app/model/card.model";
+import { IconsComponent } from "../../icons/icons/icons.component";
+import { MatDialog } from '@angular/material/dialog';
 
 interface Chiamata {
   value: string;
@@ -164,7 +166,8 @@ export class GameComponent implements OnInit, OnDestroy {
     @Inject("LOCALSTORAGE") private localStorage: Storage,
     public gameService: GameService,
     private ws: WebSocketGameService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) {}
 
   // updateInterval(interval: number) {
@@ -243,6 +246,7 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    
     this.interactionForm = new FormGroup({
       trump: this.trump,
       call: this.call,
@@ -524,10 +528,10 @@ export class GameComponent implements OnInit, OnDestroy {
     // this._hubService.CallBriscola(action);
   }
 
-  showCardsPlayedPreviousRound() {
-    if (this.game.cardsPlayedPreviousRound.length == this.game.players.length) {
-      this.cardsPlayedPopover.toggle();
-    }
+  showCardsPlayedPreviousRound(): void {
+    this.dialog.open(IconsComponent, {
+      width: '400px'
+    });
   }
 
   addExtraPoints() {
