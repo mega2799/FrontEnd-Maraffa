@@ -1,9 +1,9 @@
 <div class="game">
   <div class="players-name">
-    <p id="first-selected">{{teamA[0]}}</p>
-    <p>{{teamB[0]}}</p>
-    <p>{{teamA[1]}}</p>
-    <p id="second-selected">{{teamB[1]}}</p>
+    <p [ngClass]="getClass(0)">{{teamA[0]}} {{turn}}</p>
+    <p [ngClass]="getClass(1)">{{teamB[0]}}</p>
+    <p [ngClass]="getClass(2)">{{teamA[1]}}</p>
+    <p [ngClass]="getClass(3)">{{teamB[1]}}</p>
   </div>
 
   <!-- <mat-tab-group  id="tab-names">

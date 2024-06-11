@@ -152,6 +152,7 @@ export class GameComponent implements OnInit, OnDestroy {
   currentTrump!: string;
   public interval: number = 1;
   trump = new FormControl("trump");
+  turn: number = -1;
   trumpChoosen: string = "";
   call = new FormControl("call");
   interactionForm!: FormGroup;
@@ -182,6 +183,14 @@ export class GameComponent implements OnInit, OnDestroy {
   //   return value + suit;
 
   // }
+
+  getClass(index: number): string {
+    if (this.turn === 0) return (index === 0) ? 'first-selected' : '';
+    else if (this.turn === 1) return (index === 1) ? 'second-selected' : '';
+    else if (this.turn === 2) return (index === 2) ? 'first-selected' : '';
+    else if (this.turn === 3) return (index === 3) ? 'second-selected' : '';
+    return '';
+  }
 
   private getCardDescription(cardValue: number, cardSuit: CardSuit): string {
     const suitNames: { [key in CardSuit]: string } = {
@@ -262,11 +271,13 @@ export class GameComponent implements OnInit, OnDestroy {
         teamBScore: res.teamBScore,
       });
       this.isMyTurn = this.username === res.playerTurn;
+      this.turn = res.turn;
       this.teamA = res.teamA;
       this.teamB = res.teamB;
       // this.teamScoreA = res.teamAScore;
       // this.teamScoreB = res.teamBScore;
     });
+    
     this.gameService
       .getUserCards(this.gameID, this.username)
       .subscribe((res: any) => {
@@ -411,6 +422,7 @@ export class GameComponent implements OnInit, OnDestroy {
     console.log("Calling startGameManagment");
     console.log(response);
     this.currentUser = response.firstPlayer;
+    this.turn = response.firstPlayer;
   }
   trumpManagment(response: any) {
     console.log(response);
