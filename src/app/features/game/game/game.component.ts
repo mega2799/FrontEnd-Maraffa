@@ -1,4 +1,3 @@
-import { KeyValue } from "@angular/common";
 import {
   Component,
   HostListener,
@@ -11,6 +10,7 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { catchError, retry, throwError } from "rxjs";
 import { GameService } from "src/app/core/services/game.service";
+import { NotificationService } from "src/app/core/services/notification.service";
 import { WebSocketGameService } from "src/app/core/services/websocket.game";
 import { Card } from "src/app/model/card.model";
 
@@ -41,7 +41,7 @@ const cardNames: string[] = [
   "THREE",
 ];
 
-const suits: string[] = ["COINS", "CUPS", "SWORDS", "CLUBS"];
+const suits: string[] = ["COINS", "CUPS", "CLUBS", "SWORDS"];
 
 const cardValues: number[] = [4, 5, 6, 7, 8, 9, 10, 1, 2, 3];
 
@@ -67,23 +67,40 @@ export class GameComponent implements OnInit, OnDestroy {
   isMyTurn: boolean = false;
   playCard($event: string) {
     const card = this.cards.find((card) => card.src === $event);
-    //TODO temporary show user pyaled card eheheheh
-    //TODO estrarre in una funzione da chiamare tramite le socket :/
-    this.tableCards.push({ src: $event, user: "miaMadre" });
-
-    this.ws.webSocketSubject.next(JSON.stringify({ msg: "ZIO PERA" })); //TODO wow funziona davvero
-
+    // this.ws.webSocketSubject.next(JSON.stringify({ msg: "ZIO PERA" })); //TODO wow funziona davvero
+    let isSuitFinished = false;
+    if (this.tableCards.length > 0) {
+      isSuitFinished =
+        this.cards.filter((card) => card.suit === this.tableCards[0].suit) !=
+        undefined;
+    }
     this.gameService
       .playCard(
         this.gameID,
         this.username,
         cardNames[card.value],
         card.suit,
-        false
+        isSuitFinished
       )
-      .subscribe((res) => {
-        this.cards = this.cards.filter((card) => card.src !== $event); //TODO sembra venga chiamato a caso piu' volte ma per ora degli errori non ci preoccupiamo
-      });
+      .subscribe(
+        (res) => {
+          console.log(res);
+          if (res.error != undefined) {
+            setTimeout(() => {
+              this.notificationService.openSnackBar(res.error);
+            });
+            window.location.reload();
+            return;
+          }
+          this.cards = this.cards.filter((card) => card.src !== $event); //TODO sembra venga chiamato a caso piu' volte ma per ora degli errori non ci preoccupiamo
+        },
+        (error) => {
+          this.notificationService.openSnackBar(error.error.error); //fa molto ridere si
+          setTimeout(() => {
+            window.location.reload();
+          }, 2500);
+        }
+      );
   }
   @ViewChild("cardsPlayedPopover") //BHO
   private cardsPlayedPopover: any; //NgbPopover; //TODO cos'e' NgbPopover?
@@ -117,7 +134,8 @@ export class GameComponent implements OnInit, OnDestroy {
     { value: "CLUBS", viewValue: "Bastoni" },
     { value: "SWORDS", viewValue: "Spade" },
   ];
-
+  teamScoreA: number = 69;
+  teamScoreB: number = 69;
   isGameChatSidebarOpen = false;
   gameLocked = false;
   // currentUser: User = new User(); //TODO check
@@ -129,6 +147,7 @@ export class GameComponent implements OnInit, OnDestroy {
   selectedTrump: Boolean = false;
   cardsDrewPreviousRound: any; //CardAndUser[];
   currentUser!: string;
+  currentTrump!: string;
   public interval: number = 1;
   trump = new FormControl("trump");
   trumpChoosen: string = "";
@@ -138,6 +157,7 @@ export class GameComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     // @Inject("SESSIONSTORAGE") private localStorage: Storage,
+    private notificationService: NotificationService,
     @Inject("LOCALSTORAGE") private localStorage: Storage,
     public gameService: GameService,
     private ws: WebSocketGameService,
@@ -155,10 +175,10 @@ export class GameComponent implements OnInit, OnDestroy {
 
   // private CardsMapping(number: number): string {
   //   const suit = ;
-  //   const 
+  //   const
   //   const value = [number % 10]
   //   return value + suit;
-    
+
   // }
 
   private getCardDescription(cardValue: number, cardSuit: CardSuit): string {
@@ -187,6 +207,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     //TODO questo verra chiamato sia quando si fa una chiamata che quando si chiama la briscola
+    //TODO call da implementare
     console.log(this.interactionForm.value);
 
     const { trump, call } = this.interactionForm.value;
@@ -196,12 +217,12 @@ export class GameComponent implements OnInit, OnDestroy {
         .subscribe((res) => {
           if (res.error != null) {
             //TODO check this
-            
+
             console.log(res.error);
           } else {
             console.log(res);
             this.trumpChoosen = res.value;
-            console.log("The trump is", res.value)
+            console.log("The trump is", res.value);
             // this.selectedTrump = true;
             this.selectedTrump = false;
           }
@@ -226,11 +247,21 @@ export class GameComponent implements OnInit, OnDestroy {
       console.log("NAGATOMO ?");
       console.log(res);
       if (res.state === 0) {
-        this.trumpManagment({ username: res.trumpSelectorUsername });
+        this.trumpManagment({
+          username: res.trumpSelectorUsername,
+          trumpSelected: res.trumpSelected,
+        });
         this.selectedTrump = this.username === res.trumpSelectorUsername;
       }
-      this.turnChanegeEvent({ userTurn: res.playerTurn });
+      this.turnChanegeEvent({
+        userTurn: res.playerTurn,
+        trick: res?.trick,
+        teamAScore: res.teamAScore,
+        teamBScore: res.teamBScore,
+      });
       this.isMyTurn = this.username === res.playerTurn;
+      // this.teamScoreA = res.teamAScore;
+      // this.teamScoreB = res.teamBScore;
     });
     this.gameService
       .getUserCards(this.gameID, this.username)
@@ -251,7 +282,32 @@ export class GameComponent implements OnInit, OnDestroy {
             hidden: false,
           }))
         );
-        console.log(this.cards);
+        if (this.cards.length === 0) {
+          //FA cagare ma per l alpha e' perfetta
+          this.gameService
+            .getUserCards(this.gameID, this.username)
+            .subscribe((res: any) => {
+              this.cards = this.cards.concat(
+                ...res.cards.map((card: any) => ({
+                  suit: card.cardSuit,
+                  value:
+                    card.cardValue > 10 ? card.cardValue % 10 : card.cardValue, //TODO parse as a string
+                  src: `assets/images/cards/${card.cardSuit}/${
+                    cardValues[
+                      card.cardValue > 10 ? card.cardValue % 10 : card.cardValue
+                    ]
+                  }.jpg`,
+                  alt: this.getCardDescription(
+                    card.cardValue % 10,
+                    card.cardSuit
+                  ),
+                  // src: `assets/cards/${card.value}.png`,
+                  position: { x: 200, y: 0 },
+                  hidden: false,
+                }))
+              );
+            });
+        }
       });
 
     this.ws.webSocket$
@@ -356,20 +412,30 @@ export class GameComponent implements OnInit, OnDestroy {
     console.log(response);
     console.log(response.username);
     console.log(this.username);
-    console.log("trump selected"+ response);
+    console.log("trump selected" + response);
     //TODO dovrebbe funzionare tutto ma non nasconde dinamicamente.... perche ?
     this.selectedTrump = response.username === this.username;
+    if (response.trumpSelected != undefined) {
+      this.currentTrump = response.trumpSelected;
+    }
     // if(response.settled) this.selectedTrump = true;
   }
   turnChanegeEvent(response: any) {
     this.currentUser = response.userTurn;
     this.isMyTurn = this.username === response.userTurn;
-    if (response.trick != null){
-      this.tableCards = Object.entries(response.trick.cardsAndUsers).map(([key, value]: any) => ({
-        src: `assets/images/cards/${suits[Math.floor(key / 10)]}/${key % 10 <= 6 ? key % 10 + 4 : key % 10 - 6}.jpg`,
-        user: value,
-      }));
-      
+    this.teamScoreA = response.teamAScore;
+    this.teamScoreB = response.teamBScore;
+    if (response.trick != undefined) {
+      this.tableCards = Object.entries(response.trick.cardsAndUsers).map(
+        ([key, value]: any) => ({
+          src: `assets/images/cards/${suits[Math.floor(key / 10)]}/${
+            key % 10 <= 6 ? (key % 10) + 4 : (key % 10) - 6
+          }.jpg`,
+          suit: suits[Math.floor(key / 10)],
+          user: value,
+        })
+      );
+
       console.log("console log simpatico " + this.tableCards);
     }
   }

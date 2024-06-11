@@ -111,10 +111,6 @@ export class WaitingRoomComponentComponent implements OnInit {
     // this.currentUser = this.authService.getCurrentUser();
     this.titleService.setTitle("angular-material-template - Waiting Room");
     this.logger.log("Joined waiting room");
-
-    setTimeout(() => {
-      this.notificationService.openSnackBar("Welcome!");
-    });
   }
 
   ngOnInit() {
@@ -197,7 +193,7 @@ export class WaitingRoomComponentComponent implements OnInit {
     window.location.reload();
     setTimeout(() => {
       this.notificationService.openSnackBar(
-        `${response.user} si è unito alla partita`
+        `${response.username} si è unito alla partita`
       );
     });
   }
