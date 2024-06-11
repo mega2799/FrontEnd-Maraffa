@@ -131,9 +131,15 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    document.body.classList.add("login");
+    document.body.classList.remove("register");
     this.titleService.setTitle("MaraffaOnline - Login");
     this.authenticationService.logout();
     this.createForm();
+  }
+
+  ngOnDestroy() {
+    document.body.classList.remove("login");
   }
 
   private createForm() {
@@ -148,7 +154,14 @@ export class LoginComponent implements OnInit {
       password: new UntypedFormControl("", Validators.required),
       rememberMe: new UntypedFormControl(savedUserEmail !== null),
     });
-  }
+
+  this.loginForm.statusChanges.subscribe(status => {
+    const loginButton = document.getElementById('login-button') as HTMLButtonElement;
+    if (loginButton) {
+      loginButton.disabled = status !== 'VALID' || this.loading;
+    }
+  });
+}
 
   login() {
     const nickname = this.loginForm.get("nickname")?.value;

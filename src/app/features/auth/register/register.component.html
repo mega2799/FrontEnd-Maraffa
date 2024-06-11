@@ -2,18 +2,19 @@
   class="container login-container"
   fxLayout="row"
   fxLayoutAlign="center center">
-  <form [formGroup]="registerForm" fxFlex="30%" fxFlex.sm="50%" fxFlex.xs="90%">
-    <mat-card>
-      <mat-card-title>{{ this.name }}</mat-card-title>
-      <mat-card-subtitle>Registrati</mat-card-subtitle>
+  <form [formGroup]="registerForm" >
+    <mat-card class="auth-card">
+      <mat-card-title class="auth-title register-title">{{ this.name }}</mat-card-title>
+      <mat-card-subtitle class="subtitle">Registrati</mat-card-subtitle>
       <mat-card-content>
-        <mat-form-field class="full-width">
+        <mat-form-field class="full-width register">
           <input
             id="emailInput"
             matInput
             placeholder="Email"
             formControlName="email"
             autocomplete="email"
+            class="register-input"
             type="email" />
 
           <mat-error
@@ -24,18 +25,19 @@
           <mat-error
             id="requiredEmailError"
             *ngIf="registerForm.controls['email'].hasError('required')">
-            Email e'
+            Email è
             <strong>necessaria</strong>
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field class="full-width">
+        <mat-form-field class="full-width register">
           <input
             id="nicknameInput"
             matInput
             placeholder="Nome utente"
             formControlName="nickname"
             autocomplete="name"
+            class="register-input"
             type="text" />
 
           <!-- <mat-error
@@ -46,57 +48,59 @@
           <mat-error
             id="requiredNicknameError"
             *ngIf="registerForm.controls['nickname'].hasError('required')">
-            Un nome utente e'
+            Un nome utente è
             <strong>necessario</strong>
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field class="full-width">
+        <mat-form-field class="full-width register">
           <input
             id="passwordInput"
             matInput
             placeholder="Password"
             formControlName="password"
             type="password"
+            class="register-input"
             autocomplete="current-password" />
           <mat-error
             id="requiredPasswordError"
             *ngIf="registerForm.controls['email'].hasError('required')">
-            Password e'
+            Password è
             <strong>necessaria</strong>
           </mat-error>
         </mat-form-field>
 
-        <div class="full-width">
-          <mat-slide-toggle formControlName="rememberMe"
-            >Remember my email address</mat-slide-toggle
+        <div class="full-width register">
+          <mat-slide-toggle formControlName="rememberMe" id="remember"
+            >Ricordami</mat-slide-toggle
           >
         </div>
       </mat-card-content>
 
       <mat-card-actions class="login-actions">
+         <!-- [disabled]="registerForm.invalid || loading" -->
         <button
-          mat-raised-button
-          id="register"
-          color="primary"
+        mat-button
+          id="register-button"
           [disabled]="registerForm.invalid || loading"
           (click)="register()">
           Registrati
         </button>
-        <!-- <button
-          mat-button
-          id="resetPassword"
-          (click)="resetPassword()"
-          type="button">
-          Reset Password
-        </button> -->
-        <!-- <button
+        <button
           mat-button
           id="guestLogin"
+          class="normal-link"
           (click)="guestAccess()"
           type="button">
-          Enter as a guest
-        </button> -->
+          Entra come ospite
+        </button>
+        <button
+          mat-button
+          id="LoginBtn"
+          (click)="loginUser()"
+          type="button">
+          Login
+        </button>
       </mat-card-actions>
     </mat-card>
 
