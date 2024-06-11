@@ -245,7 +245,7 @@ export class GameComponent implements OnInit, OnDestroy {
     setTimeout(() => {}, 1500);
     this.gameService.getGame(this.gameID).subscribe((res: any) => {
       console.log("NAGATOMO ?");
-      console.log(res);
+      console.log("1 getGame res=", res);
       if (res.state === 0) {
         this.trumpManagment({
           username: res.trumpSelectorUsername,
@@ -323,7 +323,7 @@ export class GameComponent implements OnInit, OnDestroy {
         // response event
         // console.log("WTF is this: ", value);
         const response = JSON.parse(value);
-        console.log("WTF is this: ", response);
+        console.log("WTF is this switch: ", response);
         switch (response.event) {
           case "userTurn":
             this.turnChanegeEvent(response);
@@ -421,6 +421,7 @@ export class GameComponent implements OnInit, OnDestroy {
     // if(response.settled) this.selectedTrump = true;
   }
   turnChanegeEvent(response: any) {
+    console.log("response in turnChanegeEvent", response)
     this.currentUser = response.userTurn;
     this.isMyTurn = this.username === response.userTurn;
     this.teamScoreA = response.teamAScore;
