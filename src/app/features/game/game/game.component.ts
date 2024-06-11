@@ -269,11 +269,11 @@ export class GameComponent implements OnInit, OnDestroy {
         this.cards = this.cards.concat(
           ...res.cards.map((card: any) => ({
             suit: card.cardSuit,
-            value: card.cardValue > 10 ? card.cardValue % 10 : card.cardValue, //TODO parse as a string
+            value: card.cardValue >= 10 ? card.cardValue % 10 : card.cardValue, //TODO parse as a string
             // src: `https://cataas.com/cat?width=196&height=392&/${card.cardValue}`,
             src: `assets/images/cards/${card.cardSuit}/${
               cardValues[
-                card.cardValue > 10 ? card.cardValue % 10 : card.cardValue
+                card.cardValue >= 10 ? card.cardValue % 10 : card.cardValue
               ]
             }.jpg`,
             alt: this.getCardDescription(card.cardValue % 10, card.cardSuit),
@@ -291,10 +291,10 @@ export class GameComponent implements OnInit, OnDestroy {
                 ...res.cards.map((card: any) => ({
                   suit: card.cardSuit,
                   value:
-                    card.cardValue > 10 ? card.cardValue % 10 : card.cardValue, //TODO parse as a string
+                    card.cardValue >= 10 ? card.cardValue % 10 : card.cardValue, //TODO parse as a string
                   src: `assets/images/cards/${card.cardSuit}/${
                     cardValues[
-                      card.cardValue > 10 ? card.cardValue % 10 : card.cardValue
+                      card.cardValue >= 10 ? card.cardValue % 10 : card.cardValue
                     ]
                   }.jpg`,
                   alt: this.getCardDescription(
@@ -415,7 +415,7 @@ export class GameComponent implements OnInit, OnDestroy {
     console.log("trump selected" + response);
     //TODO dovrebbe funzionare tutto ma non nasconde dinamicamente.... perche ?
     this.selectedTrump = response.username === this.username;
-    if (response.trumpSelected != undefined) {
+    if (response.trumpSelected != "NONE") {
       this.currentTrump = response.trumpSelected;
     }
     // if(response.settled) this.selectedTrump = true;
