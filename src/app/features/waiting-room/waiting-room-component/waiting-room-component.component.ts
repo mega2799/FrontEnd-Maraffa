@@ -170,13 +170,15 @@ export class WaitingRoomComponentComponent implements OnInit {
       if (!actualGame) throw new Error("Game not found");
       this.status = statusValue[actualGame.status];
       this.teamA = actualGame.teamA;
-      // this.teamA.push(actualGame.creator); //TODO per ora lo hardocoddo io
+
       this.teamB = actualGame.teamB;
       this.score = actualGame.score;
     });
 
     console.log("teamA: ", this.teamA);
     console.log("teamB: ", this.teamB);
+
+
   }
   redirectToGame(response: any) {
     this.router.navigate(["/game/" + response.gameID]);

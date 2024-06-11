@@ -136,6 +136,8 @@ export class GameComponent implements OnInit, OnDestroy {
   ];
   teamScoreA: number = 69;
   teamScoreB: number = 69;
+  teamA: string[] = [];
+  teamB: string[] = [];
   isGameChatSidebarOpen = false;
   gameLocked = false;
   // currentUser: User = new User(); //TODO check
@@ -260,6 +262,8 @@ export class GameComponent implements OnInit, OnDestroy {
         teamBScore: res.teamBScore,
       });
       this.isMyTurn = this.username === res.playerTurn;
+      this.teamA = res.teamA;
+      this.teamB = res.teamB;
       // this.teamScoreA = res.teamAScore;
       // this.teamScoreB = res.teamBScore;
     });

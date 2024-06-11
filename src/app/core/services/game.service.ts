@@ -10,6 +10,8 @@ export class GameService {
     return this.http.get<any>(`/api/game/` + gameID);
   }
   private _currentPlayer!: string;
+
+
   public get currentPlayer(): string {
     return this._currentPlayer;
   }
@@ -73,4 +75,6 @@ export class GameService {
       position,
     });
   }
+
+
 }
