@@ -152,6 +152,7 @@ export class GameComponent implements OnInit, OnDestroy {
   cardsDrewPreviousRound: any; //CardAndUser[];
   currentUser!: string;
   currentTrump!: string;
+  cardsAndUsers: string[] = [];
   public interval: number = 1;
   trump = new FormControl("trump");
   turn: number = -1;
@@ -278,6 +279,7 @@ export class GameComponent implements OnInit, OnDestroy {
       this.turn = res.turn;
       this.teamA = res.teamA;
       this.teamB = res.teamB;
+      
       // this.teamScoreA = res.teamAScore;
       // this.teamScoreB = res.teamBScore;
     });
@@ -454,10 +456,13 @@ export class GameComponent implements OnInit, OnDestroy {
           }.jpg`,
           suit: suits[Math.floor(key / 10)],
           user: value,
+          
         })
       );
-
-      console.log("console log simpatico " + this.tableCards);
+     this.cardsAndUsers = [];
+      Object.entries(response.latestTrick.cardsAndUsers).forEach(([key, value]: any) => {
+      this.cardsAndUsers.push(`assets/images/cards/${suits[Math.floor(key / 10)]}/${key % 10 <= 6 ? (key % 10) + 4 : (key % 10) - 6}.jpg`);
+    });
     }
   }
 
@@ -530,7 +535,8 @@ export class GameComponent implements OnInit, OnDestroy {
 
   showCardsPlayedPreviousRound(): void {
     this.dialog.open(IconsComponent, {
-      width: '400px'
+      width: '400px',
+      data: this.cardsAndUsers
     });
   }
 
