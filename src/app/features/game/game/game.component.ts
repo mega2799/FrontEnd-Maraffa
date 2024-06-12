@@ -45,6 +45,8 @@ const cardNames: string[] = [
 
 const suits: string[] = ["COINS", "CUPS", "CLUBS", "SWORDS"];
 
+const mappingSuit: { [key: string]: string } = {"COINS": "Denari", "CUPS": "Coppe", "CLUBS": "Bastoni", "SWORDS": "Spade"};
+
 const cardValues: number[] = [4, 5, 6, 7, 8, 9, 10, 1, 2, 3];
 
 // const cardValues: number[] = [3, 4, 5, 6, 7, 8, 9, 0, 1, 2];
@@ -438,7 +440,7 @@ export class GameComponent implements OnInit, OnDestroy {
     //TODO dovrebbe funzionare tutto ma non nasconde dinamicamente.... perche ?
     this.selectedTrump = response.username === this.username;
     if (response.trumpSelected != "NONE") {
-      this.currentTrump = response.trumpSelected;
+      this.currentTrump = mappingSuit[response.trumpSelected];
     }
     // if(response.settled) this.selectedTrump = true;
   }
