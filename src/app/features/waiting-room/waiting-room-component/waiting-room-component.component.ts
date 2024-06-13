@@ -54,6 +54,7 @@ export class WaitingRoomComponentComponent implements OnInit {
     private ws: WebSocketGameService,
     public gameService: GameService,
     private logger: NGXLogger
+
   ) {}
 
   score!: number;

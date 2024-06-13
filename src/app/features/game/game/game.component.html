@@ -1,4 +1,5 @@
 <div class="game">
+  <div id="info-box" *ngIf="this.madeCall"><p>{{this.currentUser}} ha chiamato {{this.currentCall}} </p></div>
   <div class="players-name">
     <mat-icon mat-list-icon class="star">star</mat-icon>
     <p [ngClass]="getClass(0)">{{teamA[0]}}</p>

@@ -58,6 +58,19 @@ export class GameService {
       cardSuit,
     });
   }
+
+  makeCall(
+    gameID: string,
+    username: string,
+    call: string
+  ): Observable<any> {
+    return this.http.post<any>(`/api/round/makeCall`, {
+      gameID,
+      username,
+      call,
+    });
+  }
+
   startGame(gameID: string) {
     return this.http.patch<any>(`/api/game/start`, { gameID });
   }

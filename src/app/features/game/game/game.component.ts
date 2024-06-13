@@ -115,6 +115,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private dragging = false;
   private startY = 0;
   hidden = false;
+  madeCall = false;
 
   cards: any[] = [];
   //  Array.from(Array(10).keys()).map((i) => ({
@@ -154,6 +155,7 @@ export class GameComponent implements OnInit, OnDestroy {
   cardsDrewPreviousRound: any; //CardAndUser[];
   currentUser!: string;
   currentTrump!: string;
+  currentCall!: string;
   cardsAndUsers: string[] = [];
   public interval: number = 1;
   trump = new FormControl("trump");
@@ -242,6 +244,20 @@ export class GameComponent implements OnInit, OnDestroy {
             console.log("The trump is", res.value);
             // this.selectedTrump = true;
             this.selectedTrump = false;
+          }
+        });
+    } else {
+      this.gameService
+        .makeCall(this.gameID, this.username, call)
+        .subscribe((res) => {
+          console.log(res);
+          if (res.error != null) {
+            console.log(res.error);
+          } else {
+            console.log(res);
+            this.call = res.value;
+            console.log("The call is", res.value);
+            // this.selectedTrump = true;
           }
         });
     }
@@ -357,6 +373,9 @@ export class GameComponent implements OnInit, OnDestroy {
           case "startGame":
             this.startGameManagment(response);
             break;
+          case "call":
+            this.makeCall(response);
+            break;
           default:
             break;
         }
@@ -426,12 +445,15 @@ export class GameComponent implements OnInit, OnDestroy {
     //   if (messages.length > 0 && messages[0].username != this.currentUser.name && !this.isGameChatSidebarOpen) this.numberUnreadMessages++;
     // });
   }
+
+
   startGameManagment(response: any) {
     console.log("Calling startGameManagment");
     console.log(response);
     this.currentUser = response.firstPlayer;
     this.turn = response.firstPlayer;
   }
+
   trumpManagment(response: any) {
     console.log(response);
     console.log(response.username);
@@ -462,10 +484,20 @@ export class GameComponent implements OnInit, OnDestroy {
         })
       );
      this.cardsAndUsers = [];
-      Object.entries(response.latestTrick.cardsAndUsers).forEach(([key, value]: any) => {
-      this.cardsAndUsers.push(`assets/images/cards/${suits[Math.floor(key / 10)]}/${key % 10 <= 6 ? (key % 10) + 4 : (key % 10) - 6}.jpg`);
-    });
+     if (response != undefined){
+       Object.entries(response.latestTrick.cardsAndUsers).forEach(([key, value]: any) => {
+       this.cardsAndUsers.push(`assets/images/cards/${suits[Math.floor(key / 10)]}/${key % 10 <= 6 ? (key % 10) + 4 : (key % 10) - 6}.jpg`);
+      });
+     }
     }
+  }
+
+  makeCall(response: any){
+    this.madeCall = true;
+    this.currentCall = response.call;
+    setTimeout(() => {
+      this.madeCall = false;
+    }, 12000);
   }
 
   startDrag(event: MouseEvent) {
