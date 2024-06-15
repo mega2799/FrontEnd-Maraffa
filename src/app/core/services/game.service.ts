@@ -6,11 +6,17 @@ import { Observable } from "rxjs";
   providedIn: "root",
 })
 export class GameService {
+  sendMessage(author: string, message: string, gameID?: string) {
+    return this.http.post<any>(`/api/chat`, {
+      gameID,
+      author,
+      message,
+    });
+  }
   getGame(gameID: string) {
     return this.http.get<any>(`/api/game/` + gameID);
   }
   private _currentPlayer!: string;
-
 
   public get currentPlayer(): string {
     return this._currentPlayer;
@@ -59,11 +65,7 @@ export class GameService {
     });
   }
 
-  makeCall(
-    gameID: string,
-    username: string,
-    call: string
-  ): Observable<any> {
+  makeCall(gameID: string, username: string, call: string): Observable<any> {
     return this.http.post<any>(`/api/round/makeCall`, {
       gameID,
       username,
@@ -88,6 +90,4 @@ export class GameService {
       position,
     });
   }
-
-
 }

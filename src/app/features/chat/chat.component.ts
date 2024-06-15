@@ -1,4 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Inject, OnInit } from "@angular/core";
+import { catchError, retry, throwError } from "rxjs";
+import { GameService } from "src/app/core/services/game.service";
+import { WebSocketGameService } from "src/app/core/services/websocket.game";
 
 @Component({
   selector: "app-chat",
@@ -22,15 +25,46 @@ import { Component, OnInit } from "@angular/core";
 })
 export class ChatComponent implements OnInit {
   messages: any[] = [];
+  public interval: number = 1;
 
+  constructor(
+    @Inject("LOCALSTORAGE") private localStorage: Storage,
+    // public gameService: GameService,
+    private ws: WebSocketGameService,
+    private readonly gameService: GameService
+  ) {}
   ngOnInit(): void {
-    return;
+    this.ws.webSocket$
+      .pipe(
+        catchError((error) => {
+          this.interval = 1;
+          return throwError(() => new Error(error));
+        }),
+        retry({ delay: 5_000 })
+        // takeUntilDestroyed()
+      )
+      .subscribe((value: any) => {
+        // response event
+        // console.log("WTF is this: ", value);
+        const response = JSON.parse(value);
+        console.log("WTF is this switch: ", response);
+        switch (response.event) {
+          case "message":
+            this.messageReceived(response);
+            break;
+          default:
+            break;
+        }
+      });
+  }
+  messageReceived(response: any) {
+    this.messages.push(JSON.parse(response.message));
   }
 
   sendMessage(event: { message: string; files: File[] }) {
-    console.log(event.files);
+    let message = {};
     if (this.isGif(event.message) || this.isImage(event.message)) {
-      this.messages.push({
+      message = {
         text: event.message,
         date: new Date(),
         reply: true,
@@ -43,37 +77,55 @@ export class ChatComponent implements OnInit {
           },
         ],
         user: {
-          name: "Jonh Doe",
+          name: this.localStorage.getItem("fullName"),
           avatar: "https://i.gifer.com/no.gif",
         },
-      });
+      };
+      // this.messages.push({
+      //   text: event.message,
+      //   date: new Date(),
+      //   reply: true,
+      //   type: "file",
+      //   files: [
+      //     {
+      //       url: event.message, //file.src,
+      //       type: this.isGif(event.message) ? "image/gif" : "image/jpeg",
+      //       icon: "file-text-outline",
+      //     },
+      //   ],
+      //   user: {
+      //     name: "Jonh Doe",
+      //     avatar: "https://i.gifer.com/no.gif",
+      //   },
+      // });
     } else {
-      // const files = !event.files
-      //   ? []
-      //   : event.files.map((file) => {
-      //       return {
-      //         url: file.webkitRelativePath, //file.src,
-      //         type: file.type,
-      //         icon: "file-text-outline",
-      //       };
-      //     });
-
-      this.messages.push({
+      message = {
         text: event.message,
         date: new Date(),
         reply: true,
         type: "text",
         files: [],
         user: {
-          name: "Jonh Doe",
+          name: this.localStorage.getItem("fullName"),
           avatar: "https://i.gifer.com/no.gif",
         },
-      });
+      };
+
+      // this.messages.push({
+      //   text: event.message,
+      //   date: new Date(),
+      //   reply: true,
+      //   type: "text",
+      //   files: [],
+      //   user: {
+      //     name: "Jonh Doe",
+      //     avatar: "https://i.gifer.com/no.gif",
+      //   },
+      // });
     }
-    // const botReply = this.chatShowcaseService.reply(event.message);
-    // if (botReply) {
-    // setTimeout(() => { this.messages.push(botReply) }, 500);
-    // }
+    this.gameService
+      .sendMessage("mega", JSON.stringify(message))
+      .subscribe((res) => {});
   }
 
   private isGif(url: string): boolean {
