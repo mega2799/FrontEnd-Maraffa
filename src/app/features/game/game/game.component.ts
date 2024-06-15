@@ -15,6 +15,7 @@ import { WebSocketGameService } from "src/app/core/services/websocket.game";
 import { Card } from "src/app/model/card.model";
 import { IconsComponent } from "../../icons/icons/icons.component";
 import { MatDialog } from '@angular/material/dialog';
+import { TypographyComponent } from "../../typography/typography/typography.component";
 
 interface Chiamata {
   value: string;
@@ -164,6 +165,7 @@ export class GameComponent implements OnInit, OnDestroy {
   call = new FormControl("call");
   interactionForm!: FormGroup;
   tableCards: any[] = [];
+  isRoundEnded: boolean = false;
   constructor(
     private route: ActivatedRoute,
     // @Inject("SESSIONSTORAGE") private localStorage: Storage,
@@ -376,6 +378,9 @@ export class GameComponent implements OnInit, OnDestroy {
           case "call":
             this.makeCall(response);
             break;
+          case "endRound":
+            this.endRound(response);
+            break;
           default:
             break;
         }
@@ -490,6 +495,7 @@ export class GameComponent implements OnInit, OnDestroy {
       });
      }
     }
+
   }
 
   makeCall(response: any){
@@ -497,7 +503,27 @@ export class GameComponent implements OnInit, OnDestroy {
     this.currentCall = response.call;
     setTimeout(() => {
       this.madeCall = false;
-    }, 12000);
+    }, 3000);
+  }
+
+  endRound(response: any) {
+  console.log("Calling endRound");
+  this.isRoundEnded = true;
+  setTimeout(() => {
+    this.dialog.open(TypographyComponent, {
+      width: '400px',
+      data: response
+    });
+  }, 4000);
+  this.isRoundEnded = false;
+  }
+
+  /**delete this */
+  buttonEndRound(){
+    this.dialog.open(TypographyComponent, {
+      width: '355px',
+      data: 0
+    });
   }
 
   startDrag(event: MouseEvent) {
