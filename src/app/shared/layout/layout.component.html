@@ -1,5 +1,4 @@
 <div class="navbar-container" [class.example-is-mobile]="mobileQuery.matches">
-
   <!-- header -->
   <mat-toolbar class="navbar">
     <button id="menu-button" mat-icon-button (click)="snav.toggle()">
@@ -8,36 +7,41 @@
 
     <a class="navbar-brand" [routerLink]="['/']" matTooltip="Home">
       <h1>
-        {{this.name}}
+        {{ this.name }}
       </h1>
     </a>
 
     <span class="navbar-spacer"></span>
 
     <button mat-icon-button [matMenuTriggerFor]="notificationMenu">
-      <mat-icon class="whiteIcon" matBadge="2" matBadgeColor="accent">notifications</mat-icon>
+      <mat-icon class="whiteIcon" matBadge="2" matBadgeColor="accent"
+        >notifications</mat-icon
+      >
     </button>
-    <mat-menu #notificationMenu="matMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
-
+    <mat-menu
+      #notificationMenu="matMenu"
+      xPosition="before"
+      yPosition="above"
+      [overlapTrigger]="false">
       <a mat-menu-item>
         <span>You have new tasks</span>
       </a>
       <a mat-menu-item>
         <span>You have a new message</span>
       </a>
-
     </mat-menu>
-
-
 
     <button mat-button [matMenuTriggerFor]="userMenu">
       <mat-icon class="whiteIcon">person</mat-icon>
       <span class="username" fxShow fxHide.xs>
-        {{userName}}
+        {{ userName }}
       </span>
     </button>
-    <mat-menu #userMenu="matMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
-
+    <mat-menu
+      #userMenu="matMenu"
+      xPosition="before"
+      yPosition="above"
+      [overlapTrigger]="false">
       <a mat-menu-item [routerLink]="['/userInfo']">
         <mat-icon>person</mat-icon>
         <span>Profile</span>
@@ -47,59 +51,57 @@
         <mat-icon>exit_to_app</mat-icon>
         <span>Log out</span>
       </a>
-
     </mat-menu>
-
   </mat-toolbar>
 
   <!-- menu-navbar -->
-<mat-sidenav-container class="navbar-sidenav-container">
-    <mat-sidenav #snav [opened]="!mobileQuery.matches" [mode]="mobileQuery.matches ? 'over' : 'side'"
-      [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" class="sidenav">
-
+  <mat-sidenav-container class="navbar-sidenav-container">
+    <mat-sidenav
+      #snav
+      [opened]="!mobileQuery.matches"
+      [mode]="mobileQuery.matches ? 'over' : 'side'"
+      [fixedInViewport]="mobileQuery.matches"
+      fixedTopGap="56"
+      class="sidenav">
       <mat-nav-list>
-
         <h3 mat-subheader>Home</h3>
 
-        <a mat-list-item [routerLink]="['/dashboard']" routerLinkActive="active">
-          <mat-icon mat-list-icon>
-            dashboard
-          </mat-icon>
-          <p mat-line> Dashboard </p>
+        <a
+          mat-list-item
+          [routerLink]="['/dashboard']"
+          routerLinkActive="active">
+          <mat-icon mat-list-icon> dashboard </mat-icon>
+          <p mat-line>Dashboard</p>
         </a>
 
         <a mat-list-item [routerLink]="['/chat-all']" routerLinkActive="active">
-          <mat-icon mat-list-icon>
-            forum 
-          </mat-icon>
-          <p mat-line> Chat</p>
+          <mat-icon mat-list-icon> forum </mat-icon>
+          <p mat-line>Chat</p>
         </a>
 
         <a mat-list-item [routerLink]="['/users']" routerLinkActive="active">
-          <mat-icon mat-list-icon>
-            people
-          </mat-icon>
-          <p mat-line> Utenti attivi </p>
+          <mat-icon mat-list-icon> people </mat-icon>
+          <p mat-line>Utenti attivi</p>
         </a>
 
-        <a mat-list-item [routerLink]="['/all-games']" routerLinkActive="active">
-          <mat-icon mat-list-icon>
-            sports_esports
-          </mat-icon>
-          <p mat-line> Partite </p>
+        <a
+          mat-list-item
+          [routerLink]="['/all-games']"
+          routerLinkActive="active">
+          <mat-icon mat-list-icon> sports_esports </mat-icon>
+          <p mat-line>Partite</p>
         </a>
 
         <a mat-list-item [routerLink]="['/userInfo']">
           <mat-icon mat-list-icon>person</mat-icon>
-          <p mat-line> Account </p>
+          <p mat-line>Account</p>
         </a>
 
         <a mat-list-item [routerLink]="['/auth/login']">
           <mat-icon mat-list-icon>exit_to_app</mat-icon>
-          <p mat-line> Log out </p>
+          <p mat-line>Log out</p>
         </a>
       </mat-nav-list>
-
     </mat-sidenav>
 
     <!-- Main content -->
@@ -108,65 +110,73 @@
       <div class="progress-bar-container">
         <mat-progress-bar color="accent" mode="indeterminate" *ngIf="spinnerService.visibility | async">
         </mat-progress-bar>-->
-        <!-- <mat-spinner class="spinner" [diameter]="50" *ngIf="showSpinner"></mat-spinner> -->
-      <!--</div>
+    <!-- <mat-spinner class="spinner" [diameter]="50" *ngIf="showSpinner"></mat-spinner> -->
+    <!--</div>
 
 
       <router-outlet></router-outlet>
 
     </mat-sidenav-content>
   </mat-sidenav-container>-->
- <div class="oval-menu">
-    <mat-nav-list>
-      <a mat-list-item [routerLink]="['/dashboard']" routerLinkActive="active" class="menu-item">
-        <mat-icon mat-list-icon>
-          dashboard
-        </mat-icon>
-      </a>
+    <div class="oval-menu">
+      <mat-nav-list>
+        <a
+          mat-list-item
+          [routerLink]="['/dashboard']"
+          routerLinkActive="active"
+          class="menu-item">
+          <mat-icon mat-list-icon> dashboard </mat-icon>
+        </a>
 
-      <a mat-list-item [routerLink]="['/chat-all']" routerLinkActive="active" class="menu-item">
-        <mat-icon mat-list-icon>
-          forum 
-        </mat-icon>
-      </a>
+        <a
+          mat-list-item
+          [routerLink]="['/chat-all']"
+          routerLinkActive="active"
+          class="menu-item">
+          <mat-icon mat-list-icon> forum </mat-icon>
+        </a>
 
-      <a mat-list-item [routerLink]="['/profile2']" routerLinkActive="active" class="menu-item"> <!--users-->
-        <mat-icon mat-list-icon>
-          people
-        </mat-icon>
-      </a>
+        <a
+          mat-list-item
+          [routerLink]="['/profile2']"
+          routerLinkActive="active"
+          class="menu-item">
+          <!--users-->
+          <mat-icon mat-list-icon> people </mat-icon>
+        </a>
 
-      <a mat-list-item [routerLink]="['/all-games']" routerLinkActive="active" class="menu-item">
-        <mat-icon mat-list-icon>
-          sports_esports
-        </mat-icon>
-      </a>
+        <a
+          mat-list-item
+          [routerLink]="['/all-games']"
+          routerLinkActive="active"
+          class="menu-item">
+          <mat-icon mat-list-icon> sports_esports </mat-icon>
+        </a>
 
-      <a mat-list-item [routerLink]="['/userInfo']" class="menu-item">
-        <mat-icon mat-list-icon>person</mat-icon>
-      </a>
+        <a mat-list-item [routerLink]="['/userInfo']" class="menu-item">
+          <mat-icon mat-list-icon>person</mat-icon>
+        </a>
 
-      <a mat-list-item [routerLink]="['/auth/login']" class="menu-item">
-        <mat-icon mat-list-icon>exit_to_app</mat-icon>
-      </a>
-    </mat-nav-list>
-    <!--<router-outlet></router-outlet>-->
-  </div>
-<div class="cont">
-  <router-outlet></router-outlet>
-</div>
-<!--<mat-sidenav-container class="navbar-sidenav-container">
+        <a mat-list-item [routerLink]="['/auth/login']" class="menu-item">
+          <mat-icon mat-list-icon>exit_to_app</mat-icon>
+        </a>
+      </mat-nav-list>
+      <!--<router-outlet></router-outlet>-->
+    </div>
+    <div class="cont">
+      <router-outlet></router-outlet>
+    </div>
+    <!--<mat-sidenav-container class="navbar-sidenav-container">
  <mat-sidenav-content class="sidenav-content">-->
 
- <!-- <div class="progress-bar-container">
+    <!-- <div class="progress-bar-container">
     <mat-progress-bar color="accent" mode="indeterminate" *ngIf="spinnerService.visibility | async">
     </mat-progress-bar>-->
     <!-- <mat-spinner class="spinner" [diameter]="50" *ngIf="showSpinner"></mat-spinner> -->
-  <!--</div>-->
+    <!--</div>-->
 
-
-  <!--<router-outlet></router-outlet>
+    <!--<router-outlet></router-outlet>
 
 </mat-sidenav-content>-->
-</mat-sidenav-container>
+  </mat-sidenav-container>
 </div>
