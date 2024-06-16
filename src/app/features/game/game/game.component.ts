@@ -165,7 +165,6 @@ export class GameComponent implements OnInit, OnDestroy {
   call = new FormControl("call");
   interactionForm!: FormGroup;
   tableCards: any[] = [];
-  isRoundEnded: boolean = false;
   constructor(
     private route: ActivatedRoute,
     // @Inject("SESSIONSTORAGE") private localStorage: Storage,
@@ -477,6 +476,8 @@ export class GameComponent implements OnInit, OnDestroy {
     this.isMyTurn = this.username === response.userTurn;
     this.teamScoreA = response.teamAScore;
     this.teamScoreB = response.teamBScore;
+    console.log("change teamA", response.teamAScore);
+    console.log("change teamB", response.teamBScore);
     if (response.trick != undefined) {
       this.tableCards = Object.entries(response.trick.cardsAndUsers).map(
         ([key, value]: any) => ({
@@ -507,23 +508,43 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   endRound(response: any) {
-  console.log("Calling endRound");
-  this.isRoundEnded = true;
-  setTimeout(() => {
-    this.dialog.open(TypographyComponent, {
-      width: '400px',
-      data: response
-    });
-  }, 4000);
-  this.isRoundEnded = false;
-  }
-
-  /**delete this */
-  buttonEndRound(){
-    this.dialog.open(TypographyComponent, {
-      width: '355px',
-      data: 0
-    });
+    this.teamScoreA = response.teamAScore;
+    this.teamScoreB = response.teamBScore;
+    console.log("Calling endRound");
+    console.log("teamA", response.teamAScore);
+    console.log("teamB", response.teamBScore);
+    this.selectedTrump = response.initialTurn === this.username;
+    window.location.reload();
+    // const dialogRef = this.dialog.open(TypographyComponent, {
+    //   width: '400px',
+    //   data: response
+    // });
+    // setTimeout(() => {
+    //   dialogRef.close();
+    // }, 4000);
+    // this.gameService
+    // .getUserCards(this.gameID, this.username)
+    // .subscribe((res: any) => {
+    //   this.cards = this.cards.concat(
+    //     ...res.cards.map((card: any) => ({
+    //       suit: card.cardSuit,
+    //       value:
+    //         card.cardValue >= 10 ? card.cardValue % 10 : card.cardValue, //TODO parse as a string
+    //       src: `assets/images/cards/${card.cardSuit}/${
+    //         cardValues[
+    //           card.cardValue >= 10 ? card.cardValue % 10 : card.cardValue
+    //         ]
+    //       }.jpg`,
+    //       alt: this.getCardDescription(
+    //         card.cardValue % 10,
+    //         card.cardSuit
+    //       ),
+    //       // src: `assets/cards/${card.value}.png`,
+    //       position: { x: 200, y: 0 },
+    //       hidden: false,
+    //     }))
+    //   );
+    // });
   }
 
   startDrag(event: MouseEvent) {
