@@ -1,0 +1,118 @@
+/* Layout Styles */
+nb-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f4f4f7;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+nb-layout-header {
+  background-color: #222b45;
+  color: #ffffff;
+  padding: 1rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+nb-layout-column {
+  flex: 1;
+  padding: 2rem;
+  background-color: #ffffff;
+  overflow-y: auto;
+}
+
+/* Chat Styles */
+nb-chat {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #ffffff;
+  border: 1px solid #ebeff5;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+nb-chat-title {
+  background-color: #f4f4f7;
+  padding: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 1px solid #ebeff5;
+}
+
+nb-chat-message {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+nb-chat-message nb-chat-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 1rem;
+}
+
+nb-chat-message nb-chat-text {
+  background-color: #f4f4f7;
+  padding: 0.75rem;
+  border-radius: 8px;
+  max-width: 60%;
+}
+
+nb-chat-message nb-chat-text-reply {
+  background-color: #e4e4f7;
+}
+
+nb-chat-message nb-chat-sender {
+  font-size: 0.875rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+nb-chat-message nb-chat-date {
+  font-size: 0.75rem;
+  color: #8f9bb3;
+  margin-top: 0.25rem;
+}
+
+nb-chat-message nb-chat-files {
+  margin-top: 0.5rem;
+}
+
+nb-chat-form {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-top: 1px solid #ebeff5;
+  background-color: #f4f4f7;
+}
+
+nb-chat-form nb-chat-input {
+  flex: 1;
+  margin-right: 1rem;
+  padding: 0.5rem;
+  border: 1px solid #ebeff5;
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+
+nb-chat-form nb-chat-button {
+  background-color: #3366ff;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+nb-chat-form nb-chat-button:hover {
+  background-color: #274bdb;
+}

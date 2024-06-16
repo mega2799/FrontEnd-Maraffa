@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit } from "@angular/core";
+import { FormControl, FormGroup } from "@angular/forms";
 import { catchError, retry, throwError } from "rxjs";
 import { GameService } from "src/app/core/services/game.service";
 import { WebSocketGameService } from "src/app/core/services/websocket.game";
@@ -6,8 +7,7 @@ import { WebSocketGameService } from "src/app/core/services/websocket.game";
 @Component({
   selector: "app-chat",
   templateUrl: "./chat.component.html",
-  // styleUrls: ["./chat.component.css"],
-  // styleUrls: ["./default.css"],
+  styleUrls: ["./chat.component.css"],
   // styleUrls: [
   //   "../../../../node_modules/@nebular/theme/styles/prebuilt/default.css",
   // ],
@@ -27,6 +27,10 @@ export class ChatComponent implements OnInit {
   messages: any[] = [];
   public interval: number = 1;
 
+  message = new FormControl("message");
+  formCazzo = new FormGroup({
+    message: this.message,
+  });
   constructor(
     @Inject("LOCALSTORAGE") private localStorage: Storage,
     // public gameService: GameService,
@@ -61,7 +65,11 @@ export class ChatComponent implements OnInit {
     this.messages.push(JSON.parse(response.message));
   }
 
-  sendMessage(event: { message: string; files: File[] }) {
+  // sendMessage(event: { message: string; files: File[] }) {
+  sendMessage(formSubmit: any) {
+    formSubmit.preventDefault();
+    let event: any = {};
+    event.message = formSubmit.target[0].value;
     let message = {};
     if (this.isGif(event.message) || this.isImage(event.message)) {
       message = {
@@ -81,23 +89,23 @@ export class ChatComponent implements OnInit {
           avatar: "https://i.gifer.com/no.gif",
         },
       };
-      // this.messages.push({
-      //   text: event.message,
-      //   date: new Date(),
-      //   reply: true,
-      //   type: "file",
-      //   files: [
-      //     {
-      //       url: event.message, //file.src,
-      //       type: this.isGif(event.message) ? "image/gif" : "image/jpeg",
-      //       icon: "file-text-outline",
-      //     },
-      //   ],
-      //   user: {
-      //     name: "Jonh Doe",
-      //     avatar: "https://i.gifer.com/no.gif",
-      //   },
-      // });
+      this.messages.push({
+        text: event.message,
+        date: new Date(),
+        reply: true,
+        type: "file",
+        files: [
+          {
+            url: event.message, //file.src,
+            type: this.isGif(event.message) ? "image/gif" : "image/jpeg",
+            icon: "file-text-outline",
+          },
+        ],
+        user: {
+          name: "Jonh Doe",
+          avatar: "https://i.gifer.com/no.gif",
+        },
+      });
     } else {
       message = {
         text: event.message,
@@ -111,17 +119,17 @@ export class ChatComponent implements OnInit {
         },
       };
 
-      // this.messages.push({
-      //   text: event.message,
-      //   date: new Date(),
-      //   reply: true,
-      //   type: "text",
-      //   files: [],
-      //   user: {
-      //     name: "Jonh Doe",
-      //     avatar: "https://i.gifer.com/no.gif",
-      //   },
-      // });
+      this.messages.push({
+        text: event.message,
+        date: new Date(),
+        reply: true,
+        type: "text",
+        files: [],
+        user: {
+          name: "Jonh Doe",
+          avatar: "https://i.gifer.com/no.gif",
+        },
+      });
     }
     this.gameService
       .sendMessage("mega", JSON.stringify(message))
