@@ -483,22 +483,32 @@ export class GameComponent implements OnInit, OnDestroy {
     console.log("change teamA", response.teamAScore);
     console.log("change teamB", response.teamBScore);
     if (response.trick != undefined) {
-      this.tableCards = Object.entries(response.trick.cardsAndUsers).map(
-        ([key, value]: any) => ({
-          src: `assets/images/cards/${suits[Math.floor(key / 10)]}/${
-            key % 10 <= 6 ? (key % 10) + 4 : (key % 10) - 6
+      this.tableCards =  this.tableCards = response.trick.cards.map((card: number) => 
+         ({
+          src: `assets/images/cards/${suits[Math.floor(card / 10)]}/${
+            card % 10 <= 6 ? (card % 10) + 4 : (card % 10) - 6
           }.jpg`,
-          suit: suits[Math.floor(key / 10)],
-          user: value,
-          
+          suit: suits[Math.floor(card / 10)],
+          user: response.trick.cardsAndUsers[card],
         })
       );
-     this.cardsAndUsers = [];
-     if (response != undefined){
-       Object.entries(response.latestTrick.cardsAndUsers).forEach(([key, value]: any) => {
-       this.cardsAndUsers.push(`assets/images/cards/${suits[Math.floor(key / 10)]}/${key % 10 <= 6 ? (key % 10) + 4 : (key % 10) - 6}.jpg`);
-      });
-     }
+      // this.tableCards = Object.entries(response.trick.cardsAndUsers).map(
+      //   ([key, value]: any) => ({
+      //     src: `assets/images/cards/${suits[Math.floor(key / 10)]}/${
+      //       key % 10 <= 6 ? (key % 10) + 4 : (key % 10) - 6
+      //     }.jpg`,
+      //     suit: suits[Math.floor(key / 10)],
+      //     user: value,
+          
+      //   })
+      // );
+      console.log("Table =", this.tableCards);
+      this.cardsAndUsers = [];
+      if (response != undefined){
+        Object.entries(response.latestTrick.cardsAndUsers).forEach(([key, value]: any) => {
+        this.cardsAndUsers.push(`assets/images/cards/${suits[Math.floor(key / 10)]}/${key % 10 <= 6 ? (key % 10) + 4 : (key % 10) - 6}.jpg`);
+        });
+      }
     }
 
   }
