@@ -341,11 +341,17 @@
 .cards-container .wrap:nth-child(even) .player{
   background-color: #f19a3e;
   color: black;
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
 }
 
 .cards-container .wrap:nth-child(odd) .player{
   background-color:#00a3f5;
   color: black;
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
 }
 
 .hand-card {
