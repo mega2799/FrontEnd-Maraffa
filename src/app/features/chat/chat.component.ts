@@ -70,6 +70,7 @@ export class ChatComponent implements OnInit {
     formSubmit.preventDefault();
     let event: any = {};
     event.message = formSubmit.target[0].value;
+    formSubmit.target[0].value = "";
     let message = {};
     if (this.isGif(event.message) || this.isImage(event.message)) {
       message = {
@@ -89,23 +90,23 @@ export class ChatComponent implements OnInit {
           avatar: "https://i.gifer.com/no.gif",
         },
       };
-      this.messages.push({
-        text: event.message,
-        date: new Date(),
-        reply: true,
-        type: "file",
-        files: [
-          {
-            url: event.message, //file.src,
-            type: this.isGif(event.message) ? "image/gif" : "image/jpeg",
-            icon: "file-text-outline",
-          },
-        ],
-        user: {
-          name: "Jonh Doe",
-          avatar: "https://i.gifer.com/no.gif",
-        },
-      });
+      // this.messages.push({
+      //   text: event.message,
+      //   date: new Date(),
+      //   reply: true,
+      //   type: "file",
+      //   files: [
+      //     {
+      //       url: event.message, //file.src,
+      //       type: this.isGif(event.message) ? "image/gif" : "image/jpeg",
+      //       icon: "file-text-outline",
+      //     },
+      //   ],
+      //   user: {
+      //     name: "Jonh Doe",
+      //     avatar: "https://i.gifer.com/no.gif",
+      //   },
+      // });
     } else {
       message = {
         text: event.message,
@@ -119,17 +120,17 @@ export class ChatComponent implements OnInit {
         },
       };
 
-      this.messages.push({
-        text: event.message,
-        date: new Date(),
-        reply: true,
-        type: "text",
-        files: [],
-        user: {
-          name: "Jonh Doe",
-          avatar: "https://i.gifer.com/no.gif",
-        },
-      });
+      // this.messages.push({
+      //   text: event.message,
+      //   date: new Date(),
+      //   reply: true,
+      //   type: "text",
+      //   files: [],
+      //   user: {
+      //     name: "Jonh Doe",
+      //     avatar: "https://i.gifer.com/no.gif",
+      //   },
+      // });
     }
     this.gameService
       .sendMessage("mega", JSON.stringify(message))

@@ -7,6 +7,7 @@ import {
   ViewChild,
 } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { catchError, retry, throwError } from "rxjs";
 import { GameService } from "src/app/core/services/game.service";
@@ -14,8 +15,6 @@ import { NotificationService } from "src/app/core/services/notification.service"
 import { WebSocketGameService } from "src/app/core/services/websocket.game";
 import { Card } from "src/app/model/card.model";
 import { IconsComponent } from "../../icons/icons/icons.component";
-import { MatDialog } from '@angular/material/dialog';
-import { TypographyComponent } from "../../typography/typography/typography.component";
 
 interface Chiamata {
   value: string;
@@ -46,7 +45,12 @@ const cardNames: string[] = [
 
 const suits: string[] = ["COINS", "CUPS", "CLUBS", "SWORDS"];
 
-const mappingSuit: { [key: string]: string } = {"COINS": "Denari", "CUPS": "Coppe", "CLUBS": "Bastoni", "SWORDS": "Spade"};
+const mappingSuit: { [key: string]: string } = {
+  COINS: "Denari",
+  CUPS: "Coppe",
+  CLUBS: "Bastoni",
+  SWORDS: "Spade",
+};
 
 const cardValues: number[] = [4, 5, 6, 7, 8, 9, 10, 1, 2, 3];
 
@@ -194,11 +198,11 @@ export class GameComponent implements OnInit, OnDestroy {
   // }
 
   getClass(index: number): string {
-    if (this.turn === 0) return (index === 0) ? 'first-selected' : '';
-    else if (this.turn === 1) return (index === 1) ? 'second-selected' : '';
-    else if (this.turn === 2) return (index === 2) ? 'first-selected' : '';
-    else if (this.turn === 3) return (index === 3) ? 'second-selected' : '';
-    return '';
+    if (this.turn === 0) return index === 0 ? "first-selected" : "";
+    else if (this.turn === 1) return index === 1 ? "second-selected" : "";
+    else if (this.turn === 2) return index === 2 ? "first-selected" : "";
+    else if (this.turn === 3) return index === 3 ? "second-selected" : "";
+    return "";
   }
 
   private getCardDescription(cardValue: number, cardSuit: CardSuit): string {
@@ -266,7 +270,6 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    
     this.interactionForm = new FormGroup({
       trump: this.trump,
       call: this.call,
@@ -281,7 +284,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.gameService.getGame(this.gameID).subscribe((res: any) => {
       console.log("NAGATOMO ?");
       console.log("1 getGame res=", res);
-      if (res.state === 0) {
+      if (res.state % 10 === 0) {
         this.trumpManagment({
           username: res.trumpSelectorUsername,
           trumpSelected: res.trumpSelected,
@@ -298,11 +301,11 @@ export class GameComponent implements OnInit, OnDestroy {
       this.turn = res.turn;
       this.teamA = res.teamA;
       this.teamB = res.teamB;
-      
+
       // this.teamScoreA = res.teamAScore;
       // this.teamScoreB = res.teamBScore;
     });
-    
+
     this.gameService
       .getUserCards(this.gameID, this.username)
       .subscribe((res: any) => {
@@ -334,7 +337,9 @@ export class GameComponent implements OnInit, OnDestroy {
                     card.cardValue >= 10 ? card.cardValue % 10 : card.cardValue, //TODO parse as a string
                   src: `assets/images/cards/${card.cardSuit}/${
                     cardValues[
-                      card.cardValue >= 10 ? card.cardValue % 10 : card.cardValue
+                      card.cardValue >= 10
+                        ? card.cardValue % 10
+                        : card.cardValue
                     ]
                   }.jpg`,
                   alt: this.getCardDescription(
@@ -450,7 +455,6 @@ export class GameComponent implements OnInit, OnDestroy {
     // });
   }
 
-
   startGameManagment(response: any) {
     console.log("Calling startGameManagment");
     console.log(response);
@@ -475,7 +479,7 @@ export class GameComponent implements OnInit, OnDestroy {
     // if(response.settled) this.selectedTrump = true;
   }
   turnChanegeEvent(response: any) {
-    console.log("response in turnChanegeEvent", response)
+    console.log("response in turnChanegeEvent", response);
     this.currentUser = response.userTurn;
     this.isMyTurn = this.username === response.userTurn;
     this.teamScoreA = response.teamAScore;
@@ -490,20 +494,24 @@ export class GameComponent implements OnInit, OnDestroy {
           }.jpg`,
           suit: suits[Math.floor(key / 10)],
           user: value,
-          
         })
       );
-     this.cardsAndUsers = [];
-     if (response != undefined){
-       Object.entries(response.latestTrick.cardsAndUsers).forEach(([key, value]: any) => {
-       this.cardsAndUsers.push(`assets/images/cards/${suits[Math.floor(key / 10)]}/${key % 10 <= 6 ? (key % 10) + 4 : (key % 10) - 6}.jpg`);
-      });
-     }
+      this.cardsAndUsers = [];
+      if (response != undefined) {
+        Object.entries(response.latestTrick.cardsAndUsers).forEach(
+          ([key, value]: any) => {
+            this.cardsAndUsers.push(
+              `assets/images/cards/${suits[Math.floor(key / 10)]}/${
+                key % 10 <= 6 ? (key % 10) + 4 : (key % 10) - 6
+              }.jpg`
+            );
+          }
+        );
+      }
     }
-
   }
 
-  makeCall(response: any){
+  makeCall(response: any) {
     this.madeCall = true;
     this.currentCall = response.call;
     setTimeout(() => {
@@ -517,7 +525,7 @@ export class GameComponent implements OnInit, OnDestroy {
     console.log("Calling endRound");
     console.log("teamA", response.teamAScore);
     console.log("teamB", response.teamBScore);
-    this.selectedTrump = response.initialTurn === this.username;
+    this.selectedTrump = response.trumpSelectorUsername === this.username;
     window.location.reload();
     // const dialogRef = this.dialog.open(TypographyComponent, {
     //   width: '400px',
@@ -620,8 +628,8 @@ export class GameComponent implements OnInit, OnDestroy {
 
   showCardsPlayedPreviousRound(): void {
     this.dialog.open(IconsComponent, {
-      width: '400px',
-      data: this.cardsAndUsers
+      width: "400px",
+      data: this.cardsAndUsers,
     });
   }
 
