@@ -30,6 +30,12 @@
   margin: 0 15% 0; 
 }
 
+#game-button{
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
+}
+
 .menu-item{
   width: 120px;
 }

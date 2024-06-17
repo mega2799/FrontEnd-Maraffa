@@ -462,11 +462,15 @@ export class GameComponent implements OnInit, OnDestroy {
     console.log(response);
     console.log(response.username);
     console.log(this.username);
-    console.log("trump selected" + response);
+    console.log("trump selected" + response.trumpSelected);
     //TODO dovrebbe funzionare tutto ma non nasconde dinamicamente.... perche ?
     this.selectedTrump = response.username === this.username;
     if (response.trumpSelected != "NONE") {
       this.currentTrump = mappingSuit[response.trumpSelected];
+      this.chosesTrump = true;
+      setTimeout(() => {
+        this.chosesTrump = false;
+      }, 3000);
     }
     // if(response.settled) this.selectedTrump = true;
   }

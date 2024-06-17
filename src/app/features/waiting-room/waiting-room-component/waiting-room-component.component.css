@@ -62,10 +62,17 @@
 
   .teamA-box{
     background-color: #00a3f5;/*#007EA8;*/
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+
   }
 
   .teamB-box{
     background-color: #f19a3e;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
   }
 
   .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {

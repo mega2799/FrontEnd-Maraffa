@@ -112,12 +112,13 @@
               class="games-buttons"
               *ngFor="let game of this.games; index as i">
               <button
+                id="game-button"
                 mat-flat-button
                 class="orange-button"
                 [routerLink]="['/waiting/' + game.creator + '/' + game.gameID]">
                 <mat-icon class="{{ game.status.toLowerCase() }}"
                   >fiber_manual_record</mat-icon
-                >Partita di {{ game.creator }}
+                >{{ game.creator }}
               </button>
               <!-- <button mat-flat-button class="orange-button" [routerLink]="['/waiting']"><mat-icon
                   class="waiting-player">fiber_manual_record</mat-icon>game1</button>
