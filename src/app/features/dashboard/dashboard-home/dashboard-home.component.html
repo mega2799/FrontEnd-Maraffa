@@ -18,7 +18,7 @@
         <div
           class="col-12 text-center fill-viewport-max-20 dashboard-container">
           <div class="vertical-container text-center">
-            <h2 class="lightblue-text">Seleziona una modalità di gioco:</h2>
+            <h2 id="select-game-mode" class="lightblue-text">Seleziona una modalità di gioco:</h2>
             <form [formGroup]="formMode">
               <div class="radio-button">
                 <input
@@ -104,17 +104,7 @@
                 </mat-menu>
               </div>
             </form>
-            <div class="textarea-container">
-              <textarea
-                id="messages"
-                name="messages"
-                rows="15"
-                cols="70"
-                placeholder="  Scrivi un nuovo messaggio"></textarea>
-            </div>
-            <app-chat>
-
-            </app-chat>
+            <app-chat class="text-center"></app-chat>
           </div>
           <div class="games-container">
             <h2 class="lightblue-text">Partite:</h2>
@@ -158,7 +148,7 @@
         </div>
 
         <div class="col-12 text-center small fill-viewport-max-30">
-          <a
+          <a id="donation"
             class="orange-button"
             mat-flat-button
             href="donazione.html"

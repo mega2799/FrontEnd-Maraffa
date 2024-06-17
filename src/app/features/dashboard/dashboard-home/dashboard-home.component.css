@@ -20,6 +20,10 @@
   display: flex;
 }
 
+#select-game-mode{
+  margin-bottom: 0;
+}
+
 .games-buttons{
   display: flex;
   flex-direction: column;
@@ -30,12 +34,6 @@
   width: 120px;
 }
 
-
-#played-games{
-  margin-top: 3%;
-}
-
-
 ::placeholder{
   color: #0163a1;
 } 
@@ -44,30 +42,12 @@
   padding: 2%;
 }
 
-#messages {
-  outline: none;
-  scrollbar-color: #4882bf #eef9fc;
-  padding: 1%;
-  display: inline-block;
-  border: none;
-  font-size: 100%;
-  width: 98%;
-}
-
-::placeholder {
-  font-size: 150%;
-}
-
-.textarea-container{
-  border: 2px solid #4882bf;
-  border-radius: 25px;
-  padding: 0;
-  overflow: hidden;
-  /*width: 90%;*/
-}
-
 .text{
   margin: 0;
+}
+
+#donation{
+  margin-bottom: 0 !important;
 }
 
 .vertical-container{
@@ -148,10 +128,6 @@
 @media (min-width: 1170px) {
   .radio-button{
     margin-left: 30%;
-  }
-
-  #played-games{
-    margin-top: 2%;
   }
   
 }

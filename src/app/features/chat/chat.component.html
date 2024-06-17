@@ -30,46 +30,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chat Example</title>
-    <style>
-      /* Stili CSS di base */
-      .layout {
-        display: flex;
-        flex-direction: column;
-        height: 100vh; /* Altezza del layout a tutta altezza */
-      }
-
-      .header {
-        background-color: #336699; /* Colore di sfondo */
-        color: white; /* Colore del testo */
-        padding: 10px; /* Spaziatura interna */
-        text-align: center; /* Allineamento testo al centro */
-      }
-
-      .content {
-        flex: 1; /* Per riempire lo spazio rimanente */
-        overflow-y: auto; /* Scroll verticale se necessario */
-        padding: 20px; /* Spaziatura interna */
-      }
-
-      .chat-message {
-        margin-bottom: 20px; /* Spaziatura tra i messaggi */
-        padding: 10px; /* Spaziatura interna */
-        background-color: #f0f0f0; /* Colore di sfondo */
-        border-radius: 5px; /* Bordo arrotondato */
-      }
-
-      .chat-form {
-        margin-top: 20px; /* Spaziatura sopra il form */
-        padding: 10px; /* Spaziatura interna */
-        background-color: #e0e0e0; /* Colore di sfondo */
-        border-radius: 5px; /* Bordo arrotondato */
-      }
-    </style>
   </head>
   <body>
     <div class="layout">
-      <div class="header">Nebular Conversational UI</div>
+      <div class="header">MaraffaOnline Chat</div>
       <div class="content">
         <!-- Messaggi di chat -->
         <div class="chat-message" *ngFor="let msg of messages">
@@ -79,18 +43,15 @@
           <div>{{ msg.text }}</div>
           <!-- Eventuali altre parti del messaggio -->
         </div>
-        <!-- Form di chat -->
-        <div class="chat-form">
-          <!-- Form HTML -->
-          <!-- <form id="form-mess"  (submit)="sendMessage($event)"> -->
-          <form id="form-mess" (submit)="sendMessage($event)">
-            <input
-              type="text"
-              id="messageInput"
-              placeholder="Scrivi un messaggio" />
-            <button type="submit">Invia</button>
-          </form>
-        </div>
+      </div>
+      <div class="chat-form">
+        <form id="form-mess" (submit)="sendMessage($event)">
+          <input
+            type="text"
+            id="messageInput"
+            placeholder="Scrivi un messaggio" />
+          <button type="submit" id="chat-button"><img id="send" src="assets/images/send.png" alt="submit"/></button>
+        </form>
       </div>
     </div>
   </body>
