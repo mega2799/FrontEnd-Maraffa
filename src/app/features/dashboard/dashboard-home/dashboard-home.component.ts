@@ -62,8 +62,6 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   }
 
   sendCreate() {
-    // const mode =
-    //   this.formMode.value.mode === "classico" ? "CLASSIC" : "ELEVEN2ZERO";
     const mode =
       this.formMode.value.mode === "eleven2zero" ? "ELEVEN2ZERO" : "CLASSIC";
     const numberOfPlayers = parseInt(
