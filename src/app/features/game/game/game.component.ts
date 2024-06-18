@@ -245,7 +245,8 @@ export class GameComponent implements OnInit, OnDestroy {
             console.log(res.error);
           } else {
             console.log(res);
-            this.trumpChoosen = res.value;
+            this.trumpChoosen = mappingSuit[res.value];
+            // this.trumpChoosen = res.value;
             console.log("The trump is", res.value);
             // this.selectedTrump = true;
             this.selectedTrump = false;
@@ -470,7 +471,7 @@ export class GameComponent implements OnInit, OnDestroy {
     //TODO dovrebbe funzionare tutto ma non nasconde dinamicamente.... perche ?
     this.selectedTrump = response.username === this.username;
     if (response.trumpSelected != "NONE") {
-      this.currentTrump = mappingSuit[response.trumpSelected];
+      this.trumpChoosen = mappingSuit[response.trumpSelected];
       this.chosesTrump = true;
       setTimeout(() => {
         this.chosesTrump = false;
@@ -487,8 +488,8 @@ export class GameComponent implements OnInit, OnDestroy {
     console.log("change teamA", response.teamAScore);
     console.log("change teamB", response.teamBScore);
     if (response.trick != undefined) {
-      this.tableCards =  this.tableCards = response.trick.cards.map((card: number) => 
-         ({
+      this.tableCards = this.tableCards = response.trick.cards.map(
+        (card: number) => ({
           src: `assets/images/cards/${suits[Math.floor(card / 10)]}/${
             card % 10 <= 6 ? (card % 10) + 4 : (card % 10) - 6
           }.jpg`,
@@ -503,15 +504,21 @@ export class GameComponent implements OnInit, OnDestroy {
       //     }.jpg`,
       //     suit: suits[Math.floor(key / 10)],
       //     user: value,
-          
+
       //   })
       // );
       console.log("Table =", this.tableCards);
       this.cardsAndUsers = [];
-      if (response != undefined){
-        Object.entries(response.latestTrick.cardsAndUsers).forEach(([key, value]: any) => {
-        this.cardsAndUsers.push(`assets/images/cards/${suits[Math.floor(key / 10)]}/${key % 10 <= 6 ? (key % 10) + 4 : (key % 10) - 6}.jpg`);
-        });
+      if (response != undefined) {
+        Object.entries(response.latestTrick.cardsAndUsers).forEach(
+          ([key, value]: any) => {
+            this.cardsAndUsers.push(
+              `assets/images/cards/${suits[Math.floor(key / 10)]}/${
+                key % 10 <= 6 ? (key % 10) + 4 : (key % 10) - 6
+              }.jpg`
+            );
+          }
+        );
       }
     }
   }
