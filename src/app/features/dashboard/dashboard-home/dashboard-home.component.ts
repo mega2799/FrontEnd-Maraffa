@@ -34,7 +34,7 @@ export interface Game {
 })
 export class DashboardHomeComponent implements OnInit, OnDestroy {
   currentUser: any;
-  isOptionSelected: boolean = false;
+  isOptionSelected: string = "classico";
   games!: Game[];
   playersNum = new FormControl("playersNum");
   score = new FormControl("score");
@@ -63,7 +63,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
 
   sendCreate() {
     const mode =
-      this.formMode.value.mode === "classico" ? "CLASSIC" : "ELEVEN2ZERO";
+      this.formMode.value.mode === "eleven2zero" ? "ELEVEN2ZERO" : "CLASSIC";
     const numberOfPlayers = parseInt(
       this.formMode.value.numberOfPlayers as string
     );
