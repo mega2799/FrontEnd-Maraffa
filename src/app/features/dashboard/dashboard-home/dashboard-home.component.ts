@@ -34,7 +34,7 @@ export interface Game {
 })
 export class DashboardHomeComponent implements OnInit, OnDestroy {
   currentUser: any;
-  isOptionSelected: boolean = false;
+  isOptionSelected: string = "classico";
   games!: Game[];
   playersNum = new FormControl("playersNum");
   score = new FormControl("score");
