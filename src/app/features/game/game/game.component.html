@@ -1,6 +1,19 @@
-<div class="game">
+<div class="game navbar-container" [class.example-is-mobile]="mobileQuery.matches">
+  <mat-sidenav-container class="navbar-sidenav-container">
+    <mat-sidenav
+      #snav
+      [opened]="!mobileQuery.matches"
+      [mode]="mobileQuery.matches ? 'over' : 'side'"
+      [fixedInViewport]="mobileQuery.matches"
+      fixedTopGap="56"
+      class="sidenav">
+      <mat-nav-list>
+        <h3 mat-subheader>Chat della partita</h3>
+        <app-chat class="text-center"></app-chat>
+      </mat-nav-list>
+  </mat-sidenav>
   <div id="info-box" *ngIf="this.madeCall"><p>{{this.currentUser}} ha chiamato {{this.currentCall}} </p></div>
-  <div id="info-box" *ngIf="this.chosesTrump"><p>La briscola è {{this.currentTrump}}</p></div>
+  <div id="info-box" *ngIf="this.chosesTrump"><p>La briscola è {{this.trumpChoosen}}</p></div>
   <div class="players-name">
     <!-- <mat-icon mat-list-icon class="star">star</mat-icon> -->
     <p [ngClass]="getClass(0)">{{teamA[0]}}</p>
@@ -52,7 +65,7 @@
         [ngClass]="{
           'chat-button-has-new-message': numberUnreadMessages > 0
         }"
-        (click)="toggleGameChatSidebar()">
+        (click)="snav.toggle()">
         Chat 💬
         <span [hidden]="numberUnreadMessages === 0" class="badge badge-light">{{
           numberUnreadMessages
@@ -208,6 +221,8 @@
         (hiddenChange)="image.hidden = $event"></app-draggable-image>
     </div>
   </div>
+  </mat-sidenav-container>
+</div>
   <!-- *ngIf="!hidden" -->
 
   <!-- <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
@@ -293,4 +308,4 @@
       </div>
 
 </div> -->
-</div>
+

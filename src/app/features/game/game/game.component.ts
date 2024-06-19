@@ -3,6 +3,7 @@ import {
   HostListener,
   Inject,
   OnDestroy,
+  ChangeDetectorRef,
   OnInit,
   ViewChild,
 } from "@angular/core";
@@ -15,6 +16,8 @@ import { NotificationService } from "src/app/core/services/notification.service"
 import { WebSocketGameService } from "src/app/core/services/websocket.game";
 import { Card } from "src/app/model/card.model";
 import { IconsComponent } from "../../icons/icons/icons.component";
+import { MediaMatcher } from '@angular/cdk/layout';
+
 
 interface Chiamata {
   value: string;
@@ -71,6 +74,8 @@ const cardValues: number[] = [4, 5, 6, 7, 8, 9, 10, 1, 2, 3];
   // ],
 })
 export class GameComponent implements OnInit, OnDestroy {
+  private _mobileQueryListener: () => void;
+  mobileQuery: MediaQueryList;
   username!: string;
   chosesTrump: boolean = false;
   isMyTurn: boolean = false;
@@ -172,13 +177,24 @@ export class GameComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     // @Inject("SESSIONSTORAGE") private localStorage: Storage,
+    private media: MediaMatcher,
+    private changeDetectorRef: ChangeDetectorRef,
     private notificationService: NotificationService,
     @Inject("LOCALSTORAGE") private localStorage: Storage,
     public gameService: GameService,
     private ws: WebSocketGameService,
     private router: Router,
     public dialog: MatDialog
-  ) {}
+  ) {
+    this.mobileQuery = this.media.matchMedia('(max-width: 1000px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    // tslint:disable-next-line: deprecation
+    this.mobileQuery.addListener(this._mobileQueryListener);
+  }
+
+  ngAfterViewInit(): void {
+    this.changeDetectorRef.detectChanges();
+  }
 
   // updateInterval(interval: number) {
   //   this.interval = interval;
@@ -186,6 +202,7 @@ export class GameComponent implements OnInit, OnDestroy {
   // }
   ngOnDestroy(): void {
     this._isAlive = false;
+    this.mobileQuery.removeListener(this._mobileQueryListener);
     // this.ws.onExit();
   }
 
@@ -248,6 +265,7 @@ export class GameComponent implements OnInit, OnDestroy {
             this.trumpChoosen = mappingSuit[res.value];
             // this.trumpChoosen = res.value;
             console.log("The trump is", res.value);
+            this.currentTrump = res.value;
             // this.selectedTrump = true;
             this.selectedTrump = false;
           }
