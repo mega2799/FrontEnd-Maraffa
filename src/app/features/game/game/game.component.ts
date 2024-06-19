@@ -80,7 +80,7 @@ export class GameComponent implements OnInit, OnDestroy {
     let isSuitFinished = false;
     if (this.tableCards.length > 0) {
       isSuitFinished =
-        this.cards.filter((card) => card.suit === this.tableCards[0].suit) !=
+        this.cards.filter((card) => card.suit === this.tableCards[0].suit) ===
         undefined;
     }
     this.gameService
