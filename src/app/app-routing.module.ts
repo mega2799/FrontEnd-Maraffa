@@ -34,13 +34,13 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'icons',
-    loadChildren: () => import('./features/icons/icons.module').then(m => m.IconsModule),
+    path: 'ultima-presa',
+    loadChildren: () => import('./features/ultima-presa/ultima-presa.module').then(m => m.UltimaPresaModule),
     canActivate: [AuthGuard]
   },
   {
-    path: 'typography',
-    loadChildren: () => import('./features/typography/typography.module').then(m => m.TypographyModule),
+    path: 'dialog',
+    loadChildren: () => import('./features/dialog/dialog.module').then(m => m.DialogModule),
     canActivate: [AuthGuard]
   },
   {

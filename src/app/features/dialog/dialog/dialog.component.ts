@@ -3,11 +3,11 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 @Component({
-  selector: 'app-typography',
-  templateUrl: './typography.component.html',
-  styleUrls: ['./typography.component.css']
+  selector: 'app-dialog',
+  templateUrl: './dialog.component.html',
+  styleUrls: ['./dialog.component.css']
 })
-export class TypographyComponent {
+export class DialogComponent {
   teamA: string[] = [];
   teamB: string[] = [];
   scoreA: number = 0;

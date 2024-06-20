@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IconsComponent } from './icons.component';
+import { UltimaPresaComponent } from './ultima-presa.component';
 
-describe('IconsComponent', () => {
-  let component: IconsComponent;
-  let fixture: ComponentFixture<IconsComponent>;
+describe('UltimaPresaComponent', () => {
+  let component: UltimaPresaComponent;
+  let fixture: ComponentFixture<UltimaPresaComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IconsComponent ]
+      declarations: [ UltimaPresaComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IconsComponent);
+    fixture = TestBed.createComponent(UltimaPresaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

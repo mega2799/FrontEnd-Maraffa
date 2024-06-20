@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from 'src/app/shared/layout/layout.component';
-import { IconsComponent } from './icons/icons.component';
+import { UltimaPresaComponent } from './ultima-presa/ultima-presa.component';
 
 const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
     children: [
-      { path: '', component: IconsComponent },
+      { path: '', component: UltimaPresaComponent },
     ]
   }
 ];
@@ -17,4 +17,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class IconsRoutingModule { }
+export class UltimaPresaRoutingModule { }

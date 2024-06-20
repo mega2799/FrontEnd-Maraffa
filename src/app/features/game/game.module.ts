@@ -7,11 +7,11 @@ import { GameRoutingModule } from "./game-routing.module";
 import { GameComponent } from "./game/game.component";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
-import { ChatModule } from "../chat/chat.module";
+import { GameChatModule } from "../game-chat/game-chat.module";
 
 @NgModule({
   declarations: [GameComponent, CardPlayerComponent, DraggableImageComponent],
   imports: [CommonModule, SharedModule, GameRoutingModule, MatFormFieldModule,
-        MatInputModule, ChatModule],
+        MatInputModule, GameChatModule],
 })
 export class GameModule {}

@@ -6,10 +6,10 @@
       [mode]="mobileQuery.matches ? 'over' : 'side'"
       [fixedInViewport]="mobileQuery.matches"
       fixedTopGap="56"
+      position="end"
       class="sidenav">
       <mat-nav-list>
-        <h3 mat-subheader>Chat della partita</h3>
-        <app-chat class="text-center"></app-chat>
+        <app-gamechat class="text-center"></app-gamechat>
       </mat-nav-list>
   </mat-sidenav>
   <div id="info-box" *ngIf="this.madeCall"><p>{{this.currentUser}} ha chiamato {{this.currentCall}} </p></div>

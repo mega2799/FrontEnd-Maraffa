@@ -15,7 +15,7 @@ import { GameService } from "src/app/core/services/game.service";
 import { NotificationService } from "src/app/core/services/notification.service";
 import { WebSocketGameService } from "src/app/core/services/websocket.game";
 import { Card } from "src/app/model/card.model";
-import { IconsComponent } from "../../icons/icons/icons.component";
+import { UltimaPresaComponent } from "../../ultima-presa/ultima-presa/ultima-presa.component";
 import { MediaMatcher } from '@angular/cdk/layout';
 
 
@@ -638,7 +638,7 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   showCardsPlayedPreviousRound(): void {
-    this.dialog.open(IconsComponent, {
+    this.dialog.open(UltimaPresaComponent, {
       width: "400px",
       data: this.cardsAndUsers,
     });
