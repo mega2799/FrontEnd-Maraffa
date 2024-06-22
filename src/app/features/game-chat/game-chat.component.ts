@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
 import { catchError, retry, throwError } from "rxjs";
 import { GameService } from "src/app/core/services/game.service";
 import { WebSocketGameService } from "src/app/core/services/websocket.game";
@@ -26,6 +27,7 @@ import { WebSocketGameService } from "src/app/core/services/websocket.game";
 export class GameChatComponent implements OnInit {
   messages: any[] = [];
   public interval: number = 1;
+  gameID!: string;
 
   message = new FormControl("message");
   formCazzo = new FormGroup({
@@ -34,10 +36,12 @@ export class GameChatComponent implements OnInit {
   constructor(
     @Inject("LOCALSTORAGE") private localStorage: Storage,
     // public gameService: GameService,
+    private route: ActivatedRoute,
     private ws: WebSocketGameService,
     private readonly gameService: GameService
   ) {}
   ngOnInit(): void {
+    this.gameID = this.route.snapshot.paramMap.get("gameID") as string;
     this.ws.webSocket$
       .pipe(
         catchError((error) => {
@@ -133,7 +137,11 @@ export class GameChatComponent implements OnInit {
       // });
     }
     this.gameService
-      .sendMessage("mega", JSON.stringify(message))
+      .sendMessage(
+        this.localStorage.getItem("fullName") as string,
+        JSON.stringify(message),
+        this.gameID
+      )
       .subscribe((res) => {});
   }
 

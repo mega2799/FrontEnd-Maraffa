@@ -133,7 +133,10 @@ export class ChatComponent implements OnInit {
       // });
     }
     this.gameService
-      .sendMessage("mega", JSON.stringify(message))
+      .sendMessage(
+        this.localStorage.getItem("fullName") as string,
+        JSON.stringify(message)
+      )
       .subscribe((res) => {});
   }
 
