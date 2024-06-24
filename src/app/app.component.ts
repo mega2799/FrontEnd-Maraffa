@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { catchError, retry, throwError } from "rxjs";
 import * as uuid from "uuid";
 import { GameService } from "./core/services/game.service";
 import { WebSocketGameService } from "./core/services/websocket.game";
@@ -24,8 +23,8 @@ export class AppComponent implements OnInit {
       this.router.navigate(["/auth/login"]);
     }
 
-    this.ws.clientID = localStorage.getItem("UUID") as string;
-    this.ws.initWebSocket();
+    // this.ws.clientID = localStorage.getItem("UUID") as string;
+    // this.ws.initWebSocket();
     // this.ws.webSocket$
     //   .pipe(
     //     catchError((error) => {

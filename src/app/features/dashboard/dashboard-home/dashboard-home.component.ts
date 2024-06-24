@@ -34,6 +34,7 @@ export interface Game {
 })
 export class DashboardHomeComponent implements OnInit, OnDestroy {
   currentUser: any;
+  activePlayers!: string[];
   players!: string[];
   isOptionSelected: string = "classico";
   games!: Game[];
@@ -85,13 +86,17 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     this.currentUser = this.authService.getCurrentUser();
     this.titleService.setTitle("angular-material-template - Dashboard");
     this.logger.log("Dashboard loaded");
+    this.ws.clientID = localStorage.getItem("UUID") as string;
+    this.ws.userName = this.localStorage.getItem("fullName") as string;
+    this.ws.initWebSocket();
 
     this.dashboardService.getGames().subscribe((res) => {
       this.games = res;
     });
 
     this.dashboardService.getPlayers().subscribe((res) => {
-      this.players = res[0];
+      this.players = res.connected;
+      this.activePlayers = res.inGamePlayers;
     });
 
     setTimeout(() => {

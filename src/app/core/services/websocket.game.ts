@@ -7,6 +7,14 @@ import { WebSocketSubject, webSocket } from "rxjs/webSocket";
 export class WebSocketGameService {
   //Non si puo usare l inject per passare il gameID e quindi vedere come risolvere
   private _clientID!: string;
+  private _userName!: string;
+
+  public get userName(): string {
+    return this._userName;
+  }
+  public set userName(value: string) {
+    this._userName = value;
+  }
 
   public get clientID(): string {
     return this._clientID;
@@ -21,7 +29,7 @@ export class WebSocketGameService {
 
   initWebSocket(): void {
     // this.URL = `ws://localhost:3003/${this._gameID}`;
-    this.URL = `ws://localhost:3003/${this._clientID}`;
+    this.URL = `ws://localhost:3003/${this._clientID}/${this._userName}`;
     // this.webSocketSubject = webSocket<string>(this.URL);
     this.webSocketSubject = webSocket<string>({
       url: this.URL,
