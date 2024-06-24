@@ -70,18 +70,11 @@
 }
 
 .layout{
-  /* width: 75%; no*/
-  /* margin: 3% 12.5% 0 12.5%; no*/ /*50 height*/
   display: flex;
   flex-direction: column;
   height: 92vh; 
 }
 
-/* @media (min-width: 1200px) { no
-  .layout{
-    height: 40vh;
-  }
-} */
 
 ::ng-deep .mat-list-base{
   padding-top: 0 !important;
@@ -96,11 +89,13 @@
 
 
 nb-layout {
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
   height: 100vh;
   background-color: #f4f4f7;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  /* z-index: 2;
+  overflow: hidden; */
 }
 
 nb-layout-header {
@@ -212,3 +207,4 @@ nb-chat-form nb-chat-button {
 nb-chat-form nb-chat-button:hover {
   background-color: #274bdb;
 } 
+

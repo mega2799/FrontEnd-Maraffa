@@ -17,6 +17,7 @@ import { WebSocketGameService } from "src/app/core/services/websocket.game";
 import { Card } from "src/app/model/card.model";
 import { UltimaPresaComponent } from "../../ultima-presa/ultima-presa/ultima-presa.component";
 import { MediaMatcher } from '@angular/cdk/layout';
+import { DialogComponent } from "../../dialog/dialog/dialog.component";
 
 
 interface Chiamata {
@@ -171,6 +172,7 @@ export class GameComponent implements OnInit, OnDestroy {
   trump = new FormControl("trump");
   turn: number = -1;
   trumpChoosen: string = "";
+  taglio: boolean = false;
   call = new FormControl("call");
   interactionForm!: FormGroup;
   tableCards: any[] = [];
@@ -401,6 +403,9 @@ export class GameComponent implements OnInit, OnDestroy {
           case "endRound":
             this.endRound(response);
             break;
+          case "endGame":
+            this.endGame(response);
+            break;
           default:
             break;
         }
@@ -568,6 +573,22 @@ export class GameComponent implements OnInit, OnDestroy {
     //     }))
     //   );
     // });
+  }
+
+  endGame(response: any) {
+    this.teamScoreA = response.teamAScore;
+    this.teamScoreB = response.teamBScore;
+    console.log("Calling endGame");
+    console.log("teamA", response.teamAScore);
+    console.log("teamB", response.teamBScore);
+    window.location.reload();
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '400px',
+      data: response
+    });
+    setTimeout(() => {
+      dialogRef.close();
+    }, 4000);
   }
 
   startDrag(event: MouseEvent) {
