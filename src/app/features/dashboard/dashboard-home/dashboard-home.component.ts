@@ -34,6 +34,7 @@ export interface Game {
 })
 export class DashboardHomeComponent implements OnInit, OnDestroy {
   currentUser: any;
+  players!: string[];
   isOptionSelected: string = "classico";
   games!: Game[];
   playersNum = new FormControl("playersNum");
@@ -87,6 +88,10 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
 
     this.dashboardService.getGames().subscribe((res) => {
       this.games = res;
+    });
+
+    this.dashboardService.getPlayers().subscribe((res) => {
+      this.players = res[0];
     });
 
     setTimeout(() => {

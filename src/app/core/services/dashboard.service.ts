@@ -12,12 +12,15 @@ export class DashBoardService {
   }
   constructor(
     private http: HttpClient,
-    @Inject("LOCALSTORAGE") private localStorage: Storage
-    // @Inject("SESSIONSTORAGE") private localStorage: Storage,
+    @Inject("LOCALSTORAGE") private localStorage: Storage // @Inject("SESSIONSTORAGE") private localStorage: Storage,
   ) {}
 
   getGames(): Observable<any> {
     return this.http.get<any>("/api/game/getGames");
+  }
+
+  getPlayers() {
+    return this.http.get<any>(`/api/player`);
   }
 
   createGame(body: any) {
