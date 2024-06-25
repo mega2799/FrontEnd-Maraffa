@@ -300,7 +300,9 @@ export class GameComponent implements OnInit, OnDestroy {
     //TODO onStart assegna il currentPlayer al primo che deve giocare !
     this.gameID = this.route.snapshot.paramMap.get("gameID") as string;
     this.username = this.localStorage.getItem("fullName") as string;
-
+    this.ws.clientID = this.localStorage.getItem("UUID") as string;
+    this.ws.userName = this.localStorage.getItem("fullName") as string;
+    this.ws.initWebSocket();
     setTimeout(() => {}, 1500);
     this.gameService.getGame(this.gameID).subscribe((res: any) => {
       console.log("NAGATOMO ?");

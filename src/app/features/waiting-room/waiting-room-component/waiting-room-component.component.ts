@@ -54,7 +54,6 @@ export class WaitingRoomComponentComponent implements OnInit {
     private ws: WebSocketGameService,
     public gameService: GameService,
     private logger: NGXLogger
-
   ) {}
 
   score!: number;
@@ -128,12 +127,20 @@ export class WaitingRoomComponentComponent implements OnInit {
     console.log("Creator: ", this.creator);
 
     this.gameID = this.route.snapshot.paramMap.get("gameID") as string;
+    this.ws.clientID = this.localStorage.getItem("UUID") as string;
+    this.ws.userName = this.localStorage.getItem("fullName") as string;
+    this.ws.initWebSocket();
+
     this.gameService.getGames().subscribe((res: any[]) => {
-      const currentGame = res.find((game: any) => game.gameID == this.gameID);
+      const currentGame = res.find((game: any) => game.gameID === this.gameID);
+      this.activeGame = currentGame;
+      this.teamA = currentGame.teamA;
+      this.teamB = currentGame.teamB;
       this.status = statusValue[currentGame.status];
       this.mode = gameModeValue[currentGame.mode];
       this.score = currentGame.score;
     });
+    
     this.ws.webSocket$
       .pipe(
         catchError((error) => {
@@ -178,8 +185,6 @@ export class WaitingRoomComponentComponent implements OnInit {
 
     console.log("teamA: ", this.teamA);
     console.log("teamB: ", this.teamB);
-
-
   }
   redirectToGame(response: any) {
     this.router.navigate(["/game/" + response.gameID]);
@@ -233,15 +238,19 @@ export class WaitingRoomComponentComponent implements OnInit {
 
   startGame() {
     // console.log("Start game: ", this.isReady);
-    this.gameService.startGame(this.gameID).subscribe((res: any) => {
-      if (Object.keys(res).includes("error")) {
-        setTimeout(() => {
-          this.notificationService.openSnackBar(res.error);
-        });
-      } else {
-        this.router.navigate(["/game/" + this.gameID]);
-      }
-    });
+    if (this.activeGame.status != "PLAYING") {
+      this.gameService.startGame(this.gameID).subscribe((res: any) => {
+        if (Object.keys(res).includes("error")) {
+          setTimeout(() => {
+            this.notificationService.openSnackBar(res.error);
+          });
+        } else {
+          this.router.navigate(["/game/" + this.gameID]);
+        }
+      });
+    } else {
+      console.log("Game is already playing begone thot");
+    }
   }
 
   private showNotification() {

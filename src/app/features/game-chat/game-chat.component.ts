@@ -42,6 +42,9 @@ export class GameChatComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.gameID = this.route.snapshot.paramMap.get("gameID") as string;
+    // this.ws.clientID = this.localStorage.getItem("UUID") as string;
+    // this.ws.userName = this.localStorage.getItem("fullName") as string;
+    // this.ws.initWebSocket();
     this.ws.webSocket$
       .pipe(
         catchError((error) => {
