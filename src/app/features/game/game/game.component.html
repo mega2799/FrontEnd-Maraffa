@@ -40,17 +40,20 @@
       <span class="second-team">Fede</span></ng-template>
     </mat-tab>
   </mat-tab-group> -->
-  <p class="game-text">
-    Ê il turno di:
-    {{ this.currentUser }}
-  </p>
-  <p class="game-text">
-    La briscola è:
-    {{ this.trumpChoosen }}
-  </p>
-  <p class="game-text">Punteggio Team A: {{ this.teamScoreA }}</p>
-  <p class="game-text">Punteggio Team B: {{ this.teamScoreB }}</p>
-
+  <div class="game-text-container">
+    <p class="game-text">
+      Ê il turno di:
+      {{ this.currentUser }}
+    </p>
+    <div class="score-container">
+      <p class="game-text">Team A {{ this.teamScoreA }}</p>
+      <p class="game-text">Team B {{ this.teamScoreB }}</p>
+    </div>
+    <p class="game-text">
+      La briscola è:
+      {{ this.trumpChoosen }}
+    </p>
+  </div>
   <div id="table">
     <div class="game-buttons">
       <button
@@ -87,34 +90,7 @@
         <img src="{{ tableCard.src }}" alt="{{ tableCard.alt }}" class="card" />
         <div class="player">{{ tableCard.user }}</div>
       </div>
-      <!-- <div class="wrap">
-        <img
-          src="https://cataas.com/cat?width=196&height=392"
-          alt="4_spade"
-          class="card" />
-        <div class="player">Sofi</div>
-      </div>
-      <div class="wrap">
-        <img
-          src="https://cataas.com/cat?width=196&height=392"
-          alt="4_spade"
-          class="card" />
-        <div class="player">Matte</div>
-      </div>
-      <div class="wrap">
-        <img
-          src="https://cataas.com/cat?width=196&height=392"
-          alt="4_spade"
-          class="card" />
-        <div class="player">Klev</div>
-      </div>
-      <div class="wrap">
-        <img
-          src="https://cataas.com/cat?width=196&height=392"
-          alt="4_spade"
-          class="card" />
-        <div class="player">Fede</div>
-      </div> -->
+      
     </div>
   </div>
   <div class="select-container">
@@ -213,6 +189,7 @@
     <div class="hand">
       <app-draggable-image
         *ngFor="let image of cards; let i = index"
+        class="hand-card"
         [src]="image.src"
         [alt]="image.alt"
         [position]="image.position"

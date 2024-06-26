@@ -13,24 +13,6 @@
 
     <span class="navbar-spacer"></span>
 
-    <button mat-icon-button [matMenuTriggerFor]="notificationMenu">
-      <mat-icon class="whiteIcon" matBadge="2" matBadgeColor="accent"
-        >notifications</mat-icon
-      >
-    </button>
-    <mat-menu
-      #notificationMenu="matMenu"
-      xPosition="before"
-      yPosition="above"
-      [overlapTrigger]="false">
-      <a mat-menu-item>
-        <span>You have new tasks</span>
-      </a>
-      <a mat-menu-item>
-        <span>You have a new message</span>
-      </a>
-    </mat-menu>
-
     <button mat-button [matMenuTriggerFor]="userMenu">
       <mat-icon class="whiteIcon">person</mat-icon>
       <span class="username" fxShow fxHide.xs>
@@ -72,11 +54,6 @@
           routerLinkActive="active">
           <mat-icon mat-list-icon> dashboard </mat-icon>
           <p mat-line>Dashboard</p>
-        </a>
-
-        <a mat-list-item [routerLink]="['/chat-all']" routerLinkActive="active">
-          <mat-icon mat-list-icon> forum </mat-icon>
-          <p mat-line>Chat</p>
         </a>
 
         <a mat-list-item [routerLink]="['/users']" routerLinkActive="active">
@@ -126,14 +103,6 @@
           routerLinkActive="active"
           class="menu-item">
           <mat-icon mat-list-icon> dashboard </mat-icon>
-        </a>
-
-        <a
-          mat-list-item
-          [routerLink]="['/chat-all']"
-          routerLinkActive="active"
-          class="menu-item">
-          <mat-icon mat-list-icon> forum </mat-icon>
         </a>
 
         <a

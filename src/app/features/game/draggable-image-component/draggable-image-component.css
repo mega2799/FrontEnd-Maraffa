@@ -1,19 +1,16 @@
 .draggable {
-  /* position: absolute; */
   cursor: grab;
   transition: top 0.5s, opacity 0.5s;
-  display: inline-block;
   margin: 1%;
   border-radius: 10px;
-
 }
 
 .draggable img {
   margin: 1%;
   border-radius: 10px;
   border: solid 1px #9c9b9b;
-  /* width: 100px;  */
-  /* height: auto; */
+  width: 100%;
+  height: auto;
 }
 
 .readable{
@@ -31,14 +28,3 @@
   color: white;
   background-color: #000000;
 }
-
-
-/* .hand-container {
-  background-color: #f19a3e;
-  color: white;
-}
-
-.hand-container .readable:nth-child(odd) {
-  background-color:#00a3f5;
-  color: white;
-} */

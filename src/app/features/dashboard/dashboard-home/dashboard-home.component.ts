@@ -77,7 +77,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     this.dashboardService
       .createGame({ mode, numberOfPlayers, expectedScore, username, GUIID })
       .subscribe((res: any) => {
-        this.notificationService.openSnackBar("Partita creatad con successo");
+        this.notificationService.openSnackBar("Partita creata con successo");
         this.router.navigate([`/waiting/${username}/${res.gameID}`]);
       });
   }

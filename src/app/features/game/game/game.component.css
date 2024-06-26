@@ -15,13 +15,13 @@
     width: 70%;
     min-width: initial !important;
     overflow: hidden !important;
-
   }
 
   .players-name > p{
     font-weight: bold;
     margin-left: 1%;
     margin-right: 1%;
+    font-size: large;
   }
 
   .star{
@@ -44,7 +44,7 @@
 
   .players-name > p{
     font-weight: bold;
-    font-size: 80%;
+    font-size: 100%;
     margin-left: 1%;
     margin-right: 1%;
   }
@@ -95,13 +95,15 @@
   }
 
   .hand{
-    width: 94%;
-    margin: 0 3% 0 3%; 
+    width: 75%;
+    margin: 0 17% 0 8%; 
+    display: flex;
+    flex-direction: row;
+  }
+  .drag{
+    width: 20%;
   }
 
-  .hand-card {
-    width: 7%;
-  }
 }
 
 @media (min-width: 801px) and (max-width: 1289px){
@@ -126,9 +128,7 @@
   .select-container{
     margin: 1% 8% 1%;
   }
-  .hand-card {
-    width: 16.5%;
-  }
+
   .hand{
     margin: 0 15%;
     width: 70%;
@@ -142,9 +142,23 @@
 }
 
 .game-text{
-  margin: 0 0 1% 0;
+  margin: 0 4% 1% 4%;
   font-weight: bold;
   padding: 0;
+}
+
+.game-text-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 1%;
+}
+
+.score-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 0 8% 0 8%;
 }
 
 @media (min-width: 516px) and (max-width: 600px){
@@ -155,9 +169,7 @@
   .select-container{
     margin: 1% 8% 1%;
   }
-  .hand-card {
-    width: 16.5%;
-  }
+
   .hand{
     margin: 0;
   }
@@ -175,9 +187,6 @@
     margin: 5% 8% 5%;
   }
 
-  .hand-card {
-    width: 16.5%;
-  }
   .hand{
     margin: 0;
   }
@@ -357,12 +366,6 @@
   white-space: nowrap; 
   overflow: hidden; 
   text-overflow: ellipsis;
-}
-
-.hand-card {
-  margin: 1%;
-  border-radius: 10px;
-  border: solid 1px #9c9b9b;
 }
 
 #info-box{

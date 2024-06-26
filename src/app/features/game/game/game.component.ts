@@ -89,6 +89,14 @@ export class GameComponent implements OnInit, OnDestroy {
         this.cards.filter((card) => card.suit === this.tableCards[0].suit) ===
         undefined;
     }
+
+    if(this.tableCards[0] != undefined){
+      if (mappingSuit[card.suit] === this.trumpChoosen && this.tableCards[0].suit !== this.trumpChoosen) {
+        console.log("taglio");
+        //web socket
+      }
+
+    }
     this.gameService
       .playCard(
         this.gameID,
@@ -408,6 +416,9 @@ export class GameComponent implements OnInit, OnDestroy {
           case "endGame":
             this.endGame(response);
             break;
+          case "taglio":
+            this.makeTaglio(response);
+            break;
           default:
             break;
         }
@@ -537,6 +548,13 @@ export class GameComponent implements OnInit, OnDestroy {
     }, 3000);
   }
 
+  makeTaglio(response: any) {
+    this.taglio = true;
+    setTimeout(() => {
+      this.taglio = false;
+    }, 3000);
+  }
+
   endRound(response: any) {
     this.teamScoreA = response.teamAScore;
     this.teamScoreB = response.teamBScore;
@@ -580,17 +598,11 @@ export class GameComponent implements OnInit, OnDestroy {
   endGame(response: any) {
     this.teamScoreA = response.teamAScore;
     this.teamScoreB = response.teamBScore;
-    console.log("Calling endGame");
-    console.log("teamA", response.teamAScore);
-    console.log("teamB", response.teamBScore);
-    window.location.reload();
+    // window.location.reload();
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '400px',
       data: response
     });
-    setTimeout(() => {
-      dialogRef.close();
-    }, 4000);
   }
 
   startDrag(event: MouseEvent) {

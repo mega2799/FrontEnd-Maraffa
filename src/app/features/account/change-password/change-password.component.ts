@@ -54,7 +54,7 @@ export class ChangePasswordComponent implements OnInit {
   changePassword() {
 
     if (this.newPassword !== this.newPasswordConfirm) {
-      this.notificationService.openSnackBar('New passwords do not match.');
+      this.notificationService.openSnackBar('Le nuove password sono diverse.');
       return;
     }
 
@@ -65,7 +65,7 @@ export class ChangePasswordComponent implements OnInit {
         data => {
           this.logger.info(`User ${email} changed password.`);
           this.form.reset();
-          this.notificationService.openSnackBar('Your password has been changed.');
+          this.notificationService.openSnackBar('La tua password è stata cambiata.');
         },
         error => {
           this.notificationService.openSnackBar(error.error);
