@@ -140,7 +140,7 @@ export class WaitingRoomComponentComponent implements OnInit {
       this.mode = gameModeValue[currentGame.mode];
       this.score = currentGame.score;
     });
-    
+
     this.ws.webSocket$
       .pipe(
         catchError((error) => {
@@ -249,7 +249,14 @@ export class WaitingRoomComponentComponent implements OnInit {
         }
       });
     } else {
-      console.log("Game is already playing begone thot");
+      if (
+        this.activeGame.teamA.includes(this.currentUser) ||
+        this.activeGame.teamB.includes(this.currentUser)
+      ) {
+        this.router.navigate(["/game/" + this.gameID]);
+      } else {
+        console.log("Game is already playing begone thot");
+      }
     }
   }
 
