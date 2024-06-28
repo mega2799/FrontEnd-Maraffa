@@ -237,10 +237,10 @@ export class WaitingRoomComponentComponent implements OnInit {
   // }
 
   startGame() {
-    // console.log("Start game: ", this.isReady);
     if (this.activeGame.status != "PLAYING") {
       this.gameService.startGame(this.gameID).subscribe((res: any) => {
         if (Object.keys(res).includes("error")) {
+          console.log("Waiting room Error: ", res.error);
           setTimeout(() => {
             this.notificationService.openSnackBar(res.error);
           });

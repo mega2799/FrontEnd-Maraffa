@@ -90,4 +90,15 @@ export class GameService {
       position,
     });
   }
+
+  newGame(gameID: string): Observable<any> {
+    return this.http.post<any>(`/api/game/newGame`, {gameID});
+  }
+
+  notify(gameID: string, message: string,): Observable<any> {
+    return this.http.post<any>(`/api/notification`, {
+      gameID,
+      message,
+    });
+  }
 }

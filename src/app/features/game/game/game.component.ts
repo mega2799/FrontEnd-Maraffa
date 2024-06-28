@@ -91,9 +91,8 @@ export class GameComponent implements OnInit, OnDestroy {
     }
 
     if(this.tableCards[0] != undefined){
-      if (mappingSuit[card.suit] === this.trumpChoosen && this.tableCards[0].suit !== this.trumpChoosen) {
-        console.log("taglio");
-        //web socket
+      if (mappingSuit[card.suit] === this.trumpChoosen && mappingSuit[this.tableCards[0].suit] !== this.trumpChoosen) {
+        this.gameService.notify(this.gameID, "TAGLIO").subscribe();
       }
 
     }
@@ -180,7 +179,8 @@ export class GameComponent implements OnInit, OnDestroy {
   trump = new FormControl("trump");
   turn: number = -1;
   trumpChoosen: string = "";
-  taglio: boolean = false;
+  isNotifyPresent: boolean = false;
+  notifyMessage: string = "";
   call = new FormControl("call");
   interactionForm!: FormGroup;
   tableCards: any[] = [];
@@ -416,8 +416,8 @@ export class GameComponent implements OnInit, OnDestroy {
           case "endGame":
             this.endGame(response);
             break;
-          case "taglio":
-            this.makeTaglio(response);
+          case "notification":
+            this.notify(response);
             break;
           default:
             break;
@@ -505,10 +505,10 @@ export class GameComponent implements OnInit, OnDestroy {
     this.selectedTrump = response.username === this.username;
     if (response.trumpSelected != "NONE") {
       this.trumpChoosen = mappingSuit[response.trumpSelected];
-      this.chosesTrump = true;
-      setTimeout(() => {
-        this.chosesTrump = false;
-      }, 3000);
+      // this.chosesTrump = true;
+      // setTimeout(() => {
+      //   this.chosesTrump = false;
+      // }, 3000);
     }
     // if(response.settled) this.selectedTrump = true;
   }
@@ -541,17 +541,15 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   makeCall(response: any) {
-    this.madeCall = true;
     this.currentCall = response.call;
-    setTimeout(() => {
-      this.madeCall = false;
-    }, 3000);
   }
 
-  makeTaglio(response: any) {
-    this.taglio = true;
+  notify(response: any) {
+    this.notifyMessage = response.message;
+    this.isNotifyPresent = true;
     setTimeout(() => {
-      this.taglio = false;
+      this.isNotifyPresent = false;
+      this.notifyMessage = "";
     }, 3000);
   }
 
@@ -598,11 +596,11 @@ export class GameComponent implements OnInit, OnDestroy {
   endGame(response: any) {
     this.teamScoreA = response.teamAScore;
     this.teamScoreB = response.teamBScore;
-    // window.location.reload();
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '400px',
       data: response
     });
+    this.gameService.newGame(this.gameID);
   }
 
   startDrag(event: MouseEvent) {
