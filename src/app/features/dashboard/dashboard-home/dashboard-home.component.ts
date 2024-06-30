@@ -72,10 +72,27 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     const expectedScore = parseInt(this.formMode.value.expectedScore as string);
     const username = this.localStorage.getItem("fullName");
     const GUIID = this.localStorage.getItem("UUID");
-    console.log({ mode, numberOfPlayers, expectedScore, username, GUIID });
+    const currentUser = JSON.parse(
+      this.localStorage.getItem("currentUser") as string
+    );
+    console.log({
+      mode,
+      numberOfPlayers,
+      expectedScore,
+      username,
+      GUIID,
+      currentUser,
+    });
 
     this.dashboardService
-      .createGame({ mode, numberOfPlayers, expectedScore, username, GUIID })
+      .createGame({
+        mode,
+        numberOfPlayers,
+        expectedScore,
+        username,
+        GUIID,
+        guest: currentUser.isGuest,
+      })
       .subscribe((res: any) => {
         this.notificationService.openSnackBar("Partita creata con successo");
         this.router.navigate([`/waiting/${username}/${res.gameID}`]);

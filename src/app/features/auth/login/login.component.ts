@@ -155,13 +155,15 @@ export class LoginComponent implements OnInit {
       rememberMe: new UntypedFormControl(savedUserEmail !== null),
     });
 
-  this.loginForm.statusChanges.subscribe(status => {
-    const loginButton = document.getElementById('login-button') as HTMLButtonElement;
-    if (loginButton) {
-      loginButton.disabled = status !== 'VALID' || this.loading;
-    }
-  });
-}
+    this.loginForm.statusChanges.subscribe((status) => {
+      const loginButton = document.getElementById(
+        "login-button"
+      ) as HTMLButtonElement;
+      if (loginButton) {
+        loginButton.disabled = status !== "VALID" || this.loading;
+      }
+    });
+  }
 
   login() {
     const nickname = this.loginForm.get("nickname")?.value;
@@ -184,6 +186,7 @@ export class LoginComponent implements OnInit {
               token: data.token,
               isAdmin: true,
               email: null,
+              isGuest: false,
               id: nickname,
               // alias: "john.doe@gmail.com".split("@")[0],
               expiration: moment().add(1, "days").toDate(),

@@ -99,6 +99,7 @@ export class WaitingRoomComponentComponent implements OnInit {
         event.currentIndex
       );
     }
+
     this.gameService
       .changeTeam(this.gameID, newContainer, username, newIndex)
       .subscribe((res: any) => {
@@ -212,11 +213,15 @@ export class WaitingRoomComponentComponent implements OnInit {
   }
 
   joinGame() {
+    const actualUser = JSON.parse(
+      this.localStorage.getItem("currentUser") as string
+    );
     this.dashboardService
       .joinGame({
         gameID: this.gameID,
         username: this.localStorage.getItem("fullName"),
         GUIID: this.localStorage.getItem("UUID"),
+        guest: actualUser.isGuest,
       })
       .subscribe((res: any) => {
         setTimeout(() => {
