@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-material-template": {
+    "maraffa-FE": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -20,7 +20,7 @@
             "allowedCommonJsDependencies": [
               "crypto"
             ],
-            "outputPath": "dist/angular-material-template",
+            "outputPath": "dist/maraffa-FE",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -47,7 +47,7 @@
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumError": "10kb"
                 }
               ],
               "fileReplacements": [
@@ -76,10 +76,10 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular-material-template:build:production"
+              "browserTarget": "maraffa-FE:build:production"
             },
             "development": {
-              "browserTarget": "angular-material-template:build:development"
+              "browserTarget": "maraffa-FE:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -87,7 +87,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-material-template:build"
+            "browserTarget": "maraffa-FE:build"
           }
         },
         "test": {
