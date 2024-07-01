@@ -609,7 +609,7 @@ export class GameComponent implements OnInit, OnDestroy {
   newGame(response: any) {
     this.teamScoreA = 0;
     this.teamScoreB = 0;
-    
+    this.router.navigate(["/game/" + response.newGameID]);
   }
 
   startDrag(event: MouseEvent) {
