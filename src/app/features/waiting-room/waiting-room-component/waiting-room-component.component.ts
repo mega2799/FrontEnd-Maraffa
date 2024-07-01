@@ -135,8 +135,12 @@ export class WaitingRoomComponentComponent implements OnInit {
     this.gameService.getGames().subscribe((res: any[]) => {
       const currentGame = res.find((game: any) => game.gameID === this.gameID);
       this.activeGame = currentGame;
-      this.teamA = currentGame.teamA;
-      this.teamB = currentGame.teamB;
+      this.teamA = currentGame.teamA.players.map(
+        (player: any) => player.username
+      );
+      this.teamB = currentGame.teamB.players.map(
+        (player: any) => player.username
+      );
       this.status = statusValue[currentGame.status];
       this.mode = gameModeValue[currentGame.mode];
       this.score = currentGame.score;
@@ -178,9 +182,13 @@ export class WaitingRoomComponentComponent implements OnInit {
       );
       if (!actualGame) throw new Error("Game not found");
       this.status = statusValue[actualGame.status];
-      this.teamA = actualGame.teamA;
+      this.teamA = actualGame.teamA.players.map(
+        (player: any) => player.username
+      );
 
-      this.teamB = actualGame.teamB;
+      this.teamB = actualGame.teamB.players.map(
+        (player: any) => player.username
+      );
       this.score = actualGame.score;
     });
 

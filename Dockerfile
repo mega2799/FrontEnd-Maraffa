@@ -6,6 +6,7 @@ WORKDIR /app
 
 # Copia il file package.json e package-lock.json
 COPY package*.json ./
+COPY proxy* ./
 
 # Installa le dipendenze
 RUN yarn install
