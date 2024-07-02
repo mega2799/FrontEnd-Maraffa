@@ -1,9 +1,10 @@
+import { MediaMatcher } from "@angular/cdk/layout";
 import {
+  ChangeDetectorRef,
   Component,
   HostListener,
   Inject,
   OnDestroy,
-  ChangeDetectorRef,
   OnInit,
   ViewChild,
 } from "@angular/core";
@@ -15,10 +16,9 @@ import { GameService } from "src/app/core/services/game.service";
 import { NotificationService } from "src/app/core/services/notification.service";
 import { WebSocketGameService } from "src/app/core/services/websocket.game";
 import { Card } from "src/app/model/card.model";
-import { UltimaPresaComponent } from "../../ultima-presa/ultima-presa/ultima-presa.component";
-import { MediaMatcher } from '@angular/cdk/layout';
 import { DialogComponent } from "../../dialog/dialog/dialog.component";
-
+import { UltimaPresaComponent } from "../../ultima-presa/ultima-presa/ultima-presa.component";
+import { ExitDialogComponent } from "../dialogs/exit/exit-dialaog.component";
 
 interface Chiamata {
   value: string;
@@ -90,11 +90,13 @@ export class GameComponent implements OnInit, OnDestroy {
         undefined;
     }
 
-    if(this.tableCards[0] != undefined){
-      if (mappingSuit[card.suit] === this.trumpChoosen && mappingSuit[this.tableCards[0].suit] !== this.trumpChoosen) {
+    if (this.tableCards[0] != undefined) {
+      if (
+        mappingSuit[card.suit] === this.trumpChoosen &&
+        mappingSuit[this.tableCards[0].suit] !== this.trumpChoosen
+      ) {
         this.gameService.notify(this.gameID, "TAGLIO").subscribe();
       }
-
     }
     this.gameService
       .playCard(
@@ -196,7 +198,7 @@ export class GameComponent implements OnInit, OnDestroy {
     private router: Router,
     public dialog: MatDialog
   ) {
-    this.mobileQuery = this.media.matchMedia('(max-width: 1000px)');
+    this.mobileQuery = this.media.matchMedia("(max-width: 1000px)");
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     // tslint:disable-next-line: deprecation
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -525,20 +527,24 @@ export class GameComponent implements OnInit, OnDestroy {
     console.log("change teamA", response.teamAScore);
     console.log("change teamB", response.teamBScore);
     if (response.trick != undefined) {
-      this.tableCards = response.trick.cards.map(
-        (card: number) => ({
-          src: `assets/images/cards/${suits[Math.floor(card / 10)]}/${
-            card % 10 <= 6 ? (card % 10) + 4 : (card % 10) - 6
-          }.jpg`,
-          suit: suits[Math.floor(card / 10)],
-          user: response.trick.cardsAndUsers[card],
-        })
-      );
+      this.tableCards = response.trick.cards.map((card: number) => ({
+        src: `assets/images/cards/${suits[Math.floor(card / 10)]}/${
+          card % 10 <= 6 ? (card % 10) + 4 : (card % 10) - 6
+        }.jpg`,
+        suit: suits[Math.floor(card / 10)],
+        user: response.trick.cardsAndUsers[card],
+      }));
       this.cardsAndUsers = [];
-      if (response.latestTrick.cardsAndUsers != undefined){
-        Object.entries(response.latestTrick.cardsAndUsers).forEach(([key, value]: any) => {
-        this.cardsAndUsers.push(`assets/images/cards/${suits[Math.floor(key / 10)]}/${key % 10 <= 6 ? (key % 10) + 4 : (key % 10) - 6}.jpg`);
-        });
+      if (response.latestTrick.cardsAndUsers != undefined) {
+        Object.entries(response.latestTrick.cardsAndUsers).forEach(
+          ([key, value]: any) => {
+            this.cardsAndUsers.push(
+              `assets/images/cards/${suits[Math.floor(key / 10)]}/${
+                key % 10 <= 6 ? (key % 10) + 4 : (key % 10) - 6
+              }.jpg`
+            );
+          }
+        );
       }
     }
   }
@@ -600,8 +606,8 @@ export class GameComponent implements OnInit, OnDestroy {
     this.teamScoreA = response.teamAScore;
     this.teamScoreB = response.teamBScore;
     const dialogRef = this.dialog.open(DialogComponent, {
-      width: '400px',
-      data: response
+      width: "400px",
+      data: response,
     });
     this.gameService.newGame(this.gameID).subscribe();
   }
@@ -611,8 +617,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.teamScoreB = 0;
     this.router.navigate(["/game/" + response.newGameID]).then(() => {
       window.location.reload();
-   });
-  
+    });
   }
 
   startDrag(event: MouseEvent) {
@@ -656,7 +661,17 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   exitGame() {
-    this.router.navigateByUrl("/");
+    this.dialog.open(ExitDialogComponent, {
+      width: "450px",
+      data: {
+        message: "Sei davvero sicuro di voler uscire?",
+        onExit: this.handleExit.bind(this),
+      },
+    });
+  }
+  handleExit() {
+    console.log("Exiting game TODO POST");
+    // Altri codici per gestire l'uscita
   }
 
   toggleGameChatSidebar() {
