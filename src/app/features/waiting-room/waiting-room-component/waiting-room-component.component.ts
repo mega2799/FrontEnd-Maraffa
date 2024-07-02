@@ -62,6 +62,11 @@ export class WaitingRoomComponentComponent implements OnInit {
 
   teamB: string[] = [];
 
+  setRoomPassword(password: string) {
+    this.password = password;
+    alert("Password salvata");
+  }
+
   drop(event: CdkDragDrop<string[]>) {
     console.log("WTF is going on? ");
     console.log(event);
@@ -280,10 +285,7 @@ export class WaitingRoomComponentComponent implements OnInit {
     this.notificationService.openSnackBar(message);
   }
 
-  setRoomPassword() {
-    if (!this.password) return;
-    // this._hubService.SetGamePassword(this.activeGame.gameSetup.id, this.password);
-  }
+
 
   kickPlayerFromGame(player: any) {
     //Player) {

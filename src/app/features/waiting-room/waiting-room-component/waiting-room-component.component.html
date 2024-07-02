@@ -53,7 +53,7 @@
           </div>
         </div>
       </div>
-      <form>
+      <form *ngIf="this.creator === this.currentUser" (ngSubmit)="setRoomPassword(passwordInput.value)">
         <div class="form-group row">
           <label
             for="password"
@@ -65,8 +65,9 @@
               type="text"
               class="form-control input-login"
               id="password"
+              #passwordInput
               placeholder="(Optional)" />
-            <button class="tick-button" (click)="setRoomPassword()">
+            <button class="tick-button" type="submit">
               <mat-icon mat-list-icon id="tick"
                 ><span class="material-symbols-outlined">
                   check_circle</span
