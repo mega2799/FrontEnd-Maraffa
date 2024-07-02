@@ -162,4 +162,13 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     // return this._hubService.GameCount;
     //return 15;
   }
+
+  insertPassword(game : Game) {
+    let pwd = prompt("Inserire la password:");
+    if (this.dashboardService.checkPassword(pwd as string)) {
+      this.router.navigate(["/waiting/" + game.creator + '/' + game.gameID]);
+    } else {
+      alert("Password errata");
+    }
+  }
 }

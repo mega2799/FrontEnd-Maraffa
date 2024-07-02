@@ -64,6 +64,7 @@ export class WaitingRoomComponentComponent implements OnInit {
 
   setRoomPassword(password: string) {
     this.password = password;
+    this.dashboardService.setPassword(password);
     alert("Password salvata");
   }
 

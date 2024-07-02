@@ -7,6 +7,16 @@ import { Observable } from "rxjs";
   providedIn: "root",
 })
 export class DashBoardService {
+  private _password!: string;
+
+  checkPassword(pwd: string): boolean {
+    console.log("pwd", pwd, "this._password", this._password);
+    return this._password === pwd;
+  }
+  setPassword(value: string) {
+    this._password = value;
+  }
+
   joinGame(body: any) {
     return this.http.patch<any>("/api/game/join", body);
   }
