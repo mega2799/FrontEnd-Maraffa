@@ -419,6 +419,9 @@ export class GameComponent implements OnInit, OnDestroy {
           case "notification":
             this.notify(response);
             break;
+          case "newGame":
+            this.newGame(response);
+            break;
           default:
             break;
         }
@@ -600,7 +603,16 @@ export class GameComponent implements OnInit, OnDestroy {
       width: '400px',
       data: response
     });
-    this.gameService.newGame(this.gameID);
+    this.gameService.newGame(this.gameID).subscribe();
+  }
+
+  newGame(response: any) {
+    this.teamScoreA = 0;
+    this.teamScoreB = 0;
+    this.router.navigate(["/game/" + response.newGameID]).then(() => {
+      window.location.reload();
+   });
+  
   }
 
   startDrag(event: MouseEvent) {
