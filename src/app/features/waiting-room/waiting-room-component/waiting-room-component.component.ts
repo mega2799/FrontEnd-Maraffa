@@ -64,7 +64,7 @@ export class WaitingRoomComponentComponent implements OnInit {
 
   setRoomPassword(password: string) {
     this.password = password;
-    this.dashboardService.setPassword(password);
+    this.gameService.setPassword(this.gameID, password).subscribe();
     alert("Password salvata");
   }
 
@@ -227,6 +227,7 @@ export class WaitingRoomComponentComponent implements OnInit {
   }
 
   joinGame() {
+    let pwd = prompt("Inserire la password:");
     const actualUser = JSON.parse(
       this.localStorage.getItem("currentUser") as string
     );
@@ -236,6 +237,7 @@ export class WaitingRoomComponentComponent implements OnInit {
         username: this.localStorage.getItem("fullName"),
         GUIID: this.localStorage.getItem("UUID"),
         guest: actualUser.isGuest,
+        password: pwd as string,
       })
       .subscribe((res: any) => {
         setTimeout(() => {

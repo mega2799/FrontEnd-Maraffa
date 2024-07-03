@@ -117,7 +117,7 @@
                 id="game-button"
                 mat-flat-button
                 class="orange-button"
-                (click)="insertPassword(game)"
+                [routerLink]="['/waiting/' + game.creator + '/' + game.gameID]"
                 >
                 <mat-icon class="{{ game.status.toLowerCase() }}"
                   >fiber_manual_record</mat-icon

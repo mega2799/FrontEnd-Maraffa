@@ -80,6 +80,10 @@ export class GameService {
     return this.http.patch<any>(`/api/game/start`, { gameID });
   }
 
+  setPassword(gameID: string, password: string) {
+    return this.http.patch<any>(`/api/game/password`, { gameID, password });
+  }
+
   changeTeam(
     gameID: string,
     team: string,
