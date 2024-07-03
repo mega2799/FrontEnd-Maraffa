@@ -6,6 +6,9 @@ import { Observable } from "rxjs";
   providedIn: "root",
 })
 export class GameService {
+  exitGame(gameID: string) {
+    return this.http.delete<any>(`/api/game/` + gameID);
+  }
   sendMessage(author: string, message: string, gameID?: string) {
     return this.http.post<any>(`/api/chat`, {
       gameID,
@@ -93,10 +96,10 @@ export class GameService {
 
   newGame(gameID: string): Observable<any> {
     console.log("new game api");
-    return this.http.post<any>(`/api/game/newGame`, {gameID,});
+    return this.http.post<any>(`/api/game/newGame`, { gameID });
   }
 
-  notify(gameID: string, message: string,): Observable<any> {
+  notify(gameID: string, message: string): Observable<any> {
     return this.http.post<any>(`/api/notification`, {
       gameID,
       message,

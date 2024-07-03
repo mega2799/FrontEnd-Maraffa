@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>Uscita dal gioco</h1>
-<div mat-dialog-content>Sei davvero sicuro sicuro sicuro ?</div>
+<div mat-dialog-content>{{ data.message }}</div>
 <div mat-dialog-actions>
-  <button mat-button mat-dialog-close (click)="this.exitConfirmed()">Si</button>
+  <button mat-button mat-dialog-close (click)="this.exitConfirmed()">OK</button>
 </div>
