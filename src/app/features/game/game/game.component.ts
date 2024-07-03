@@ -424,6 +424,9 @@ export class GameComponent implements OnInit, OnDestroy {
           case "newGame":
             this.newGame(response);
             break;
+          case "exitGame":
+            this.exitGameManagment();
+            break;
           default:
             break;
         }
@@ -492,6 +495,24 @@ export class GameComponent implements OnInit, OnDestroy {
     // this._hubService.GameChatMessages.pipe(takeWhile(() => this._isAlive)).subscribe(messages => {
     //   if (messages.length > 0 && messages[0].username != this.currentUser.name && !this.isGameChatSidebarOpen) this.numberUnreadMessages++;
     // });
+  }
+  exitGameManagment() {
+    this.dialog.open(ExitDialogComponent, {
+      width: "500px",
+      data: {
+        message:
+          "Qualcuno ha abbandonato la partita, la partita e' stata chiusa\n Verrai reindirizzato alla home page a breve",
+        onExit: this.handleExitRedirect.bind(this),
+      },
+    });
+    setInterval(() => {
+      this.handleExitRedirect();
+    }, 3000);
+  }
+  handleExitRedirect() {
+    this.router.navigate(["/"]).then(() => {
+      window.location.reload();
+    });
   }
 
   startGameManagment(response: any) {
@@ -672,6 +693,7 @@ export class GameComponent implements OnInit, OnDestroy {
   handleExit() {
     console.log("Exiting game TODO POST");
     // Altri codici per gestire l'uscita
+    this.gameService.exitGame(this.gameID).subscribe((res) => {});
   }
 
   toggleGameChatSidebar() {
