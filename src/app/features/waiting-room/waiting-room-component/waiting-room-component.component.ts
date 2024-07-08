@@ -38,6 +38,7 @@ export class WaitingRoomComponentComponent implements OnInit {
   password!: string; //TODO modificato
   currentUser!: string; //User; //TODO modificato
   creator!: string;
+  pwdSaved: boolean = false;
   public interval: number = 1;
   mode!: string;
   isReady: boolean = false;
@@ -65,7 +66,10 @@ export class WaitingRoomComponentComponent implements OnInit {
   setRoomPassword(password: string) {
     this.password = password;
     this.gameService.setPassword(this.gameID, password).subscribe();
-    alert("Password salvata");
+    this.pwdSaved = true;
+    setTimeout(() => {
+      this.pwdSaved = false;
+    }, 3000);
   }
 
   drop(event: CdkDragDrop<string[]>) {

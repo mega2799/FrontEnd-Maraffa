@@ -1,5 +1,6 @@
 <div fxLayout="row" fxLayoutAlign="center none">
   <div fxFlex="95%" class="container">
+    <div id="info-box" *ngIf="this.pwdSaved"><p>Password salvata</p></div>
     <h2 class="text">Partita di {{ this.creator }}</h2>
     <div class="card-container">
       <div class="p-container">
@@ -90,7 +91,7 @@
           *ngIf="this.creator !== this.currentUser"
           (click)="joinGame()">
           Unisciti
-        </button>
+        </button> 
         <button mat-flat-button class="orange-button" (click)="startGame()">
           Gioca
         </button>
