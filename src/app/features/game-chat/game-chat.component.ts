@@ -45,6 +45,7 @@ export class GameChatComponent implements OnInit {
     // this.ws.clientID = this.localStorage.getItem("UUID") as string;
     // this.ws.userName = this.localStorage.getItem("fullName") as string;
     // this.ws.initWebSocket();
+    this.loadMessages();
     this.ws.webSocket$
       .pipe(
         catchError((error) => {
@@ -68,8 +69,19 @@ export class GameChatComponent implements OnInit {
         }
       });
   }
+  saveMessages() {
+    sessionStorage.setItem("chatMessages", JSON.stringify(this.messages));
+  }
+
+  loadMessages() {
+    const storedMessages = sessionStorage.getItem("chatMessages");
+    if (storedMessages) {
+      this.messages = JSON.parse(storedMessages);
+    }
+  }
   messageReceived(response: any) {
     this.messages.push(JSON.parse(response.message));
+    this.saveMessages();
   }
 
   // sendMessage(event: { message: string; files: File[] }) {
