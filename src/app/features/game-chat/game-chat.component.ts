@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from "@angular/core";
+import { Component, Inject, OnDestroy, OnInit } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { catchError, retry, throwError } from "rxjs";
@@ -24,7 +24,7 @@ import { WebSocketGameService } from "src/app/core/services/websocket.game";
   //   `,
   // ],
 })
-export class GameChatComponent implements OnInit {
+export class GameChatComponent implements OnInit, OnDestroy {
   messages: any[] = [];
   public interval: number = 1;
   gameID!: string;
@@ -40,6 +40,10 @@ export class GameChatComponent implements OnInit {
     private ws: WebSocketGameService,
     private readonly gameService: GameService
   ) {}
+  ngOnDestroy(): void {
+    this.clearMessages();
+  }
+
   ngOnInit(): void {
     this.gameID = this.route.snapshot.paramMap.get("gameID") as string;
     // this.ws.clientID = this.localStorage.getItem("UUID") as string;
@@ -68,6 +72,10 @@ export class GameChatComponent implements OnInit {
             break;
         }
       });
+  }
+
+  clearMessages() {
+    localStorage.removeItem("chatMessages");
   }
   saveMessages() {
     sessionStorage.setItem("chatMessages", JSON.stringify(this.messages));

@@ -24,7 +24,7 @@
       xPosition="before"
       yPosition="above"
       [overlapTrigger]="false">
-      <a mat-menu-item [routerLink]="['/userInfo']">
+      <a *ngIf="!this.isGuest" mat-menu-item [routerLink]="['/userInfo']">
         <mat-icon>person</mat-icon>
         <span>Profile</span>
       </a>
@@ -56,7 +56,10 @@
           <p mat-line>Dashboard</p>
         </a>
 
-        <a mat-list-item [routerLink]="['/users']" routerLinkActive="active">
+        <a
+          mat-list-item
+          [routerLink]="['/user-list']"
+          routerLinkActive="active">
           <mat-icon mat-list-icon> people </mat-icon>
           <p mat-line>Utenti attivi</p>
         </a>
@@ -69,12 +72,16 @@
           <p mat-line>Partite</p>
         </a>
 
-        <a mat-list-item [routerLink]="['/userInfo']">
-          <mat-icon mat-list-icon>person</mat-icon>
+        <a
+          *ngIf="!this.isGuest"
+          mat-menu-item
+          [routerLink]="['/account/profile']"
+          routerLinkActive="active">
+          <mat-icon>password-reset</mat-icon>
           <p mat-line>Account</p>
         </a>
 
-        <a mat-list-item [routerLink]="['/auth/login']">
+        <a mat-list-item (click)="this.logOut()">
           <mat-icon mat-list-icon>exit_to_app</mat-icon>
           <p mat-line>Log out</p>
         </a>
@@ -105,9 +112,10 @@
           <mat-icon mat-list-icon> dashboard </mat-icon>
         </a>
 
+        <!-- TODO la user list -->
         <a
           mat-list-item
-          [routerLink]="['/profile2']"
+          [routerLink]="['/user-list']"
           routerLinkActive="active"
           class="menu-item">
           <!--users-->
@@ -122,11 +130,19 @@
           <mat-icon mat-list-icon> sports_esports </mat-icon>
         </a>
 
-        <a mat-list-item [routerLink]="['/userInfo']" class="menu-item">
-          <mat-icon mat-list-icon>person</mat-icon>
+        <a
+          *ngIf="!this.isGuest"
+          mat-menu-item
+          [routerLink]="['/account/profile']"
+          routerLinkActive="active">
+          <mat-icon>password-reset</mat-icon>
         </a>
 
-        <a mat-list-item [routerLink]="['/auth/login']" class="menu-item">
+        <!-- <a mat-list-item [routerLink]="['/auth/login']" class="menu-item">
+          <mat-icon mat-list-icon>exit_to_app</mat-icon>
+        </a> -->
+
+        <a mat-list-item (click)="this.logOut()" class="menu-item">
           <mat-icon mat-list-icon>exit_to_app</mat-icon>
         </a>
       </mat-nav-list>

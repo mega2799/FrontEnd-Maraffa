@@ -77,12 +77,15 @@
 
                 <button
                   mat-flat-button
-                  class="orange-button number-of-players"
+                  class="orange-button number-of-players hoverbutton"
                   [matMenuTriggerFor]="twoPlayersMenu"
                   formControlName="playersNum"
+                  [disabled]="true"
                   (click)="this.playersNum.setValue('2')">
                   2 giocatori <mat-icon mat-list-icon> people</mat-icon>
                 </button>
+                <div class="hide">Presto disponibile.</div>
+
                 <mat-menu
                   #twoPlayersMenu="matMenu"
                   xPosition="before"
@@ -117,8 +120,7 @@
                 id="game-button"
                 mat-flat-button
                 class="orange-button"
-                [routerLink]="['/waiting/' + game.creator + '/' + game.gameID]"
-                >
+                [routerLink]="['/waiting/' + game.creator + '/' + game.gameID]">
                 <mat-icon class="{{ game.status.toLowerCase() }}"
                   >fiber_manual_record</mat-icon
                 >{{ game.creator }}
