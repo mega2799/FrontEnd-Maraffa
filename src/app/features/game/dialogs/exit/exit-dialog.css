@@ -1,0 +1,23 @@
+button {
+  margin-right: 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  --color: #0077ff;
+  font-family: inherit;
+  display: inline-block;
+  width: 6em;
+  height: 2.6em;
+  line-height: 2.5em;
+  overflow: hidden;
+  cursor: pointer;
+  margin-right: 2%;
+  margin-top: 2%;
+  font-size: 17px;
+  z-index: 1;
+  color: var(--color);
+  border: 2px solid var(--color);
+  border-radius: 6px;
+  position: relative;
+}

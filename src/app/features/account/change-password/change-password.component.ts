@@ -32,13 +32,13 @@ export class ChangePasswordComponent implements OnInit {
 
   ngOnInit() {
     this.form = new UntypedFormGroup({
-      currentPassword: new UntypedFormControl('', Validators.required),
+      // currentPassword: new UntypedFormControl('', Validators.required),
       newPassword: new UntypedFormControl('', Validators.required),
       newPasswordConfirm: new UntypedFormControl('', Validators.required),
     });
 
-    this.form.get('currentPassword')?.valueChanges
-      .subscribe(val => { this.currentPassword = val; });
+    // this.form.get('currentPassword')?.valueChanges
+    //   .subscribe(val => { this.currentPassword = val; });
 
     this.form.get('newPassword')?.valueChanges
       .subscribe(val => { this.newPassword = val; });
@@ -54,18 +54,18 @@ export class ChangePasswordComponent implements OnInit {
   changePassword() {
 
     if (this.newPassword !== this.newPasswordConfirm) {
-      this.notificationService.openSnackBar('New passwords do not match.');
+      this.notificationService.openSnackBar('Le nuove password sono diverse.');
       return;
     }
 
     const email = this.authService.getCurrentUser().email;
 
-    this.authService.changePassword(email, this.currentPassword, this.newPassword)
+    this.authService.changePassword(this.newPassword)
       .subscribe(
         data => {
           this.logger.info(`User ${email} changed password.`);
           this.form.reset();
-          this.notificationService.openSnackBar('Your password has been changed.');
+          this.notificationService.openSnackBar('La tua password è stata cambiata.');
         },
         error => {
           this.notificationService.openSnackBar(error.error);

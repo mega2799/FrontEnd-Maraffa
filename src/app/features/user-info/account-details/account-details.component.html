@@ -1,9 +1,26 @@
 <div>
-  <p><mat-icon mat-list-icon class="profile-icon">event</mat-icon> Data di registrazione:<span>12/01/24</span></p>
-  <p><mat-icon mat-list-icon class="profile-icon">mail</mat-icon> Email:<span>sofia@maraffa.com</span></p>
-  <p><mat-icon mat-list-icon class="profile-icon">schedule</mat-icon> Ultimo accesso:<span>Online</span></p>
-  <p class="img-paragraph"><img src="assets/images/trophy.png" class="image_icon" /> Partite giocate: <span>10</span></p>
-  <p class="img-paragraph"><img src="assets/images/playing_cards.png" class="image_icon" /> Numero di Cricche:<span>4</span><img src="assets/images/maraffa_image.png" id="maraffa_image" /></p>
+  <p>
+    <mat-icon mat-list-icon class="profile-icon">event</mat-icon> Data di
+    registrazione:<span>{{ this.userData.registrationDate }}</span>
+  </p>
+  <p>
+    <mat-icon mat-list-icon class="profile-icon">mail</mat-icon> Email:<span>{{
+      this.userData.email
+    }}</span>
+  </p>
+  <p>
+    <mat-icon mat-list-icon class="profile-icon">schedule</mat-icon> Ultimo
+    accesso:<span>{{ this.userData.latestLogin }}</span>
+  </p>
+  <p class="img-paragraph">
+    <img src="assets/images/trophy.png" class="image_icon" /> Partite giocate:
+    <span>{{ this.userData.gamesPlayed }}</span>
+  </p>
+  <p class="img-paragraph">
+    <img src="assets/images/playing_cards.png" class="image_icon" /> Numero di
+    Cricche:<span>{{ this.userData.criccaNum }}</span
+    ><img src="assets/images/maraffa_image.png" id="maraffa_image" />
+  </p>
 </div>
 
 <div id="chart">
@@ -13,6 +30,6 @@
     [labels]="chartOptions.labels"
     [colors]="chartOptions.colors"
     [responsive]="
-    chartOptions.responsive ? chartOptions.responsive : []
+      chartOptions.responsive ? chartOptions.responsive : []
     "></apx-chart>
-  </div>
+</div>

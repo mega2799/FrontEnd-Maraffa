@@ -12,21 +12,24 @@ export class AccountPageComponent implements OnInit {
   userData: any = {};
   constructor(
     private http: HttpClient,
+    // @Inject("SESSIONSTORAGE") private localStorage: Storage,
     @Inject("LOCALSTORAGE") private localStorage: Storage,
     private titleService: Title
   ) {}
 
   ngOnInit() {
     const nickName = this.localStorage.getItem("fullName");
-    this.http.get<any>(`/api/user/${nickName}`).subscribe((response) => {
-      if (response.error != undefined) {
-        console.log(response.error);
-        //TODO 404 page ?????
-      } else {
-        this.userData = response;
-      }
-    });
-
     this.titleService.setTitle(`${nickName} - Account`);
+    JSON.parse(this.localStorage.getItem("currentUser")!) &&
+    JSON.parse(this.localStorage.getItem("currentUser")!).isGuest
+      ? (this.userData = {})
+      : this.http.get<any>(`/api/user/${nickName}`).subscribe((response) => {
+          if (response.error != undefined) {
+            console.log(response.error);
+            //TODO 404 page ?????
+          } else {
+            this.userData = response;
+          }
+        });
   }
 }

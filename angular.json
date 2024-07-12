@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-material-template": {
+    "maraffa-FE": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -17,7 +17,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-material-template",
+            "allowedCommonJsDependencies": [
+              "crypto"
+            ],
+            "outputPath": "dist/maraffa-FE",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -30,8 +33,7 @@
               "src/styles.css"
             ],
             "scripts": [
-                "node_modules/apexcharts/dist/apexcharts.min.js"
-
+              "node_modules/apexcharts/dist/apexcharts.min.js"
             ]
           },
           "configurations": {
@@ -45,7 +47,7 @@
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumError": "10kb"
                 }
               ],
               "fileReplacements": [
@@ -69,15 +71,14 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "proxyConfig": "proxy.conf.json"
-          },
           "configurations": {
             "production": {
-              "browserTarget": "angular-material-template:build:production"
+              "browserTarget": "maraffa-FE:build:production",
+              "proxyConfig": "proxy.conf.docker.json"
             },
             "development": {
-              "browserTarget": "angular-material-template:build:development"
+              "browserTarget": "maraffa-FE:build:development",
+              "proxyConfig": "proxy.conf.docker.json"
             }
           },
           "defaultConfiguration": "development"
@@ -85,7 +86,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-material-template:build"
+            "browserTarget": "maraffa-FE:build"
           }
         },
         "test": {

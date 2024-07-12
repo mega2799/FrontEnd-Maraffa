@@ -62,10 +62,17 @@
 
   .teamA-box{
     background-color: #00a3f5;/*#007EA8;*/
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+
   }
 
   .teamB-box{
     background-color: #f19a3e;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
   }
 
   .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
@@ -138,6 +145,30 @@
   outline: none;
   }
 
+  #info-box{
+    position: fixed;
+    top: 100px;
+    left: 20px;
+    background-color: #277E96;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    width: fit-content;
+    transform: translateY(-20px);
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    padding: 0 5%;
+  }
+  
+  #info-box p{
+    margin-right: 1%;
+    color: white;
+    white-space: nowrap;
+    display: inline-block;
+  }
+
   .tick-button{
     border: none;
     vertical-align: middle;
@@ -157,4 +188,8 @@
 
   form{
     margin: 1%;
+  }
+
+  .button-container{
+    margin-top: 1%;
   }

@@ -1,0 +1,17 @@
+<!-- draggable-image.component.html -->
+<div
+  class="draggable"
+  (mousedown)="startDrag($event)"
+  (mouseup)="stopDrag()"
+  (mousemove)="onDrag($event)"
+  [ngStyle]="{
+    top: position.y + 'px',
+    left: position.x + 'px',
+    opacity: hidden ? 0 : 1,
+    transform: hidden ? 'translateY(-100px)' : 'translateY(0)',
+    transition: 'transform 0.5s, opacity 0.5s'
+  }"
+  (transitionend)="onTransitionEnd($event)">
+  <img [src]="src" alt="Draggable Image" />
+  <div class="readable">{{alt}}</div>
+</div>

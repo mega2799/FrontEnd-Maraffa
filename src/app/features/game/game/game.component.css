@@ -5,20 +5,62 @@
   text-align: center;
 }
 
-.players-name{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin: 0 0 0 25%;
-  width: 50%;
-  min-width: initial !important;
-  overflow: hidden !important;
+@media (min-width: 820px){
 
+  .players-name{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0 15%;
+    width: 70%;
+    min-width: initial !important;
+    overflow: hidden !important;
+  }
+
+  .players-name > p{
+    font-weight: bold;
+    margin-left: 1%;
+    margin-right: 1%;
+    font-size: large;
+  }
+
+  .star{
+    margin-top: 1%;
+  }
 }
 
-.players-name > p{
-  width: 25%;
-  font-weight: bold;
+@media (max-width: 819px){
+
+  .players-name{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0 2%;
+    width: 96%;
+    min-width: initial !important;
+    overflow: hidden !important;
+
+  }
+
+  .players-name > p{
+    font-weight: bold;
+    font-size: 100%;
+    margin-left: 1%;
+    margin-right: 1%;
+  }
+
+  .star{
+    display: none;
+  }
+}
+
+@media (min-width: 410px) and (max-width: 500px){
+  .star{
+    width: 30%;
+    margin-top: 3% 1%;
+    font-size: 80%;
+  }
+  
 }
 
 .players-name > p:nth-child(even){
@@ -29,18 +71,80 @@
   border-bottom: solid 2.5px #00a3f5; /*63CCCA*/
 }
 
-#first-selected{
+.first-selected{
   background-color: #00a3f5;
   color: black;
   border-radius: 4px;
   border: 1px solid #a8a8a8;
 }
 
-#second-selected{
+.second-selected{
   background-color: #f19a3e;
   color: black;
   border-radius: 4px;
   border: 1px solid #a8a8a8;
+}
+
+@media (min-width: 870px){
+  .hand{
+    width: 75%;
+    margin: 0 17% 0 8%; 
+    display: flex;
+    flex-direction: row;
+  }
+  .hand-card{
+    margin-right: 1%;
+  }
+}
+
+@media (max-width: 600px){
+  .hand{
+    width: 84%;
+    margin: 0 8% 0 8%; 
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 10px;
+  }
+  .hand-card {
+    width: 100%;
+  }
+
+}
+
+@media (min-width: 600px) and (max-width: 869px){
+  .hand{
+    width: 84%;
+    margin: 0 8% 0 8%; 
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 10px;
+  }
+  .hand-card{
+    width: 100%;
+  }
+
+  .hand-card:nth-child(1),
+  .hand-card:nth-child(2),
+  .hand-card:nth-child(3),
+  .hand-card:nth-child(4),
+  .hand-card:nth-child(5),
+  .hand-card:nth-child(6) {
+    grid-column: span 1;
+  }
+  .hand-card:nth-child(7) {
+    grid-column: 2 / span 1;
+  }
+  .hand-card:nth-child(8) {
+    grid-column: 3 / span 1;
+  }
+  .hand-card:nth-child(9) {
+    grid-column: 4 / span 1;
+  }
+  .hand-card:nth-child(10) {
+    grid-column: 5 / span 1;
+  }
 }
 
 @media (min-width: 1290px){
@@ -52,14 +156,6 @@
     margin: 1% 30% 1%;
   }
 
-  .hand{
-    width: 94%;
-    margin: 0 3% 0 3%; 
-  }
-
-  .hand-card {
-    width: 7%;
-  }
 }
 
 @media (min-width: 801px) and (max-width: 1289px){
@@ -84,17 +180,12 @@
   .select-container{
     margin: 1% 8% 1%;
   }
-  .hand-card {
-    width: 16.5%;
-  }
-  .hand{
-    margin: 0 15%;
-    width: 70%;
-  }
 
   .normal-text{
     margin-top: 0;
   }
+
+
 }
 
 @media (min-width: 516px) and (max-width: 600px){
@@ -105,33 +196,41 @@
   .select-container{
     margin: 1% 8% 1%;
   }
-  .hand-card {
-    width: 16.5%;
+    
+    .normal-text{
+      margin-top: 0;
+    }
   }
-  .hand{
-    margin: 0;
+  
+  @media (max-width: 515px){
+    #table{  
+      margin: 0 8% 0 8%;
+    }
+    .select-container{
+      margin: 5% 8% 5%;
   }
 
-  .normal-text{
-    margin-top: 0;
   }
-}
-
-@media (max-width: 515px){
-  #table{  
+  
+  .game-text{
+    margin: 0 4% 1% 4%;
+    font-weight: bold;
+    padding: 0;
+  }
+  
+  .game-text-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 1%;
+  }
+  
+  .score-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     margin: 0 8% 0 8%;
   }
-  .select-container{
-    margin: 5% 8% 5%;
-  }
-
-  .hand-card {
-    width: 16.5%;
-  }
-  .hand{
-    margin: 0;
-  }
-}
 
 #table{  
   background-color: #52AA5E;
@@ -152,7 +251,12 @@
 
 #chat{
   --color: #FFB01F;
+}
 
+
+.game-chat{
+  position: fixed;
+  right: 0;
 }
 
 .game-button{
@@ -291,17 +395,60 @@
 .cards-container .wrap:nth-child(even) .player{
   background-color: #f19a3e;
   color: black;
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
 }
 
 .cards-container .wrap:nth-child(odd) .player{
   background-color:#00a3f5;
   color: black;
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
 }
 
+#info-box{
+  position: fixed;
+  top: 100px;
+  left: 20px;
+  background-color: #277E96;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  opacity: 1;
+  width: fit-content;
+  transform: translateY(-20px);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  padding: 0 5%;
 
+}
 
-.hand-card {
-  margin: 1%;
-  border-radius: 10px;
-  border: solid 1px #9c9b9b;
+#info-box p{
+  margin-right: 1%;
+  color: white;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.notification.ng-enter {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.notification.ng-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.notification.ng-leave {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.notification.ng-leave-active {
+  opacity: 0;
+  transform: translateY(-20px);
 }

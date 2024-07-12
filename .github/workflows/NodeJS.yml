@@ -1,0 +1,121 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  workflow_call:
+  release: 
+    types: [ published ]
+  pull_request:
+    branches: [ "develop" ]
+    types: [ closed ]
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    strategy:
+        fail-fast: false
+        matrix:
+          # os: [ windows, macos, ubuntu ]
+          node-version: [18.x]
+    # concurrency: # group: ${{ github.workflow }}-${{ github.ref }}-build-${{ matrix.os }}-${{ matrix.node-version }}
+    #   group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.node-version }}
+    #   cancel-in-progress: true
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run install
+      uses: borales/actions-yarn@v3
+      with:
+        cmd: install # will run `yarn install` command
+    - name: Make a cache
+      uses: actions/cache@v2
+      id: restore-build
+      with:
+        path: ./*
+        key: ${{ github.sha }}
+
+
+
+  # test:
+  #   runs-on: ubuntu-22.04
+  #   needs: build
+  #   strategy:
+  #       fail-fast: false
+  #       matrix:
+  #         # os: [ windows, macos, ubuntu ]
+  #         node-version: [18.x]
+  #   # concurrency: # group: ${{ github.workflow }}-${{ github.ref }}-build-${{ matrix.os }}-${{ matrix.node-version }}
+  #   #   group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.node-version }}
+  #   #   cancel-in-progress: true
+  #       # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+  #   steps:
+  #   - name: Use cache
+  #     uses: actions/cache@v2
+  #     id: restore-build
+  #     with:
+  #       path: ./*
+  #       key: ${{ github.sha }}
+  #   - name: Test
+  #     uses: borales/actions-yarn@v3
+  #     with:
+  #       cmd: test
+
+  deploy:
+    runs-on: ubuntu-22.04
+    needs: build
+    permissions: write-all
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        #with:
+          #token: ${{ secrets.CHANGELOG }}
+      - name: Set project name
+        run: echo "REPOSITORY_NAME=maraffa-FE" >> $GITHUB_ENV
+      - name: lowercase github.repository
+        run: |
+          echo "IMAGE_NAME=`echo ${{github.repository_owner}}/${{ env.REPOSITORY_NAME }} | tr '[:upper:]' '[:lower:]'`" >> ${GITHUB_ENV}
+      - name: Extract tag name
+        run: echo "TAG_NAME=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+      - name: version check
+        run: echo "V=${{ github.ref }}" >> $GITHUB_ENV
+      - name: Set version
+        run: |
+          if [ "${{ github.ref }}" == 'refs/heads/develop' ]; then
+            echo "VERSION=develop" >> ${GITHUB_ENV}
+          else 
+            echo "VERSION=latest" >> ${GITHUB_ENV}
+          fi
+      - name: Use cache
+        uses: actions/cache@v2
+        id: restore-build
+        with:
+          path: ./*
+          key: ${{ github.sha }}
+      - name: check ENV
+        run: echo $GITHUB_ENV
+      - name: 'Login to GitHub Container Registry'
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{github.actor}}
+          password: ${{secrets.GITHUB_TOKEN}}
+      - name: Build Docker image
+        run: docker build -t ghcr.io/${{ env.IMAGE_NAME}}:${{ env.VERSION }}  .
+      - name: Push Docker image
+        run: docker push ghcr.io/${{ env.IMAGE_NAME}}:${{ env.VERSION }}
+
+      - name: Build Docker image with tag
+        run: |
+          if [ "${{ github.event.release.tag_name }}" != '' ]; then
+            docker build -t ghcr.io/${{ env.IMAGE_NAME}}:${{ env.TAG_NAME }}  .
+            docker push ghcr.io/${{ env.IMAGE_NAME}}:${{ env.TAG_NAME }}
+          fi 

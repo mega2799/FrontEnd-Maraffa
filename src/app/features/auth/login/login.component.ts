@@ -11,6 +11,16 @@ import { bufferCount, first, fromEvent, map } from "rxjs";
 import { AuthenticationService } from "src/app/core/services/auth.service";
 import { NotificationService } from "src/app/core/services/notification.service";
 import { environment } from "src/environments/environment.prod";
+import {
+  adjectives,
+  animals,
+  colors,
+  uniqueNamesGenerator,
+} from "unique-names-generator";
+
+const randomName = uniqueNamesGenerator({
+  dictionaries: [adjectives, colors, animals],
+}); // big_red_donkey
 
 const konami = [
   "ArrowUp",
@@ -68,12 +78,35 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     @Inject("LOCALSTORAGE") private localStorage: Storage,
+    // @Inject("SESSIONSTORAGE") private localStorage: Storage,
     private titleService: Title,
     private notificationService: NotificationService,
     private authenticationService: AuthenticationService
   ) {}
 
-  guestAccess() {}
+  guestAccess() {
+    const shortName = uniqueNamesGenerator({
+      dictionaries: [adjectives, animals, colors], // colors can be omitted here as not used
+      length: 2,
+    }); //
+    this.localStorage.setItem("fullName", shortName);
+    this.localStorage.setItem(
+      "currentUser",
+      JSON.stringify({
+        token: "MegaToken",
+        isAdmin: true,
+        isGuest: true,
+        email: null,
+        id: shortName,
+        // alias: "john.doe@gmail.com".split("@")[0],
+        expiration: moment().add(1, "days").toDate(),
+        fullName: shortName,
+      })
+    );
+
+    this.localStorage.setItem("authorized", "MegaToken");
+    this.router.navigate(["/"]);
+  }
 
   guestAccessFunny() {
     const name = bestNames[Math.floor(Math.random() * bestNames.length)];
@@ -84,6 +117,7 @@ export class LoginComponent implements OnInit {
       JSON.stringify({
         token: "MegaToken",
         isAdmin: true,
+        isGuest: true,
         email: null,
         id: name,
         // alias: "john.doe@gmail.com".split("@")[0],
@@ -121,13 +155,15 @@ export class LoginComponent implements OnInit {
       rememberMe: new UntypedFormControl(savedUserEmail !== null),
     });
 
-  this.loginForm.statusChanges.subscribe(status => {
-    const loginButton = document.getElementById('login-button') as HTMLButtonElement;
-    if (loginButton) {
-      loginButton.disabled = status !== 'VALID' || this.loading;
-    }
-  });
-}
+    this.loginForm.statusChanges.subscribe((status) => {
+      const loginButton = document.getElementById(
+        "login-button"
+      ) as HTMLButtonElement;
+      if (loginButton) {
+        loginButton.disabled = status !== "VALID" || this.loading;
+      }
+    });
+  }
 
   login() {
     const nickname = this.loginForm.get("nickname")?.value;
@@ -150,6 +186,7 @@ export class LoginComponent implements OnInit {
               token: data.token,
               isAdmin: true,
               email: null,
+              isGuest: false,
               id: nickname,
               // alias: "john.doe@gmail.com".split("@")[0],
               expiration: moment().add(1, "days").toDate(),

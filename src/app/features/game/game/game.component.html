@@ -1,100 +1,227 @@
-<div class="game">
+<div class="game navbar-container" [class.example-is-mobile]="mobileQuery.matches">
+  <mat-sidenav-container class="navbar-sidenav-container">
+    <mat-sidenav
+      #snav
+      [opened]="!mobileQuery.matches"
+      [mode]="mobileQuery.matches ? 'over' : 'side'"
+      [fixedInViewport]="mobileQuery.matches"
+      fixedTopGap="56"
+      position="end"
+      class="sidenav">
+      <mat-nav-list>
+        <app-gamechat class="text-center game-chat"></app-gamechat>
+      </mat-nav-list>
+  </mat-sidenav>
+  <!-- <div id="info-box" *ngIf="this.madeCall"><p>{{this.currentUser}} ha chiamato {{this.currentCall}} </p></div>
+  <div id="info-box" *ngIf="this.chosesTrump"><p>La briscola è {{this.trumpChoosen}}</p></div> -->
+  <div id="info-box" *ngIf="this.isNotifyPresent"><p>{{this.notifyMessage}}</p></div>
   <div class="players-name">
-    <p id="first-selected">Sofi</p>
-    <p>Matte</p>
-    <p>Klev</p>
-    <p id="second-selected">Fede</p>
+    <!-- <mat-icon mat-list-icon class="star">star</mat-icon> -->
+    <p [ngClass]="getClass(0)">{{teamA[0]}}</p>
+    <!-- <mat-icon mat-list-icon class="star">star</mat-icon> -->
+    <p [ngClass]="getClass(1)">{{teamB[0]}}</p>
+    <!-- <mat-icon mat-list-icon class="star">star</mat-icon> -->
+    <p [ngClass]="getClass(2)">{{teamA[1]}}</p>
+    <!-- <mat-icon mat-list-icon class="star">star</mat-icon> -->
+    <p [ngClass]="getClass(3)">{{teamB[1]}}</p>
+   <!-- <mat-icon mat-list-icon class="star">star</mat-icon> -->
   </div>
-  
-  <p class="normal-text">Ê il turno di: Matte</p>
-
+  <!-- <mat-tab-group  id="tab-names">
+    <mat-tab label="Sofi" ><ng-template mat-tab-label>
+      <span class="first-team">Sofi</span></ng-template>
+    </mat-tab>
+    <mat-tab label="Matte" ><ng-template mat-tab-label>
+      <span class="second-team">Matte</span></ng-template>
+    </mat-tab>
+    <mat-tab label="Klev" class="first-team"><ng-template mat-tab-label>
+      <span class="first-team">Klev</span></ng-template>
+    </mat-tab>
+    <mat-tab label="Fede" class="second-team"><ng-template mat-tab-label>
+      <span class="second-team">Fede</span></ng-template>
+    </mat-tab>
+  </mat-tab-group> -->
+  <div class="game-text-container">
+    <p class="game-text">
+      Ê il turno di:
+      {{ this.currentUser }}
+    </p>
+    <div class="score-container">
+      <p class="game-text">Team A {{ this.teamScoreA }}</p>
+      <p class="game-text">Team B {{ this.teamScoreB }}</p>
+    </div>
+    <p class="game-text">
+      La briscola è:
+      {{ this.trumpChoosen }}
+    </p>
+  </div>
   <div id="table">
-  <div class="game-buttons">
-    <button id="esci" class="btn btn-danger btn-block game-button" (click)="exitGame()">
-      Esci &#10007;
-    </button>
-    <button id="chat"
+    <div class="game-buttons">
+      <button
+        id="esci"
+        class="btn btn-danger btn-block game-button"
+        (click)="exitGame()">
+        Esci &#10007;
+      </button>
+      <button
+        id="chat"
         type="button"
         class="btn btn-block btn-success game-button"
         [ngClass]="{
           'chat-button-has-new-message': numberUnreadMessages > 0
         }"
-        (click)="toggleGameChatSidebar()">
+        (click)="snav.toggle()">
         Chat 💬
-        <span
-          [hidden]="numberUnreadMessages === 0"
-          class="badge badge-light"
-          >{{ numberUnreadMessages }}</span
-        >
+        <span [hidden]="numberUnreadMessages === 0" class="badge badge-light">{{
+          numberUnreadMessages
+        }}</span>
       </button>
-      <button id="ultima"
-      class="btn btn-info btn-block game-button"
-      triggers="manual"
-      placement="left"
-      popoverClass="popover-previous-cards"
-      (click)="showCardsPlayedPreviousRound()">
-      Ultima &#9776;
-    </button>
+      <button
+        id="ultima"
+        class="btn btn-info btn-block game-button"
+        triggers="manual"
+        placement="left"
+        popoverClass="popover-previous-cards"
+        (click)="showCardsPlayedPreviousRound()">
+        Ultima &#9776;
+      </button>
+    </div>
+    <div class="cards-container">
+      <div class="wrap" *ngFor="let tableCard of tableCards">
+        <img src="{{ tableCard.src }}" alt="{{ tableCard.alt }}" class="card" />
+        <div class="player">{{ tableCard.user }}</div>
+      </div>
+      
+    </div>
   </div>
-  <div class="cards-container">
-  <div class="wrap">
-    <img src="assets/images/4S.png" alt="4_spade" class="card"/>
-    <div class="player">Sofi</div>
-  </div>
-  <div class="wrap">
-    <img src="assets/images/4S.png" alt="4_spade" class="card"/>
-    <div class="player">Matte</div>
-  </div>
-  <div class="wrap">
-    <img src="assets/images/4S.png" alt="4_spade" class="card"/>
-    <div class="player">Klev</div>
-  </div>
-  <div class="wrap">
-    <img src="assets/images/4S.png" alt="4_spade" class="card"/>
-    <div class="player">Fede</div>
-  </div>
-</div>
-</div>
-<div class="select-container">
-  <mat-form-field class="custom-select">
-    <mat-label>Chiamata</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let call of calls" [value]="call.value">
-        {{call.viewValue}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field> 
+  <div class="select-container">
+    <form [formGroup]="interactionForm" (ngSubmit)="onSubmit()">
+      <mat-form-field *ngIf="selectedTrump" class="custom-select">
+        <mat-label>Briscola</mat-label>
+        <mat-select formControlName="trump">
+          <mat-option *ngFor="let briscola of trumps" [value]="briscola.value">
+            {{ briscola.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button *ngIf="selectedTrump" type="submit">
+        Chiama briscola
+      </button>
 
-  <mat-form-field class="custom-select">
-    <mat-label>Briscola</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let trump of trumps" [value]="trump.value">
-        {{trump.viewValue}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field> 
-</div>
-<div class="hand">
-  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
-  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
-  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
-  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
-  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
-  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
-  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
-  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
-  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
-  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
-</div>
+      <mat-form-field *ngIf="isMyTurn" class="custom-select">
+        <mat-label>Chiamata</mat-label>
+        <mat-select formControlName="call">
+          <mat-option *ngFor="let chiamata of calls" [value]="chiamata.value">
+            {{ chiamata.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-      <!-- <div
+      <button mat-raised-button type="submit" *ngIf="isMyTurn">Chiama</button>
+    </form>
+    <!-- 
+    <form [formGroup]="this.interactionForm">
+      <mat-form-field class="custom-select">
+        <mat-label>Chiamata</mat-label>
+        <mat-select *ngIf="!selectedTrump">
+          <input
+            *ngFor="let call of calls"
+            formControlName="call"
+            value="call.value"
+            (click)="CallBriscola(call.value)" />
+          > <label for="call.value"> {{ call.value }}</label>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="custom-select">
+        <mat-label>Briscola</mat-label>
+        <mat-select>
+          <mat-input
+            *ngFor="let trump of trumps"
+            formControlName="trump"
+            value="trump.value"
+            (click)="CallBriscola(trump.value)">
+            {{ trump.viewValue }}
+          </mat-input>
+        </mat-select>
+      </mat-form-field>
+    </form> -->
+    <!-- <mat-form-field class="custom-select">
+      <mat-label>Chiamata</mat-label>
+      <mat-select *ngIf="!selectedTrump">
+        <mat-option
+          *ngFor="let call of calls"
+          [value]="call.value"
+          (selectionChange)="CallBriscola(call.value)">
+          {{ call.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="custom-select">
+      <mat-label>Briscola</mat-label>
+      <mat-select>
+        <mat-option
+          *ngFor="let trump of trumps"
+          [value]="trump.value"
+          (selectionChange)="CallBriscola(trump.value)">
+          {{ trump.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field> -->
+    <!-- <div class="hand">
+      <img
+      *ngFor="let item of this.cards; index as i"
+      src="https://cataas.com/cat?width=196&height=392&/{{ i }}"
+      (mousedown)="startDrag($event)"
+      (mouseup)="stopDrag()"
+      (mousemove)="onDrag($event)"
+      [ngStyle]="{
+        top: position.y + 'px',
+        left: position.x + 'px',
+        opacity: hidden ? 0 : 1,
+        transition: 'top 0.5s, opacity 0.5s'
+        }"
+        alt="4_spade"
+        class="hand-card" />
+      </div> -->
+  </div>
+  <div class="hand-container">
+    <div class="hand">
+      <app-draggable-image
+        *ngFor="let image of cards; let i = index"
+        class="hand-card"
+        [src]="image.src"
+        [alt]="image.alt"
+        [position]="image.position"
+        [hidden]="image.hidden"
+        (positionChange)="image.position = $event"
+        (playedCard)="playCard($event)"
+        (hiddenChange)="image.hidden = $event"></app-draggable-image>
+    </div>
+  </div>
+  </mat-sidenav-container>
+</div>
+  <!-- *ngIf="!hidden" -->
+
+  <!-- <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
+  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
+  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
+  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
+  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
+  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
+  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
+  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
+  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/>
+  <img src="assets/images/4S.png" alt="4_spade" class="hand-card"/> -->
+
+  <!-- <div
         ngbDropdown
         placement="top-left"
         class="d-inline-block action-button-left">
         /* TODO logica visual *ngIf=" currentUser.connectionId ===
         game.userTurnToPlay.connectionId && game.isFirstRound &&
         game.cardsPlayed.length === 0 "*/ -->
-        <!-- <button
+  <!-- <button
           class="btn btn-success"
           id="callbriscoladropdown"
           ngbDropdownToggle>
@@ -122,15 +249,15 @@
         ngbDropdown
         placement="top-right"
         class="d-inline-block action-button"> -->
-        <!--button class="btn btn-primary" id="callactiondropdown" *ngIf="currentUser.connectionId==game.userTurnToPlay.connectionId && game.cardsPlayed.length==0 && !selectingCardsForExtraPoints" ngbDropdownToggle-->
+  <!--button class="btn btn-primary" id="callactiondropdown" *ngIf="currentUser.connectionId==game.userTurnToPlay.connectionId && game.cardsPlayed.length==0 && !selectingCardsForExtraPoints" ngbDropdownToggle-->
 
-        <!-- TODO logic visual 
+  <!-- TODO logic visual 
         *ngIf="
               currentUser.connectionId === game.userTurnToPlay.connectionId &&
               game.cardsPlayed.length === 0 &&
               !game.roundEnded
             " -->
-        <!-- <button
+  <!-- <button
           class="btn btn-primary"
           id="callactiondropdown"
           ngbDropdownToggle>
@@ -158,4 +285,5 @@
         </div>
       </div>
 
-</div> --> 
+</div> -->
+
