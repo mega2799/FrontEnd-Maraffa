@@ -4,10 +4,12 @@
         "secure": false,
         "changeOrigin": true,
         "logLevel": "debug",
+        "ws" : true,
         "pathRewrite": {
             "^/api": ""
         }
     },
+
     "/ip/*": {
         "target": "http://api.ipify.org",
         "secure": false

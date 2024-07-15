@@ -28,8 +28,8 @@ export class WebSocketGameService {
   public webSocket$: any;
 
   initWebSocket(): void {
-    // this.URL = `ws://localhost:3003/${this._gameID}`;
-    this.URL = `ws://localhost:3003/${this._clientID}/${this._userName}`;
+    this.URL = `api/${this._clientID}/${this._userName}`;
+    // this.URL = `ws://localhost:3003/${this._clientID}/${this._userName}`;
     // this.webSocketSubject = webSocket<string>(this.URL);
     this.webSocketSubject = webSocket<string>({
       url: this.URL,
