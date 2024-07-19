@@ -39,6 +39,7 @@ export class WaitingRoomComponentComponent implements OnInit {
   currentUser!: string; //User; //TODO modificato
   creator!: string;
   pwdSaved: boolean = false;
+  passwordPresent: boolean = false;
   public interval: number = 1;
   mode!: string;
   isReady: boolean = false;
@@ -154,6 +155,7 @@ export class WaitingRoomComponentComponent implements OnInit {
       this.status = statusValue[currentGame.status];
       this.mode = gameModeValue[currentGame.mode];
       this.score = currentGame.score;
+      this.passwordPresent = currentGame.password;
     });
 
     this.ws.webSocket$
@@ -190,6 +192,7 @@ export class WaitingRoomComponentComponent implements OnInit {
       const actualGame: any = res.find(
         (game: any) => game.gameID == this.gameID
       );
+      
       if (!actualGame) throw new Error("Game not found");
       this.status = statusValue[actualGame.status];
       this.teamA = actualGame.teamA.players.map(
@@ -231,7 +234,14 @@ export class WaitingRoomComponentComponent implements OnInit {
   }
 
   joinGame() {
-    let pwd = prompt("Inserire la password:");
+    let pwd;
+    if (this.passwordPresent){
+      pwd = prompt("Inserire la password:");
+      
+    } else {
+      pwd = "";
+    }
+    
     const actualUser = JSON.parse(
       this.localStorage.getItem("currentUser") as string
     );
