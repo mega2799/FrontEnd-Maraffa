@@ -182,6 +182,9 @@ export class WaitingRoomComponentComponent implements OnInit {
           case "startGame":
             this.redirectToGame(response);
             break;
+          case "userRemoved":
+            window.location.reload();
+            break;
           default:
             break;
         }
@@ -229,8 +232,16 @@ export class WaitingRoomComponentComponent implements OnInit {
   }
 
   leaveWaitingRoom() {
-    // this._hubService.ExitGame();
-    // this._router.navigate(['/']);
+    if (this.creator === this.currentUser){
+      //TODO eliminare la partita
+    } else {
+      //remove user
+      this.dashboardService
+        .removeUser({
+          gameID: this.gameID,
+          username: this.currentUser
+      }).subscribe();
+    }
   }
 
   joinGame() {

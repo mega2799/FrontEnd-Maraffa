@@ -27,4 +27,8 @@ export class DashBoardService {
   createGame(body: any) {
     return this.http.post("/api/game/create", body);
   }
+
+  removeUser(body: any) {
+    return this.http.patch<any>("/api/game/remove", body);
+  }
 }
