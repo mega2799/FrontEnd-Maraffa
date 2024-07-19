@@ -233,9 +233,8 @@ export class WaitingRoomComponentComponent implements OnInit {
 
   leaveWaitingRoom() {
     if (this.creator === this.currentUser){
-      //TODO eliminare la partita
+      this.gameService.exitGame(this.gameID).subscribe();
     } else {
-      //remove user
       this.dashboardService
         .removeUser({
           gameID: this.gameID,
