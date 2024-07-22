@@ -317,8 +317,8 @@ export class GameComponent implements OnInit, OnDestroy {
     this.gameService.getGame(this.gameID).subscribe((res: any) => {
       console.log("NAGATOMO ?");
       console.log("1 getGame res=", res);
-      this.teamA = res.teamA;
-      this.teamB = res.teamB;
+      this.teamA = res.teamA.players.map((player: any) => player.username);
+      this.teamB = res.teamB.players.map((player: any) => player.username);
       if (res.state % 10 === 0) {
         this.trumpManagment({
           username: res.trumpSelectorUsername,

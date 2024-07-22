@@ -138,6 +138,9 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
           case "gameList":
             this.updateGames(response);
             break;
+          case "gameRemoved":
+            window.location.reload();
+            break;
           default:
             break;
         }

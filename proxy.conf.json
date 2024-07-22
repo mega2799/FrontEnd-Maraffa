@@ -2,12 +2,13 @@
     "/api/*": {
         "target": "http://127.0.0.1:3003",
         "secure": false,
-        "changeOrigin": true,
         "logLevel": "debug",
+        "ws" : true,
         "pathRewrite": {
             "^/api": ""
         }
     },
+ 
     "/ip/*": {
         "target": "http://api.ipify.org",
         "secure": false
