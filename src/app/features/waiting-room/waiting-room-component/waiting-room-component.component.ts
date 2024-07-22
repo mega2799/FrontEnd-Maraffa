@@ -13,6 +13,8 @@ import { DashBoardService } from "src/app/core/services/dashboard.service";
 import { GameService } from "src/app/core/services/game.service";
 import { NotificationService } from "src/app/core/services/notification.service";
 import { WebSocketGameService } from "src/app/core/services/websocket.game";
+import { Game } from "src/app/model/game.model";
+import { Team, UserTeam } from "src/app/model/team.model";
 
 const gameModeValue: any = {
   ELEVEN2ZERO: "11 a 0",
@@ -34,7 +36,7 @@ const statusValue: any = {
 export class WaitingRoomComponentComponent implements OnInit {
   private _isAlive = true;
   gameID!: string;
-  activeGame!: any; //Game; //TODO modificato
+  activeGame!: Game; //TODO modificato
   password!: string; //TODO modificato
   currentUser!: string; //User; //TODO modificato
   creator!: string;
@@ -60,9 +62,9 @@ export class WaitingRoomComponentComponent implements OnInit {
 
   score!: number;
   status!: string;
-  teamA: string[] = [];
+  teamA!: Team;
 
-  teamB: string[] = [];
+  teamB!: Team;
 
   setRoomPassword(password: string) {
     this.password = password;
@@ -73,7 +75,7 @@ export class WaitingRoomComponentComponent implements OnInit {
     }, 3000);
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<UserTeam[]>) {
     console.log("WTF is going on? ");
     console.log(event);
     const oldContainer = event.previousContainer.id;
@@ -86,7 +88,7 @@ export class WaitingRoomComponentComponent implements OnInit {
       event.previousContainer.data[event.previousIndex]
     );
     if (
-      event.previousContainer.data[event.previousIndex] !== this.currentUser
+      event.previousContainer.data[event.previousIndex].username !== this.currentUser
     ) {
       setTimeout(() => {
         this.notificationService.openSnackBar(
@@ -142,22 +144,19 @@ export class WaitingRoomComponentComponent implements OnInit {
     this.ws.clientID = this.localStorage.getItem("UUID") as string;
     this.ws.userName = this.localStorage.getItem("fullName") as string;
     this.ws.initWebSocket();
-
-    this.gameService.getGames().subscribe((res: any[]) => {
-      const currentGame = res.find((game: any) => game.gameID === this.gameID);
+    this.gameService.getGame(this.gameID).subscribe((res: Game) => {
+      const currentGame : Game = res; //.find((game: Game) => game.gameID === this.gameID);
       this.activeGame = currentGame;
-      this.teamA = currentGame.teamA.players.map(
-        (player: any) => player.username
-      );
-      this.teamB = currentGame.teamB.players.map(
-        (player: any) => player.username
-      );
+      this.teamA = currentGame.teamA
+      // .map(
+      //   (player: any) => player.username
+      // );
+      this.teamB = currentGame.teamB
       this.status = statusValue[currentGame.status];
       this.mode = gameModeValue[currentGame.mode];
       this.score = currentGame.score;
       this.passwordPresent = currentGame.password;
     });
-
     this.ws.webSocket$
       .pipe(
         catchError((error) => {
@@ -190,21 +189,24 @@ export class WaitingRoomComponentComponent implements OnInit {
         }
       });
 
-    this.dashboardService.getGames().subscribe((res: any[]) => {
+    this.dashboardService.getGame(this.gameID).subscribe((res: Game) => {
       //TODO non c'e' nel middleware
-      const actualGame: any = res.find(
-        (game: any) => game.gameID == this.gameID
-      );
+      const actualGame: any = res;
+      // .find(
+      //   (game: any) => game.gameID == this.gameID
+      // );
       
       if (!actualGame) throw new Error("Game not found");
       this.status = statusValue[actualGame.status];
-      this.teamA = actualGame.teamA.players.map(
-        (player: any) => player.username
-      );
+      this.teamA = actualGame.teamA
+      // .players.map(
+      //   (player: any) => player.username
+      // );
 
-      this.teamB = actualGame.teamB.players.map(
-        (player: any) => player.username
-      );
+      this.teamB = actualGame.teamB
+      // .players.map(
+      //   (player: any) => player.username
+      // );
       this.score = actualGame.score;
     });
 
@@ -268,6 +270,7 @@ export class WaitingRoomComponentComponent implements OnInit {
           this.notificationService.openSnackBar(
             "Ti sei unito correttamente alla partita"
           );
+          window.location.reload();
         });
       });
     // this._hubService.JoinGame(this.activeGame.gameSetup.id, '');
@@ -295,8 +298,8 @@ export class WaitingRoomComponentComponent implements OnInit {
       });
     } else {
       if (
-        this.activeGame.teamA.includes(this.currentUser) ||
-        this.activeGame.teamB.includes(this.currentUser)
+        this.activeGame.teamA.players.map((el : any) => el.username).includes(this.currentUser) ||
+        this.activeGame.teamB.players.map((el : any) => el.username).includes(this.currentUser)
       ) {
         this.router.navigate(["/game/" + this.gameID]);
       } else {
