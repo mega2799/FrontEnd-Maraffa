@@ -22,15 +22,15 @@
           <div
             cdkDropList
             id="A"
-            [cdkDropListData]="teamA"
+            [cdkDropListData]="teamA.players"
             class="example-list"
             cdkDropListSortingDisabled
             (cdkDropListDropped)="drop($event)">
             <div
               class="teamA-box example-box"
-              *ngFor="let item of teamA"
+              *ngFor="let item of teamA.players"
               cdkDrag>
-              {{ item }}
+              {{ item.username }}
             </div>
           </div>
         </div>
@@ -40,16 +40,16 @@
 
           <div
             cdkDropList
-            [cdkDropListData]="teamB"
+            [cdkDropListData]="teamB.players"
             class="example-list"
             id="B"
             (cdkDropListDropped)="drop($event)">
             <div
               class="teamB-box example-box"
-              *ngFor="let item of teamB"
+              *ngFor="let item of teamB.players"
               id="item"
               cdkDrag>
-              {{ item }}
+              {{ item.username }}
             </div>
           </div>
         </div>

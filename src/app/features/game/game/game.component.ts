@@ -300,7 +300,7 @@ export class GameComponent implements OnInit, OnDestroy {
     // if()
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.interactionForm = new FormGroup({
       trump: this.trump,
       call: this.call,
@@ -312,7 +312,11 @@ export class GameComponent implements OnInit, OnDestroy {
     this.username = this.localStorage.getItem("fullName") as string;
     this.ws.clientID = this.localStorage.getItem("UUID") as string;
     this.ws.userName = this.localStorage.getItem("fullName") as string;
-    this.ws.initWebSocket();
+    console.log('INITIALIZE SOCKET');
+    await this.ws.initWebSocket();
+    console.log('DONE WITH SOCKET');
+    console.log({e : this.ws.webSocket$});
+    
     setTimeout(() => {}, 1500);
     this.gameService.getGame(this.gameID).subscribe((res: any) => {
       console.log("NAGATOMO ?");

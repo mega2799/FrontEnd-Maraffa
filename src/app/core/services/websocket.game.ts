@@ -27,7 +27,7 @@ export class WebSocketGameService {
   public webSocketSubject!: WebSocketSubject<string>;
   public webSocket$: any;
 
-  initWebSocket(): void {
+  async initWebSocket(): Promise<void> {
     this.URL = `api/${this._clientID}/${this._userName}`;
     // this.URL = `ws://localhost:3003/${this._clientID}/${this._userName}`;
     // this.webSocketSubject = webSocket<string>(this.URL);
@@ -52,6 +52,7 @@ export class WebSocketGameService {
       },
     });
     this.webSocket$ = this.webSocketSubject.asObservable();
+
   }
   //   private readonly URL = 'ws://localhost:3000';
 

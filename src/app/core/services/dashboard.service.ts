@@ -19,7 +19,9 @@ export class DashBoardService {
   getGames(): Observable<any> {
     return this.http.get<any>("/api/game/getGames");
   }
-
+  getGame(gameID: string) {
+    return this.http.get<any>(`/api/game/` + gameID);
+  }
   getPlayers() {
     return this.http.get<any>(`/api/player`);
   }

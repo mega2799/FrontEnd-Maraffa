@@ -8,6 +8,7 @@ import { AuthenticationService } from "src/app/core/services/auth.service";
 import { DashBoardService } from "src/app/core/services/dashboard.service";
 import { NotificationService } from "src/app/core/services/notification.service";
 import { WebSocketGameService } from "src/app/core/services/websocket.game";
+import { Game } from "src/app/model/game.model";
 
 // export enum GameStatus {
 //   // playing = "PLAYING ",
@@ -17,15 +18,6 @@ import { WebSocketGameService } from "src/app/core/services/websocket.game";
 //   starting = "STARTING",
 // }
 
-export interface Game {
-  gameID: String;
-  status: String;
-  gameMode: String;
-  creator: String;
-  numberOfPlayers: Number;
-  team1: any;
-  team2: any;
-}
 
 @Component({
   selector: "app-dashboard-home",
