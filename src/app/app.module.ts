@@ -1,5 +1,4 @@
 import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 // import { SocketIoModule, SocketIoConfig } from "ngx-socket-io";
@@ -11,9 +10,6 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 // import { LoggerModule } from 'ngx-logger';
 // import { environment } from '../environments/environment';
 import { HttpClientModule } from "@angular/common/http";
-
-import { LoggerModule } from "ngx-logger";
-import { SocketIoConfig, SocketIoModule } from "ngx-socket-io";
 import { environment } from "../environments/environment";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -33,8 +29,6 @@ const config: SocketIoConfig = { url: "http://localhost:4444", options: {} };
     // NgApexchartsModule,
     CustomMaterialModule.forRoot(),
     AppRoutingModule,
-    FormsModule,
-    SocketIoModule.forRoot(config),
     LoggerModule.forRoot({
       serverLoggingUrl: `http://my-api/logs`,
       level: environment.logLevel,
