@@ -7,17 +7,16 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 // import { SharedModule } from './shared/shared.module';
 // import { CustomMaterialModule } from './custom-material/custom-material.module';
 // import { AppRoutingModule } from './app-routing.module';
-// import { LoggerModule } from 'ngx-logger';
-// import { environment } from '../environments/environment';
 import { HttpClientModule } from "@angular/common/http";
-import { environment } from "../environments/environment";
+import { LoggerModule } from 'ngx-logger';
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { CoreModule } from "./core/core.module";
 import { CustomMaterialModule } from "./custom-material/custom-material.module";
 import { SharedModule } from "./shared/shared.module";
 
-const config: SocketIoConfig = { url: "http://localhost:4444", options: {} };
+// const config: SocketIoConfig = { url: "http://localhost:4444", options: {} };
 @NgModule({
   declarations: [AppComponent],
   imports: [
