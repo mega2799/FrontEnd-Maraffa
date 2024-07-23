@@ -95,6 +95,10 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     this.currentUser = this.authService.getCurrentUser();
     this.titleService.setTitle("angular-material-template - Dashboard");
     this.logger.log("Dashboard loaded");
+    
+    // this.websocketService.clientID = localStorage.getItem("UUID") as string;
+    // this.websocketService.userName = this.localStorage.getItem("fullName") as string;
+    // this.websocketService.init();
     this.ws.clientID = localStorage.getItem("UUID") as string;
     this.ws.userName = this.localStorage.getItem("fullName") as string;
     this.ws.initWebSocket();

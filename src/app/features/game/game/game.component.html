@@ -49,7 +49,7 @@
       <p class="game-text">Team A {{ this.teamScoreA }}</p>
       <p class="game-text">Team B {{ this.teamScoreB }}</p>
     </div>
-    <p class="game-text">
+    <p *ngIf="this.trumpChoosen" class="game-text">
       La briscola è:
       {{ this.trumpChoosen }}
     </p>

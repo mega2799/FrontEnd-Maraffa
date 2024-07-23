@@ -43,6 +43,7 @@ export class WebSocketGameService {
         next: () => {
           console.log("connection ok");
           console.log("listening to url: ", this.URL);
+          this.webSocketSubject.next(JSON.stringify({ clientID: this._clientID, userName: this._userName }));
         },
       },
       closeObserver: {

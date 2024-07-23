@@ -323,12 +323,13 @@ export class GameComponent implements OnInit, OnDestroy {
       console.log("1 getGame res=", res);
       this.teamA = res.teamA.players.map((player: any) => player.username);
       this.teamB = res.teamB.players.map((player: any) => player.username);
+      this.trumpChoosen = res.trumpSelected != 'NONE' ? mappingSuit[res.trumpSelected] : '';
       if (res.state % 10 === 0) {
         this.trumpManagment({
           username: res.trumpSelectorUsername,
           trumpSelected: res.trumpSelected,
         });
-        this.selectedTrump = this.username === res.trumpSelectorUsername;
+        this.selectedTrump = (this.trumpChoosen === '' || this.trumpChoosen === 'NONE') && this.username === res.trumpSelectorUsername;
       }
       this.turnChanegeEvent({
         userTurn: res.playerTurn,
