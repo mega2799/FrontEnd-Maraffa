@@ -2,6 +2,7 @@ FROM --platform=linux/arm64/v8 node:18 as build
 WORKDIR /app
 COPY package*.json ./
 COPY proxy* ./
+RUN yarn config set network-timeout 600000 -g
 RUN yarn install
 COPY . .
 RUN yarn build
