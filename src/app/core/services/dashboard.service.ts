@@ -15,7 +15,9 @@ export class DashBoardService {
     private http: HttpClient,
     @Inject("LOCALSTORAGE") private localStorage: Storage // @Inject("SESSIONSTORAGE") private localStorage: Storage,
   ) {}
-
+  getTotalGamesCount(): Observable<any> {
+    return this.http.get<any>("/api/game/count");
+  }
   getGames(): Observable<any> {
     return this.http.get<any>("/api/game/getGames");
   }

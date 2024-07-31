@@ -32,6 +32,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   games!: Game[];
   playersNum = new FormControl("playersNum");
   score = new FormControl("score");
+  gamesCount = 0;
   formMode = new FormGroup({
     mode: new FormControl("mode"),
     numberOfPlayers: this.playersNum,
@@ -57,7 +58,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
 
   sendCreate() {
     const mode =
-      this.formMode.value.mode === "eleven2zero" ? "ELEVEN2ZERO" : "CLASSIC";
+      this.formMode.value.mode === "eleven2Zero" ? "ELEVEN2ZERO" : "CLASSIC";
     const numberOfPlayers = parseInt(
       this.formMode.value.numberOfPlayers as string
     );
@@ -102,6 +103,9 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     this.ws.clientID = localStorage.getItem("UUID") as string;
     this.ws.userName = this.localStorage.getItem("fullName") as string;
     this.ws.initWebSocket();
+      this.dashboardService.getTotalGamesCount().subscribe((res : { total : number}) => {
+        this.gamesCount = res.total;
+      })
 
     this.dashboardService.getGames().subscribe((res) => {
       this.games = res;
@@ -158,6 +162,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   }
 
   getGameCount() {
+    return this.gamesCount;
     // return this._hubService.GameCount;
     //return 15;
   }

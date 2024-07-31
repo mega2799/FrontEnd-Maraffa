@@ -109,7 +109,7 @@ export class GameComponent implements OnInit, OnDestroy {
       .subscribe(
         (res) => {
           console.log(res);
-          if (res.error != undefined) {
+          if (res.error != undefined && res.mode != "ELEVEN2ZERO" ) {
             setTimeout(() => {
               this.notificationService.openSnackBar(res.error);
             });
