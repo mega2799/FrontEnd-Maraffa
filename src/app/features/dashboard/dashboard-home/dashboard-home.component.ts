@@ -7,6 +7,7 @@ import { catchError, retry, throwError } from "rxjs";
 import { AuthenticationService } from "src/app/core/services/auth.service";
 import { DashBoardService } from "src/app/core/services/dashboard.service";
 import { NotificationService } from "src/app/core/services/notification.service";
+import { SocketIoService } from "src/app/core/services/socket.io";
 import { WebSocketGameService } from "src/app/core/services/websocket.game";
 import { Game } from "src/app/model/game.model";
 
@@ -44,6 +45,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     private router: Router,
     private notificationService: NotificationService,
     private authService: AuthenticationService,
+    private socket : SocketIoService,
     // @Inject("SESSIONSTORAGE") private localStorage: Storage,
     @Inject("LOCALSTORAGE") private localStorage: Storage,
     private titleService: Title,
@@ -100,13 +102,13 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     // this.websocketService.clientID = localStorage.getItem("UUID") as string;
     // this.websocketService.userName = this.localStorage.getItem("fullName") as string;
     // this.websocketService.init();
-    this.ws.clientID = localStorage.getItem("UUID") as string;
-    this.ws.userName = this.localStorage.getItem("fullName") as string;
-    this.ws.initWebSocket();
-      this.dashboardService.getTotalGamesCount().subscribe((res : { total : number}) => {
-        this.gamesCount = res.total;
-      })
-
+    // this.ws.clientID = localStorage.getItem("UUID") as string;
+    // this.ws.userName = this.localStorage.getItem("fullName") as string;
+    // this.ws.initWebSocket();
+    //   this.dashboardService.getTotalGamesCount().subscribe((res : { total : number}) => {
+    //     this.gamesCount = res.total;
+    //   })
+    this.socket.sendMessage();
     this.dashboardService.getGames().subscribe((res) => {
       this.games = res;
     });

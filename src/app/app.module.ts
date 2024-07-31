@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 // import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from "@angular/common/http";
 import { LoggerModule } from 'ngx-logger';
+import { SocketIoConfig, SocketIoModule } from "ngx-socket-io";
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -17,6 +18,7 @@ import { CustomMaterialModule } from "./custom-material/custom-material.module";
 import { SharedModule } from "./shared/shared.module";
 
 // const config: SocketIoConfig = { url: "http://localhost:4444", options: {} };
+const config: SocketIoConfig = { url: "http://localhost:9092", options: {} };
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -26,6 +28,7 @@ import { SharedModule } from "./shared/shared.module";
     CoreModule,
     SharedModule,
     // NgApexchartsModule,
+    SocketIoModule.forRoot(config),
     CustomMaterialModule.forRoot(),
     AppRoutingModule,
     LoggerModule.forRoot({

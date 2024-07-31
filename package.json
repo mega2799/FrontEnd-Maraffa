@@ -34,6 +34,7 @@
     "moment": "^2.30.1",
     "ng-apexcharts": "^1.7.4",
     "ngx-logger": "^5.0.7",
+    "ngx-socket-io": "^4.7.0",
     "os-browserify": "^0.3.0",
     "rxjs": "~7.5.0",
     "stream-browserify": "^3.0.0",
