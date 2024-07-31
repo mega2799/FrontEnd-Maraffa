@@ -136,7 +136,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private startY = 0;
   hidden = false;
   madeCall = false;
-
+  gameState : number = 0;
   cards: any[] = [];
   //  Array.from(Array(10).keys()).map((i) => ({
   //   suit: null,
@@ -324,7 +324,8 @@ export class GameComponent implements OnInit, OnDestroy {
       this.teamA = res.teamA.players.map((player: any) => player.username);
       this.teamB = res.teamB.players.map((player: any) => player.username);
       this.trumpChoosen = res.trumpSelected != 'NONE' ? mappingSuit[res.trumpSelected] : '';
-      if (res.state % 10 === 0) {
+      if (res.state === 0 || res.state != this.gameState) {
+        this.gameState = res.state;
         this.trumpManagment({
           username: res.trumpSelectorUsername,
           trumpSelected: res.trumpSelected,
