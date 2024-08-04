@@ -85,9 +85,7 @@ export class GameComponent implements OnInit, OnDestroy {
     // this.ws.webSocketSubject.next(JSON.stringify({ msg: "ZIO PERA" })); //TODO wow funziona davvero
     let isSuitFinished = false;
     if (this.tableCards.length > 0) {
-      isSuitFinished =
-        this.cards.filter((card) => card.suit === this.tableCards[0].suit) ===
-        undefined;
+      isSuitFinished = this.cards.find((card) => card.suit === this.tableCards[0].suit) === undefined;
     }
 
     if (this.tableCards[0] != undefined) {
