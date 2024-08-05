@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { catchError, retry, throwError } from "rxjs";
 import { GameService } from "src/app/core/services/game.service";
 import { WebSocketGameService } from "src/app/core/services/websocket.game";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-chat",
@@ -62,6 +63,7 @@ export class ChatComponent implements OnInit {
       });
   }
   messageReceived(response: any) {
+    if(response.environment !== "global") return;
     this.messages.push(JSON.parse(response.message));
   }
 
@@ -135,7 +137,8 @@ export class ChatComponent implements OnInit {
     this.gameService
       .sendMessage(
         this.localStorage.getItem("fullName") as string,
-        JSON.stringify(message)
+        JSON.stringify(message),
+       "global", 
       )
       .subscribe((res) => {});
   }

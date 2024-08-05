@@ -88,6 +88,7 @@ export class GameChatComponent implements OnInit, OnDestroy {
     }
   }
   messageReceived(response: any) {
+    if(response.environment !== "game") return;
     this.messages.push(JSON.parse(response.message));
     this.saveMessages();
   }
@@ -139,6 +140,7 @@ export class GameChatComponent implements OnInit, OnDestroy {
         text: event.message,
         date: new Date(),
         reply: true,
+        environment: "game",
         type: "text",
         files: [],
         user: {
@@ -163,6 +165,7 @@ export class GameChatComponent implements OnInit, OnDestroy {
       .sendMessage(
         this.localStorage.getItem("fullName") as string,
         JSON.stringify(message),
+        "game",
         this.gameID
       )
       .subscribe((res) => {});

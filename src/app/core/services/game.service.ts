@@ -9,10 +9,11 @@ export class GameService {
   exitGame(gameID: string) {
     return this.http.delete<any>(`/api/game/` + gameID);
   }
-  sendMessage(author: string, message: string, gameID?: string) {
+  sendMessage(author: string, message: string, environment : string, gameID?: string) {
     return this.http.post<any>(`/api/chat`, {
       gameID,
       author,
+      environment,
       message,
     });
   }

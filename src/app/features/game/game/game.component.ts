@@ -85,9 +85,7 @@ export class GameComponent implements OnInit, OnDestroy {
     // this.ws.webSocketSubject.next(JSON.stringify({ msg: "ZIO PERA" })); //TODO wow funziona davvero
     let isSuitFinished = false;
     if (this.tableCards.length > 0) {
-      isSuitFinished =
-        this.cards.filter((card) => card.suit === this.tableCards[0].suit) ===
-        undefined;
+      isSuitFinished = this.cards.find((card) => card.suit === this.tableCards[0].suit) === undefined;
     }
 
     if (this.tableCards[0] != undefined) {
@@ -109,7 +107,7 @@ export class GameComponent implements OnInit, OnDestroy {
       .subscribe(
         (res) => {
           console.log(res);
-          if (res.error != undefined) {
+          if (res.error != undefined && res.mode != "ELEVEN2ZERO" ) {
             setTimeout(() => {
               this.notificationService.openSnackBar(res.error);
             });
@@ -136,7 +134,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private startY = 0;
   hidden = false;
   madeCall = false;
-
+  gameState : number = 0;
   cards: any[] = [];
   //  Array.from(Array(10).keys()).map((i) => ({
   //   suit: null,
@@ -324,7 +322,8 @@ export class GameComponent implements OnInit, OnDestroy {
       this.teamA = res.teamA.players.map((player: any) => player.username);
       this.teamB = res.teamB.players.map((player: any) => player.username);
       this.trumpChoosen = res.trumpSelected != 'NONE' ? mappingSuit[res.trumpSelected] : '';
-      if (res.state % 10 === 0) {
+      if (res.state === 0 || res.state != this.gameState) {
+        this.gameState = res.state;
         this.trumpManagment({
           username: res.trumpSelectorUsername,
           trumpSelected: res.trumpSelected,
