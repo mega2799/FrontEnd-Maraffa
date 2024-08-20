@@ -35,7 +35,7 @@
                 </div>
                 <div class="game-score">Partita ai: {{ game.score }}</div>
                 <div class="game-turn">Modalità: {{ game.mode === "ELEVEN2ZERO" ? "11 a zero" : "Classica"}}</div>
-                <div class="game-turn">Turno: {{ (game.turn + 1) % 10}}</div>
+                <div class="game-turn">Turno: {{ game.state === -1 ? (game.state + 1) % 10 : game.state % 10}}</div>
                 <div class="game-turn">Team A: {{ game.teamA.toString() }}</div>
                 <div class="game-turn">Team B: {{ game.teamB.toString() }}</div>
                 <div class="game-turn">Punteggio {{ game.teamAScore.toString() }} - {{ game.teamBScore.toString() }}</div>

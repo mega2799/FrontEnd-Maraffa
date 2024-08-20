@@ -107,7 +107,7 @@
         Chiama briscola
       </button>
 
-      <mat-form-field *ngIf="isMyTurn" class="custom-select">
+      <mat-form-field *ngIf="isMyTurn && tableCards.length === 0" class="custom-select">
         <mat-label>Chiamata</mat-label>
         <mat-select formControlName="call">
           <mat-option *ngFor="let chiamata of calls" [value]="chiamata.value">
@@ -116,7 +116,7 @@
         </mat-select>
       </mat-form-field>
 
-      <button mat-raised-button type="submit" *ngIf="isMyTurn">Chiama</button>
+      <button mat-raised-button type="submit" *ngIf="isMyTurn && tableCards.length === 0">Chiama</button>
     </form>
     <!-- 
     <form [formGroup]="this.interactionForm">

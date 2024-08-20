@@ -145,6 +145,13 @@ export class GameComponent implements OnInit, OnDestroy {
   // }));
 
   // cards!: any[];
+  callJson: any = {
+    BUSSO: "Busso",
+    VOLO : "Volo" ,
+    STRISCIO_LUNGO : "Striscio Lungo",
+    STRISCIO_CORTO : "Striscio Corto" ,
+  };
+
   calls: Chiamata[] = [
     { value: "busso", viewValue: "Busso" },
     { value: "volo", viewValue: "Volo" },
@@ -262,7 +269,7 @@ export class GameComponent implements OnInit, OnDestroy {
     console.log(this.interactionForm.value);
 
     const { trump, call } = this.interactionForm.value;
-    if (trump != "trump") {
+    if (!this.trumpChoosen) {
       this.gameService
         .chooseSuit(this.gameID, this.username, trump)
         .subscribe((res) => {
@@ -280,6 +287,8 @@ export class GameComponent implements OnInit, OnDestroy {
             this.selectedTrump = false;
           }
         });
+        console.log(this.interactionForm.value);
+        
     } else {
       this.gameService
         .makeCall(this.gameID, this.username, call)
@@ -535,6 +544,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.selectedTrump = response.username === this.username;
     if (response.trumpSelected != "NONE") {
       this.trumpChoosen = mappingSuit[response.trumpSelected];
+      this.notify({message : `La briscola è ${mappingSuit[response.trumpSelected]}`});
       // this.chosesTrump = true;
       // setTimeout(() => {
       //   this.chosesTrump = false;
@@ -576,6 +586,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   makeCall(response: any) {
     this.currentCall = response.call;
+    this.notify({message : `Il giocatore ${response.username} dice ${this.callJson[`${response.call}`]}`});
   }
 
   notify(response: any) {
