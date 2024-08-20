@@ -11,8 +11,11 @@
         <p class="lighter-text">
           Modalità : <span class="normal-text">{{ mode }}</span>
         </p>
-        <p class="lighter-text">
-          Partita ai: <span class="normal-text">{{ score }}</span>
+        <p class="lighter-text" *ngIf="score !== 5">
+          Partita ai: <span class="normal-text">{{ score === 5 ? "Mano veloce" : score }}</span>
+        </p>
+        <p class="lighter-text" *ngIf="score === 5">
+          Mano veloce
         </p>
         <p class="lighter-text">Partecipanti:</p>
       </div>

@@ -639,21 +639,25 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   endGame(response: any) {
+    console.log("Calling endGame");
     this.teamScoreA = response.teamAScore;
     this.teamScoreB = response.teamBScore;
     const dialogRef = this.dialog.open(DialogComponent, {
       width: "400px",
       data: response,
     });
-    this.gameService.newGame(this.gameID).subscribe();
+    this.gameService.exitGame(this.gameID).subscribe((res) => {});
+    this.router.navigate(["/"]).then(() => {
+      window.location.reload();
+    });
   }
 
   newGame(response: any) {
-    this.teamScoreA = 0;
-    this.teamScoreB = 0;
-    this.router.navigate(["/game/" + response.newGameID]).then(() => {
-      window.location.reload();
-    });
+    // this.teamScoreA = 0;
+    // this.teamScoreB = 0;
+    // this.router.navigate(["/game/" + response.newGameID]).then(() => {
+    //   window.location.reload();
+    // });
   }
 
   startDrag(event: MouseEvent) {
