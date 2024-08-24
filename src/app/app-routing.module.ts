@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from './core/guards/auth.guard';
 
@@ -20,6 +20,17 @@ const appRoutes: Routes = [
   },
   {
     path: 'users',
+    loadChildren: () => import('./features/users/users.module').then(m => m.UsersModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'all-games',
+    loadChildren: () => import('./features/game/all-games/allgames.module').then(m => m.AllGamesModule),
+    canActivate: [AuthGuard]
+  },
+
+  {
+    path: 'user-list',
     loadChildren: () => import('./features/users/users.module').then(m => m.UsersModule),
     canActivate: [AuthGuard]
   },
@@ -56,6 +67,11 @@ const appRoutes: Routes = [
   {
     path: 'waiting',
     loadChildren: () => import('./features/waiting-room/waiting-room.module').then(m => m.WaitingRoomModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'donazione',
+    loadChildren: () => import('./features/dashboard/donazione/donazione.module').then(m => m.DonazioneModule),
     canActivate: [AuthGuard]
   },
   {
