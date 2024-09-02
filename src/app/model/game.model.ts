@@ -40,21 +40,21 @@ export interface GameSetup {
 // }
 
 export interface Game {
-    gameID: string;
-    creator: string;
-    status: string;
-    score: number;
-    firstPlayer: string;
-    playerTurn: string;
-    turn: number;
-    state: number;
-    password: boolean;
-    trumpSelected: string;
-    trumpSelectorUsername: string;
-    teamA: Team;
-    teamB: Team;
-    trick: any; // or you can define a specific type if you know the structure of "trick"
-    teamAScore: number;
-    teamBScore: number;
-    mode: string;
+  gameID: string;
+  creator: string;
+  status: string;
+  score: number;
+  firstPlayer: string;
+  playerTurn: string;
+  turn: number;
+  state: number;
+  password: boolean;
+  trumpSelected: string;
+  trumpSelectorUsername: string;
+  teamA: Team;
+  teamB: Team;
+  trick: any; // or you can define a specific type if you know the structure of "trick"
+  teamAScore: number;
+  teamBScore: number;
+  mode: string;
 }
