@@ -1,0 +1,54 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+  <div fxFlex="95%">
+    <mat-card>
+      <mat-card-content>
+        <h2>Partite</h2>
+
+        <div
+          *ngIf="this.gameList.length === 0"
+          class="container"
+          fxLayout="row"
+          fxLayoutAlign="center none">
+          <div fxFlex="50%" class="text-center no-records animate">
+            <!-- <mat-icon>people_outline</mat-icon> -->
+            <p>Non ci sono partite in corso al momento</p>
+          </div>
+          <mat-icon> </mat-icon>
+        </div>
+
+        <div class="container" fxLayout="row" fxLayoutAlign="center none">
+          <div fxFlex="50%" class="text-center no-records animate">
+            <!-- <div class="icon-text" *ngFor="let user of gameList">
+            <mat-icon class="icon-display">people</mat-icon>
+            {{user}}
+            </div> -->
+
+            <div *ngFor="let game of gameList" class="game-item">
+              <div class="game-info">
+                <!-- <div class="game-id">Game ID: {{ game.gameID }}</div> -->
+                <div class="game-creator">Creatore: {{ game.creator }}</div>
+                <div class="game-status">
+                  Status:
+                  <span [class]="getStatusClass(game.status)">{{
+                  getStatusClass(game.status)
+                  }}</span>
+                </div>
+                <div class="game-score">Partita ai: {{ game.score }}</div>
+                <div class="game-turn">Modalità: {{ game.mode === "ELEVEN2ZERO" ? "11 a zero" : "Classica"}}</div>
+                <div class="game-turn">Turno: {{ game.state === -1 ? (game.state + 1) % 10 : game.state % 10}}</div>
+                <div class="game-turn">Team A: {{ game.teamA.toString() }}</div>
+                <div class="game-turn">Team B: {{ game.teamB.toString() }}</div>
+                <div class="game-turn">Punteggio {{ game.teamAScore.toString() }} - {{ game.teamBScore.toString() }}</div>
+              </div>
+              <img src="/assets/images/maraffa_image.png" style="width: 20%;" /><br />
+              <div
+                class="status-indicator"
+                [class]="getStatusClass(game.status)"></div>
+            </div>
+          </div>
+          <!-- <mat-icon> </mat-icon> -->
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

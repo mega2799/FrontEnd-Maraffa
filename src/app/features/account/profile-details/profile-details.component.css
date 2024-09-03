@@ -1,3 +1,11 @@
 .profile-card {
     text-align: center;
+    color: white;
 }
+
+.circular-image {
+      width: 150px;  /* Imposta la larghezza desiderata */
+      height: 150px; /* Imposta l'altezza desiderata */
+      border-radius: 50%;
+      object-fit: cover; /* Assicura che l'immagine riempia il contenitore */
+    }

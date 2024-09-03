@@ -1,0 +1,7 @@
+.icon-display {
+   transform: scale(0.3);
+}
+.icon-text {
+    display: flex;
+    align-items: center;
+}

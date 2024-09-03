@@ -1,10 +1,48 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
+html{
+  background-color: #f4f8fb;
+}
+
+
+.lightblue-text{
+  color: #0163a1;
+  font-weight: bold;
+}
+
+[type=radio]:checked::before, .orange-button{
+  background-color: #ffb01f;
+}
+
+.orange-button { /**button color*/
+  /* background-color: #ffb01f; #63CCCA; */
+  color: black;
+  border-radius: 20px !important;
+  margin: 1% !important;
+}
+
+.mat-raised-button .mat-flat-button{
+  border-radius: 50%;
+  margin-right: .5%;
+}
+
+.button-container button{
+  width: 151px;
+}
+
+@media (max-width: 990px) {
+  .button-container{
+    margin-bottom: 4%;
+  }
+}
+
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 14px;
 }
+
 
 .full-width {
   width: 100%;

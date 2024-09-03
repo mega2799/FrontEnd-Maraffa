@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
 
-import { AccountRoutingModule } from './account-routing.module';
-import { AccountPageComponent } from './account-page/account-page.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
-import { ProfileDetailsComponent } from './profile-details/profile-details.component';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule } from "src/app/shared/shared.module";
+import { AccountPageComponent } from "./account-page/account-page.component";
+import { AccountRoutingModule } from "./account-routing.module";
+import { ChangePasswordComponent } from "./change-password/change-password.component";
+import { ProfileDetailsComponent } from "./profile-details/profile-details.component";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    SharedModule,
-    AccountRoutingModule
+  imports: [CommonModule, SharedModule, AccountRoutingModule],
+  declarations: [
+    AccountPageComponent,
+    ChangePasswordComponent,
+    ProfileDetailsComponent,
   ],
-  declarations: [AccountPageComponent, ChangePasswordComponent, ProfileDetailsComponent],
-  exports: [AccountPageComponent]
+  exports: [AccountPageComponent],
 })
-export class AccountModule { }
+export class AccountModule {}

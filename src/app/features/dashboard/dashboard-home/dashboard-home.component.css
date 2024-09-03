@@ -11,12 +11,133 @@
   font-size: 55px;
 }
 
-.projects-card>mat-card-content {
+.projects-card > mat-card-content {
   max-height: 400px;
   overflow: auto;
 }
 
-.mat-raised-button {
-  border-radius: 50%;
-  margin-right: .5%;
+.dashboard-container {
+  display: flex;
+}
+
+#select-game-mode {
+  margin-bottom: 0;
+}
+
+.games-buttons {
+  display: flex;
+  flex-direction: column;
+  margin: 0 15% 0;
+}
+
+#game-button {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menu-item {
+  width: 120px;
+}
+
+::placeholder {
+  color: #0163a1;
+}
+
+.orange-button .mat-icon {
+  padding: 2%;
+}
+
+.text {
+  margin: 0;
+}
+
+#donation {
+  margin-bottom: 0 !important;
+}
+
+.vertical-container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin-left: 7%;
+}
+
+.games-container {
+  width: 50%;
+}
+
+.number-of-players {
+  margin-bottom: 3%;
+  padding: 1%;
+  border-radius: 30px;
+  font-size: 110%;
+}
+
+.hide {
+  display: none;
+}
+
+.hoverbutton:hover + .hide {
+  display: block;
+}
+
+/*status of the games*/
+.waiting_players {
+  color: #52aa5e;
+}
+
+.playing {
+  color: #dd2d4a;
+}
+
+/*radio button*/
+.radio-label {
+  color: #000000;
+  font-weight: 600;
+  font-size: 120%;
+}
+
+.radio-button {
+  display: flex;
+  gap: 1%;
+  margin: 3% 20% 3%;
+}
+
+[type="radio"],
+[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+[type="radio"],
+[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  border: solid 1px #cccccc;
+  margin-right: 8px;
+  position: relative;
+}
+
+[type="radio"]:checked::before,
+[type="checkbox"]:checked::before {
+  content: "";
+  width: 14px;
+  height: 14px;
+  /* background-color: #63CCCA;#74bbfc; */
+  position: absolute;
+  top: 2px;
+  left: 2px;
+}
+
+[type="radio"],
+[type="radio"]:checked::before {
+  border-radius: 100%;
+}
+
+@media (min-width: 1170px) {
+  .radio-button {
+    margin-left: 30%;
+  }
 }

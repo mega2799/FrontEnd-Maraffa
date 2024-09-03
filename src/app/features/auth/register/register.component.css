@@ -1,0 +1,99 @@
+.auth-title{
+    font-family: "Lemon";
+    text-align: center;
+    width: 100%;
+}
+
+.subtitle{
+    text-align: center;
+    font-size: large;
+}
+
+#remember{
+    font-size: large;
+}
+
+.auth-card{
+    border-radius: 10px;
+    margin-left: 10%; 
+    margin-right: 10%; 
+}
+
+.mat-card-actions, .mat-card-subtitle, .mat-card-content{
+    margin: 0;
+}
+
+.register-input{
+    background-color: #F5F5F5;
+    border-radius: 5px;
+    padding: 2% 0;
+}
+
+.register-title{
+    color: #E67300;
+}
+
+#register-button{
+    background-color: #FFB01F;
+    color: black;
+    width: 45%;
+    font-size: 120%;
+}
+
+#register-button:disabled{
+    background-color: #aeafaf;
+    color: rgb(25, 25, 25);
+    width: 45%;
+    font-size: 120%;
+}
+
+
+#LoginBtn{
+    background-color: white ;
+    color: #E67300;
+    font-weight: bold;
+    text-decoration: underline;
+    border: none;
+    font-size: large;
+}
+
+.login-actions{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.normal-link{
+    text-decoration: underline;
+    font-size: 120%;
+}
+
+/*input placeholder*/
+::ng-deep .full-width .mat-form-field-label{
+    padding-left: 5%;
+    padding-bottom: 5%;
+ }
+
+::ng-deep .register .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb{
+    background-color: #FFB01F !important;
+}
+
+::ng-deep .register .mat-slide-toggle.mat-checked .mat-slide-toggle-bar{
+    background-color: #e67300cc !important;
+}
+
+/*change color of label*/
+::ng-deep .mat-focused .mat-form-field-label {
+    color: #E67300 !important;
+}
+  
+/*change color of underline*/
+::ng-deep .register .mat-form-field-underline{
+    background-color: #FFB01F !important;
+} 
+  
+/*change color of underline when focused*/
+::ng-deep.mat-form-field-ripple {
+   background-color: #FFB01F !important;
+  }

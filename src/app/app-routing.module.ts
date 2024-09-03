@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from './core/guards/auth.guard';
 
@@ -24,18 +24,34 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'all-games',
+    loadChildren: () => import('./features/game/all-games/allgames.module').then(m => m.AllGamesModule),
+    canActivate: [AuthGuard]
+  },
+
+  {
+    path: 'user-list',
+    loadChildren: () => import('./features/users/users.module').then(m => m.UsersModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'userInfo',
+    loadChildren: () => import('./features/user-info/account.module').then(m => m.UserInfoModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'account',
     loadChildren: () => import('./features/account/account.module').then(m => m.AccountModule),
     canActivate: [AuthGuard]
   },
   {
-    path: 'icons',
-    loadChildren: () => import('./features/icons/icons.module').then(m => m.IconsModule),
+    path: 'ultima-presa',
+    loadChildren: () => import('./features/ultima-presa/ultima-presa.module').then(m => m.UltimaPresaModule),
     canActivate: [AuthGuard]
   },
   {
-    path: 'typography',
-    loadChildren: () => import('./features/typography/typography.module').then(m => m.TypographyModule),
+    path: 'dialog',
+    loadChildren: () => import('./features/dialog/dialog.module').then(m => m.DialogModule),
     canActivate: [AuthGuard]
   },
   {
@@ -51,6 +67,11 @@ const appRoutes: Routes = [
   {
     path: 'waiting',
     loadChildren: () => import('./features/waiting-room/waiting-room.module').then(m => m.WaitingRoomModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'donazione',
+    loadChildren: () => import('./features/dashboard/donazione/donazione.module').then(m => m.DonazioneModule),
     canActivate: [AuthGuard]
   },
   {

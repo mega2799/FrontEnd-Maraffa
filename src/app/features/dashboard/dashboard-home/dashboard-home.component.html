@@ -1,5 +1,4 @@
 <div class="container" fxLayout="row" fxLayoutAlign="center none">
-
   <div fxFlex="95%">
     <!-- <div class="container" fxLayout="row" fxLayoutAlign="center none">
 
@@ -14,13 +13,141 @@
       </div>
       <mat-icon> </mat-icon>
     </div> -->
-<div class="row">
-  <div class="col-sm-8 col-6">
     <div class="row">
-      <div class="col-12 text-center fill-viewport-max-20">
-        <h3 class=" h3 text-center text-primary">Maraffa</h3>
-          <!-- <button class="btn btn-primary my-3" ngbDropdownToggle> Nuova Partita</button> -->
-            <h5 class="dropdown-header">2 giocatori</h5>
+      <div class="row">
+        <div
+          class="col-12 text-center fill-viewport-max-20 dashboard-container">
+          <div class="vertical-container text-center">
+            <h2 id="select-game-mode" class="lightblue-text">
+              Seleziona una modalità di gioco:
+            </h2>
+            <form [formGroup]="formMode">
+              <div class="radio-button">
+                <input
+                  type="radio"
+                  id="classico"
+                  name="options"
+                  [(ngModel)]="isOptionSelected"
+                  formControlName="mode"
+                  value="classico" />
+                <label class="radio-label" for="classico">Classico</label>
+              </div>
+              <div class="radio-button">
+                <input
+                  type="radio"
+                  id="eleven2Zero"
+                  name="options"
+                  [(ngModel)]="isOptionSelected"
+                  formControlName="mode"
+                  value="eleven2Zero" />
+                <label class="radio-label" for="eleven2Zero">11 a 0</label
+                ><br />
+              </div>
+              <div class="button-container">
+                <button
+                  mat-flat-button
+                  class="orange-button number-of-players"
+                  [matMenuTriggerFor]="fourPlayersMenu"
+                  (click)="this.playersNum.setValue('4')">
+                  <!-- (click)="this.formMode.get('playersNum')?.setValue('4')"> -->
+                  4 giocatori
+                  <mat-icon mat-list-icon>people</mat-icon>
+                  <mat-icon mat-list-icon>people</mat-icon>
+                </button>
+                <mat-menu
+                  #fourPlayersMenu="matMenu"
+                  xPosition="before"
+                  yPosition="above"
+                  [overlapTrigger]="false">
+                  <a
+                    mat-menu-item
+                    class="menu-item"
+                    (click)="this.score.setValue('5'); this.sendCreate()">
+                    <span> Una mano (veloce) </span>
+                  </a>
+
+                  <a
+                    mat-menu-item
+                    class="menu-item"
+                    (click)="this.score.setValue('31'); this.sendCreate()">
+                    <span>ai 31</span>
+                  </a>
+
+                  <a
+                    mat-menu-item
+                    class="menu-item"
+                    (click)="this.score.setValue('41'); this.sendCreate()">
+                    <!-- (click)="this.formMode.get('score')?.setValue('41')"> -->
+                    <span>ai 41</span>
+                  </a>
+                </mat-menu>
+
+                <button
+                  mat-flat-button
+                  class="orange-button number-of-players hoverbutton"
+                  [matMenuTriggerFor]="twoPlayersMenu"
+                  formControlName="playersNum"
+                  [disabled]="true"
+                  (click)="this.playersNum.setValue('2')">
+                  2 giocatori <mat-icon mat-list-icon> people</mat-icon>
+                </button>
+                <div class="hide">Presto disponibile.</div>
+
+                <mat-menu
+                  #twoPlayersMenu="matMenu"
+                  xPosition="before"
+                  yPosition="above"
+                  [overlapTrigger]="false">
+                  <a
+                    mat-menu-item
+                    class="menu-item"
+                    formControlName="score"
+                    (click)="this.score.setValue('31'); this.sendCreate()">
+                    <span>ai 31</span>
+                  </a>
+
+                  <a
+                    mat-menu-item
+                    class="menu-item"
+                    formControlName="score"
+                    (click)="this.score.setValue('41'); this.sendCreate()">
+                    <span>ai 41</span>
+                  </a>
+                </mat-menu>
+              </div>
+            </form>
+            <app-chat class="text-center"></app-chat>
+          </div>
+          <div class="games-container">
+            <h2 class="lightblue-text">Partite:</h2>
+            <div
+              class="games-buttons"
+              *ngFor="let game of this.games; index as i">
+              <button
+                id="game-button"
+                mat-flat-button
+                class="orange-button"
+                [routerLink]="['/waiting/' + game.creator + '/' + game.gameID]">
+                <mat-icon class="{{ game.status.toLowerCase() }}"
+                  >fiber_manual_record</mat-icon
+                >{{ game.creator }}
+              </button>
+              <!-- <button mat-flat-button class="orange-button" [routerLink]="['/waiting']"><mat-icon
+                  class="waiting-player">fiber_manual_record</mat-icon>game1</button>
+              <button mat-flat-button class="orange-button"><mat-icon
+                  class="playing">fiber_manual_record</mat-icon>game2</button> -->
+            </div>
+            <h2 class="lightblue-text">Giocatori connessi:</h2>
+
+            <h4 class="text" *ngFor="let user of this.players">{{ user }}</h4>
+            <!-- <h4 class="text">Sofy<br />Matte<br /></h4> -->
+            <h2 class="lightblue-text">Giocatori impegnati:</h2>
+            <h4 class="text" *ngFor="let user of this.activePlayers">
+              {{ user }}
+            </h4>
+          </div>
+          <!--delete <button class="btn btn-primary my-3" ngbDropdownToggle> Nuova Partita</button> -->
+          <!--<h5 class="dropdown-header">2 giocatori</h5>
             <button mat-raised-button color="primary" (click)="createGame(21,2)">21 punti</button>
             <button mat-raised-button color="primary" (click)="createGame(31,2)">31 punti</button>
             <button mat-raised-button color="primary" (click)="createGame(41,2)">41 punti</button>
@@ -31,40 +158,47 @@
             <button mat-raised-button color="primary" (click)="createGame(31,2)">31 punti</button>
             <button mat-raised-button color="primary" (click)="createGame(41,2)">41 punti</button>
             <button mat-raised-button color="primary" (click)="createGame(51,2)">51 punti</button>
-      </div>
-      <div class="col-12 scrollable-div-y fill-viewport-max-50">
-        <!-- <app-all-chat></app-all-chat> -->
-      </div>
+      </div>-->
+        </div>
+        <div id="played-games" class="text-center fill-viewport-max-10">
+          <h2 class="lightblue-text text">
+            <b>{{ getGameCount() }}</b> Partite giocate
+          </h2>
+        </div>
 
-      <div  class="col-12 text-center fill-viewport-max-10">
-        <br />
-        <h6><b>{{getGameCount()}}</b> partite giocate</h6>
-      </div>
-
-      <div class="col-12 text-center small fill-viewport-max-30">
-        <a href="donazione.html"><img src="https://www.paypalobjects.com/it_IT/IT/i/btn/btn_donate_SM.gif" /></a>
-        <small>
-          <br /><b>Sostieni lo sviluppo e il potenziamento dei Server</b>
-          <br />
-        </small>
-        <!--<div class="alert alert-primary small" style="margin-top:5px;padding:0.2rem">
+        <div class="col-12 text-center small fill-viewport-max-30">
+<!-- <img src="https://www.paypalobjects.com/it_IT/IT/i/btn/btn_donate_SM.gif" > -->
+          <a
+            id="donation"
+            class="orange-button"
+            mat-flat-button
+            href="donazione"
+            target="_blank"
+            >Donazione</a
+          >
+          <p class="text">
+            <small>
+              <br /><b>Sostieni lo sviluppo e il potenziamento dei Server</b>
+              <br />
+            </small>
+            <!--<div class="alert alert-primary small" style="margin-top:5px;padding:0.2rem">
           in caso di malfunzionamento per eccessivo traffico giocate sul
           <a href="https://maraffaapp.azurewebsites.net/">server di backup</a>
         </div>-->
-        <small>
-          &copy; Thomas Casali - Alessandra Lumini - Sofia Tosi - Santoro Matteo
-        </small>
+            <small>
+              &copy; Thomas Casali - Alessandra Lumini - Sofia Tosi - Matteo
+              Santoro
+            </small>
+          </p>
+        </div>
       </div>
+      <!--<div class="col-sm-4 col-6 fill-viewport-max-100 scrollable-div-y">
+      <button class="btn btn-outline-dark btn-sm btn-block my-2" (click)="rename()">Cambia nome</button> -->
+      <!-- <app-active-players></app-active-players>
+      <app-running-games></app-running-games> -->
+      <!-- <app-running-games></app-running-games>
+      <app-active-players></app-active-players> -->
+      <!--</div>-->
     </div>
-    </div>
-  <div class="col-sm-4 col-6 fill-viewport-max-100 scrollable-div-y">
-    <!-- <button class="btn btn-outline-dark btn-sm btn-block my-2" (click)="rename()">Cambia nome</button> -->
-     <!-- <app-active-players></app-active-players>
-     <app-running-games></app-running-games> -->
-     <!-- <app-running-games></app-running-games>
-     <app-active-players></app-active-players> -->
-  </div>
-</div>
-
   </div>
 </div>

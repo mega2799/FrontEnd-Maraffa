@@ -1,0 +1,46 @@
+.played-card { 
+    border: 2px solid black;
+    float: left;
+    width:25%;
+    margin:0 auto;
+  }
+
+.drew-card {
+    border: 3px solid black;
+    float: left;
+    margin:0 auto;
+    width:50%;
+  }
+.card-body {
+  padding: 0;
+}
+
+.played-card-2 {
+  border: 2px solid black;
+  float: left;
+  margin: 0 auto;
+}
+
+  @media (max-width: 768px) {
+    .played-card-2 {
+      width: 50%;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .played-card-2 {
+      width: 20%;
+    }
+  }
+  @media (max-width: 768px) {
+    .played-card {
+      width:25%;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .played-card {
+      width: 10%;
+    }
+  }
+  
