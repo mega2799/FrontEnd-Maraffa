@@ -1,0 +1,58 @@
+<!-- <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@nebular/theme/styles/prebuilt/default.css" /> -->
+<!-- <nb-layout>
+  <nb-layout-header fixed> </nb-layout-header>
+  <nb-layout-column>
+    <nb-chat title="Nebular Conversational UI">
+      <nb-chat-message
+        *ngFor="let msg of messages"
+        [type]="msg.type"
+        [message]="msg.text"
+        [reply]="msg.reply"
+        [sender]="msg.user.name"
+        [date]="msg.date"
+        [files]="msg.files"
+        [quote]="msg.quote"
+        [latitude]="msg.latitude"
+        [longitude]="msg.longitude"
+        [avatar]="msg.user.avatar">
+      </nb-chat-message>
+
+      <nb-chat-form (send)="sendMessage($event)" [dropFiles]="true">
+      </nb-chat-form>
+    </nb-chat>
+  </nb-layout-column>
+</nb-layout> -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div class="layout">
+      <div class="header">MaraffaOnline Chat</div>
+      <div class="content">
+        <!-- Messaggi di chat -->
+        <div class="chat-message" *ngFor="let msg of messages">
+          <div>
+            <strong>{{ msg.user.name }}</strong> <span>{{ msg.date }}</span>
+          </div>
+          <div>{{ msg.text }}</div>
+          <!-- Eventuali altre parti del messaggio -->
+        </div>
+      </div>
+      <div class="chat-form">
+        <form id="form-mess" (submit)="sendMessage($event)">
+          <input
+            type="text"
+            id="messageInput"
+            placeholder="Scrivi un messaggio" />
+          <button type="submit" id="chat-button"><img id="send" src="assets/images/send.png" alt="submit"/></button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

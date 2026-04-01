@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Il tuo contributo per la Maraffa Online</title>
+    <!-- <link rel="stylesheet" href="styles.ee1cf54af9b04d53280b.css"> -->
+    <script>
+        function ringrazia() {
+            alert("Grazie per il tuo feedback!");
+        }
+    </script>
+</head>
+<body style="text-align:center;">
+    <div >
+        <h1>Maraffa Online!</h1>
+        <img src="/assets/images/maraffa_image.png" class="w-50" style="width: 24%;"/><br />
+        <div class="container text-center">
+            <h4 class="text-body text-primary">
+                Se questa app ti piace fai una donazione agli sviluppatori per il mantenimento del server e una birra!! 🍺<br />
+                cliccando sul bottone sotto verrai rimandato alla pagina di donazioni di Paypal. <br />
+                Grazie per il sostegno!
+            </h4>
+        </div>
+        <br />
+        <form novalidate action="https://www.paypal.com/cgi-bin/webscr"class="text-center" method="post" target="_top">
+            <input type="hidden" name="cmd" value="_s-xclick" />
+            <input type="hidden" name="hosted_button_id" value="FZSDN4QUU53NC"/>
+            <input class="img-fluid w-50"  type="image" src="https://www.paypalobjects.com/it_IT/IT/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Fai una donazione con il pulsante PayPal" />
+            <img alt="" border="0" src="https://www.paypal.com/it_IT/i/scr/pixel.gif" width="1" height="1" />
+        </form>
+
+        <hr />
+        <h3 class="text-center">Suggerimenti e segnalazioni:</h3>
+        <h5>Scrivici il tuo suggerimento/segnalazione:</h5>
+        <form action="https://postmail.invotes.com/send" method="post" id="email_form">
+            <input type="text" name="subject" style="width:75%;margin-top:5px;border-radius:5px;" Value="" placeholder="Se vuoi che ti risponda scrivimi la tua email"/>
+            <textarea style="width:75%;margin-top:5px;border-radius:10px;" rows="3" name="text"></textarea><br />
+            <input type="hidden" name="access_token" value="0yqb03cvt6c0kafhdlq9lwd9" />
+            <!-- return urls can be fully qualified -OR- start with / for root relative -OR- start with . for url relative -->
+            <input type="hidden" name="success_url" value=".?message=Email+Successfully+Sent%21&isError=0" />
+            <input type="hidden" name="error_url" value=".?message=Email+could+not+be+sent.&isError=1" />
+            <input type="submit" id="submit_form" onclick="ringrazia()" value="Invia" class="btn btn-primary" style="font-size:1.6em;border-radius:25px;background-color: #ffb01f;border: none;padding: .5%;" />
+        </form>
+    </div>
+    <script>
+        var submitButton = document.getElementById("submit_form");
+        var form = document.getElementById("email_form");
+        form.addEventListener("submit", function (e) {
+            setTimeout(function() {
+                submitButton.value = "Sending...";
+                submitButton.disabled = true;
+            }, 1);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!-- draggable-image.component.html -->
+<div
+  class="draggable"
+  [class.my-turn]="isMyTurn"
+  [class.not-my-turn]="!isMyTurn"
+  (mousedown)="startDrag($event)"
+  (mouseup)="stopDrag()"
+  (mousemove)="onDrag($event)"
+  [ngStyle]="{
+    top: position.y + 'px',
+    opacity: hidden ? 0 : 1,
+    transform: hidden ? 'translateY(-100px)' : 'translateY(0)',
+    transition: 'transform 0.5s, opacity 0.5s'
+  }"
+  (transitionend)="onTransitionEnd($event)">
+  <div class="play-hint" [hidden]="!isMyTurn">▲</div>
+  <img [src]="src" alt="Draggable Image" />
+  <div class="readable">{{alt}}</div>
+</div>

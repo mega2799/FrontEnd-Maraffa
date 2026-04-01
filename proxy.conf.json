@@ -1,0 +1,29 @@
+{
+    "/api/*": {
+        "target": "http://127.0.0.1:8080",
+        "secure": false,
+        "logLevel": "debug",
+        "pathRewrite": {
+            "^/api": ""
+        }
+    },
+    "/socket.io/*": {
+        "target": "http://127.0.0.1:3002",
+        "secure": false,
+        "logLevel": "debug",
+        "ws": true
+    },
+    "/otlp/*": {
+        "target": "http://127.0.0.1:4318",
+        "secure": false,
+        "logLevel": "debug",
+        "ws" : true,
+        "pathRewrite": {
+            "^/otlp": ""
+        }
+    },
+    "/ip/*": {
+        "target": "http://api.ipify.org",
+        "secure": false
+    }
+}

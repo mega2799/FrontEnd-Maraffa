@@ -1,0 +1,128 @@
+<div class="game navbar-container" [class.example-is-mobile]="mobileQuery.matches">
+  <mat-sidenav-container class="navbar-sidenav-container">
+    <mat-sidenav
+      #snav
+      [opened]="!mobileQuery.matches"
+      [mode]="mobileQuery.matches ? 'over' : 'side'"
+      [fixedInViewport]="mobileQuery.matches"
+      fixedTopGap="56"
+      position="end"
+      class="sidenav">
+      <mat-nav-list>
+        <app-gamechat class="text-center game-chat" [gameID]="gameID"></app-gamechat>
+      </mat-nav-list>
+  </mat-sidenav>
+  <div id="info-box" *ngIf="this.isNotifyPresent"><p>{{this.notifyMessage}}</p></div>
+  <div class="teams-row">
+    <div class="team-group team-a">
+      <span class="team-badge team-badge-a">A</span>
+      <span [class.active-player]="currentUser === teamA[0]">{{teamA[0]}}</span>
+      <span class="team-separator">&amp;</span>
+      <span [class.active-player]="currentUser === teamA[1]">{{teamA[1]}}</span>
+    </div>
+    <span class="vs-label">vs</span>
+    <div class="team-group team-b">
+      <span class="team-badge team-badge-b">B</span>
+      <span [class.active-player]="currentUser === teamB[0]">{{teamB[0]}}</span>
+      <span class="team-separator">&amp;</span>
+      <span [class.active-player]="currentUser === teamB[1]">{{teamB[1]}}</span>
+    </div>
+  </div>
+  <div class="game-info-row">
+    <div class="turn-banner" [class.my-turn]="isMyTurn">
+      <span *ngIf="isMyTurn">È il tuo turno!</span>
+      <span *ngIf="!isMyTurn">Turno di: {{ currentUser }}</span>
+    </div>
+    <div class="score-container">
+      <span class="score score-a">A: <strong>{{ teamScoreA }}</strong></span>
+      <span class="score-divider">—</span>
+      <span class="score score-b">B: <strong>{{ teamScoreB }}</strong></span>
+    </div>
+    <div *ngIf="trumpChoosen" class="trump-badge">
+      <span class="trump-icon">{{ mappingSuitEmoji[trumpChoosen] }}</span>
+      {{ trumpChoosen }}
+    </div>
+  </div>
+  <div class="game-buttons">
+    <button
+      id="esci"
+      class="btn game-button btn-esci"
+      (click)="exitGame()">
+      Esci &#10007;
+    </button>
+    <button
+      id="chat"
+      type="button"
+      class="btn game-button btn-chat"
+      [ngClass]="{
+        'chat-button-has-new-message': numberUnreadMessages > 0
+      }"
+      (click)="snav.toggle()">
+      <span class="chat-icon">💬</span>
+      <span class="chat-label">Chat</span>
+      <span [hidden]="numberUnreadMessages === 0" class="badge badge-light">{{
+        numberUnreadMessages
+      }}</span>
+    </button>
+    <button
+      id="ultima"
+      class="btn btn-info game-button"
+      (click)="showCardsPlayedPreviousRound()">
+      Ultima &#9776;
+    </button>
+  </div>
+  <div id="table">
+    <div class="cards-container">
+      <div class="wrap" *ngFor="let tableCard of tableCards">
+        <img src="{{ tableCard.src }}" alt="{{ tableCard.alt }}" class="card" />
+        <div class="player">{{ tableCard.user }}</div>
+      </div>
+      <div *ngIf="tableCards.length === 0" class="table-placeholder">
+        <span *ngIf="isMyTurn">Gioca una carta</span>
+        <span *ngIf="!isMyTurn">In attesa...</span>
+      </div>
+    </div>
+  </div>
+  <div class="select-container">
+    <form [formGroup]="interactionForm" (ngSubmit)="onSubmit()">
+      <mat-form-field *ngIf="selectedTrump && !trumpChoosen" class="custom-select">
+        <mat-label>Briscola</mat-label>
+        <mat-select formControlName="trump">
+          <mat-option *ngFor="let briscola of trumps" [value]="briscola.value">
+            {{ briscola.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button *ngIf="selectedTrump && !trumpChoosen" type="submit">
+        Chiama briscola
+      </button>
+
+      <mat-form-field *ngIf="isMyTurn && tableCards.length === 0 && trumpChoosen" class="custom-select">
+        <mat-label>Chiamata</mat-label>
+        <mat-select formControlName="call">
+          <mat-option *ngFor="let chiamata of calls" [value]="chiamata.value">
+            {{ chiamata.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button type="submit" *ngIf="isMyTurn && tableCards.length === 0 && trumpChoosen">Chiama</button>
+    </form>
+  </div>
+  <div class="hand-container">
+    <div class="hand">
+      <app-draggable-image
+        *ngFor="let image of cards; let i = index"
+        class="hand-card"
+        [src]="image.src"
+        [alt]="image.alt"
+        [position]="image.position"
+        [hidden]="image.hidden"
+        [isMyTurn]="isMyTurn"
+        (positionChange)="image.position = $event"
+        (playedCard)="playCard($event)"
+        (hiddenChange)="image.hidden = $event"></app-draggable-image>
+    </div>
+  </div>
+  </mat-sidenav-container>
+</div>

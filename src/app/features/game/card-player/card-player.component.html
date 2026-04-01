@@ -1,0 +1,8 @@
+<p>card-player works!</p>
+<div class="card" [ngClass]="getCardClass()">
+  <img class="card-img-top" [src]="cardAndUser.card.imageUrl" alt="">
+  <div class="card-body">
+    <p class="card-text text-center btn-primary" *ngIf="cardAndUser.user.team!==1"><small>{{cardAndUser.user.name}}</small></p>
+    <p class="card-text text-center btn-warning" *ngIf="cardAndUser.user.team===1"><small>{{cardAndUser.user.name}}</small></p>
+  </div>
+</div>
